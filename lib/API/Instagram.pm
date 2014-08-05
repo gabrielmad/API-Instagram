@@ -1,7 +1,8 @@
 =head1 NAME
 
-API::Instagram - OO Interface to Instagram REST API
+API::Instagram - OO Interface to Instagram REST API 
 
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=master"></a>
 
 =head1 VERSION
 
@@ -199,8 +200,8 @@ sub get_access_token {
 
 =head2 media
 
-		my $media = $instagram->media( $media_id );
-		say $media->type;
+	my $media = $instagram->media( $media_id );
+	say $media->type;
 
 Get information about a media object. Returns a L<API::Instagram::Media> object.
 
@@ -210,11 +211,11 @@ sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
 
 =head2 user
 
-		my $me = $instagram->user; # Authenticated user
-		say $me->username;
+	my $me = $instagram->user; # Authenticated user
+	say $me->username;
 
-		my $user = $instagram->user( $user_id );
-		say $user->full_name;
+	my $user = $instagram->user( $user_id );
+	say $user->full_name;
 
 Get information about user. Returns a L<API::Instagram::User> object.
 
@@ -224,8 +225,8 @@ sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
 
 =head2 location
 
-		my $location = $instagram->location( $location_id );
-		say $location->name;
+	my $location = $instagram->location( $location_id );
+	say $location->name;
 
 Get information about a location. Returns a L<API::Instagram::Location> object.
 
@@ -235,8 +236,8 @@ sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shi
 
 =head2 tag
 
-		my $tag = $instagram->tag('perl');
-		say $tag->media_count;
+	my $tag = $instagram->tag('perl');
+	say $tag->media_count;
 
 Get information about a tag. Returns a L<API::Instagram::Tag> object.
 
@@ -372,7 +373,6 @@ L<http://github.com/gabrielmad/API-Instagram>
 =head1 SEE ALSO
 
 L<WebService::Instagram>
-L<WebService::Instagram>
 
 
 =head1 AUTHOR
@@ -382,7 +382,7 @@ Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2014, Gabriel Vieira C<< <gabriel@cpan.org> >>. All rights reserved.
+Copyright (c) 2014, Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
