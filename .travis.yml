@@ -1,0 +1,18 @@
+language: perl
+perl:
+   - "5.16"
+   - "5.14"
+   - "5.12"
+   - "5.10"
+
+install:
+  # Prerequisites
+  - "cpanm Time::Moment"
+
+branches:
+
+  only:
+
+    - /^build/
+
+
