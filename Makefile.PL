@@ -20,7 +20,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "API::Instagram",
   "PREREQ_PM" => {},
-  "VERSION" => "0.001",
+  "VERSION" => "0.0011",
   "test" => {
     "TESTS" => "t/*.t"
   }

@@ -5,7 +5,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.001
+version 0.0011
 
 =cut
 
