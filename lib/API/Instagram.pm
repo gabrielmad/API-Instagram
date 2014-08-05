@@ -22,10 +22,10 @@ use JSON;
 use LWP::UserAgent;
 # use LWP::Protocol::Net::Curl;
 
-use API::instagram::User;
-use API::instagram::Location;
-use API::instagram::Tag;
-use API::instagram::Media;
+use API::Instagram::User;
+use API::Instagram::Location;
+use API::Instagram::Tag;
+use API::Instagram::Media;
 use API::Instagram::Media::Comment;
 
 
