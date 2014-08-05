@@ -1,8 +1,7 @@
 =head1 NAME
 
-API::Instagram - OO Interface to Instagram REST API 
+API::Instagram - OO Interface to Instagram REST API
 
-=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=master"></a>
 
 =head1 VERSION
 
