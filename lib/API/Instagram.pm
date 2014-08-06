@@ -148,10 +148,10 @@ this feature setting a true value to C<no_chace> parameter.
 
 =head2 get_auth_url
 
-Returns an Instagram authorization URL.
-
 	my $auth_url = $instagram->get_auth_url;
 	print $auth_url;
+
+Returns an Instagram authorization URL.
 
 =cut
 sub get_auth_url { 
