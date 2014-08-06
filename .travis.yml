@@ -6,7 +6,5 @@ perl:
   - "5.14"
 
 branches:
-
   only:
-
     - /^build/

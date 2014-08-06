@@ -2,15 +2,15 @@
 
 API::Instagram - OO Interface to Instagram REST API
 
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
 =head1 VERSION
 
-version 0.0011
+version 0.002
 
 =cut
 
 package API::Instagram;
-use Data::Dumper;
 use Moo;
 
 use Carp;
@@ -130,9 +130,10 @@ authenticated user credentials.
 			scope           => 'basic',
 			response_type   => 'code',
 			granty_type     => 'authorization_code',
+			no_cache        => 1,
 	});
 
-Returns a L<API::Instagram> object.
+Returns a an L<API::Instagram> object.
 
 Set C<client_id>, C<client_secret> and C<redirect_uri> with the ones registered
 to your application. See L<http://instagram.com/developer/clients/manage/>.
@@ -141,6 +142,8 @@ C<scope> is the scope of access. See L<http://instagram.com/developer/authentica
 
 C<response_code> and C<granty_type> do no vary. See L<http://instagram.com/developer/authentication/>.
 
+By default, L<API::Instagram> caches created objects to avoid duplications. You can disable
+this feature setting a true value to C<no_chace> parameter.
 
 =head2 get_auth_url
 
@@ -202,7 +205,7 @@ sub get_access_token {
 	my $media = $instagram->media( $media_id );
 	say $media->type;
 
-Get information about a media object. Returns a L<API::Instagram::Media> object.
+Get information about a media object. Returns an L<API::Instagram::Media> object.
 
 =cut
 sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
@@ -245,9 +248,6 @@ sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
 
 
 
-
-
-
 sub _get_obj {
 	my ( $self, $obj, $url, $cache, $key, $data, $opts ) = @_;
 
@@ -258,6 +258,10 @@ sub _get_obj {
 	$data      = ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data};
 
 	$self->_cache($cache)->{$id} //= $self->$method( $data );
+
+	delete $self->_cache($cache)->{$id} if $self->no_cache;
+
+	$self->_cache($cache)->{$id};
 }
 
 sub _create_media_object {
@@ -371,8 +375,11 @@ L<http://github.com/gabrielmad/API-Instagram>
 
 =head1 SEE ALSO
 
+=item *
+
 L<WebService::Instagram>
 
+=back
 
 =head1 AUTHOR
 
