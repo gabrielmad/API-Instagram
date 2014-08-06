@@ -133,7 +133,7 @@ authenticated user credentials.
 			no_cache        => 1,
 	});
 
-Returns a an L<API::Instagram> object.
+Returns an L<API::Instagram> object.
 
 Set C<client_id>, C<client_secret> and C<redirect_uri> with the ones registered
 to your application. See L<http://instagram.com/developer/clients/manage/>.
@@ -147,7 +147,7 @@ this feature setting a true value to C<no_chace> parameter.
 
 =head2 get_auth_url
 
-Returns a Instagram authorization URL.
+Returns an Instagram authorization URL.
 
 	my $auth_url = $instagram->get_auth_url;
 	print $auth_url;
@@ -219,7 +219,7 @@ sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
 	my $user = $instagram->user( $user_id );
 	say $user->full_name;
 
-Get information about user. Returns a L<API::Instagram::User> object.
+Get information about user. Returns an L<API::Instagram::User> object.
 
 =cut
 sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
@@ -230,7 +230,7 @@ sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
 	my $location = $instagram->location( $location_id );
 	say $location->name;
 
-Get information about a location. Returns a L<API::Instagram::Location> object.
+Get information about a location. Returns an L<API::Instagram::Location> object.
 
 =cut
 sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shift ) }
@@ -241,7 +241,7 @@ sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shi
 	my $tag = $instagram->tag('perl');
 	say $tag->media_count;
 
-Get information about a tag. Returns a L<API::Instagram::Tag> object.
+Get information about a tag. Returns an L<API::Instagram::Tag> object.
 
 =cut
 sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
@@ -374,6 +374,8 @@ L<http://github.com/gabrielmad/API-Instagram>
 
 
 =head1 SEE ALSO
+
+=over
 
 =item *
 
