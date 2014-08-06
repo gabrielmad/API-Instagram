@@ -11,7 +11,6 @@ version 0.002
 =cut
 
 package API::Instagram;
-use Data::Dumper;
 use Moo;
 
 use Carp;

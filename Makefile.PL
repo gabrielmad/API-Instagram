@@ -21,14 +21,11 @@ my %WriteMakefileArgs = (
   "NAME" => "API::Instagram",
   "PREREQ_PM" => {
     "Carp" => 0,
-    "Data::Dumper" => 0,
-    "HTTP::Request" => 0,
     "JSON" => 0,
     "LWP::UserAgent" => 0,
     "Moo" => 0,
     "Time::Moment" => 0,
     "URI" => 0,
-    "constant" => 0,
     "strict" => 0,
     "warnings" => 0
   },
@@ -44,15 +41,12 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
-  "Data::Dumper" => 0,
-  "HTTP::Request" => 0,
   "JSON" => 0,
   "LWP::UserAgent" => 0,
   "Moo" => 0,
   "Test::More" => 0,
   "Time::Moment" => 0,
   "URI" => 0,
-  "constant" => 0,
   "strict" => 0,
   "warnings" => 0
 );
