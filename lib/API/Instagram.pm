@@ -6,7 +6,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =cut
 
@@ -79,8 +79,8 @@ This module implements an OO interface to Instagram REST API.
 
 =head2 Authentication
 
-Instagram API uses the OAuth2 for authentication, requering a client_id and
-client_secret. See L<http://instagr.am/developer/register/> for details.
+Instagram API uses the OAuth2 for authentication, requering a C<client_id> and
+C<client_secret>. See L<http://instagr.am/developer/register/> for details.
 
 =head3 Authorize
 
@@ -97,13 +97,12 @@ Get the AUTH URL to authenticate.
 			granty_type     => 'authorization_code',
 	});
 
-	my $auth_url = $instagram->get_auth_url;
-	print $auth_url;
+	print $instagram->get_auth_url;
 
 
 =head3 Authenticate
 
-After authorization, Instagram will redirected the user to the url in
+After authorization, Instagram will redirected the user to the URL in
 C<redirect_uri> with a code as an URL query parameter. This code is needed
 to obtain an acess token.
 
@@ -112,7 +111,7 @@ to obtain an acess token.
 
 =head3 Request
 
-With the access token its possible to request Instagram API using the
+With the access token its possible to do Instagram API requests using the
 authenticated user credentials.
 
 	$instagram->access_token( $access_token );
@@ -180,7 +179,7 @@ sub get_auth_url {
 
 Returns the access token string if the context is looking for a scalar, or an
 array containing the access token string and the authenticated user
-L<API::Instagram::User> object if looking a list value.
+L<API::Instagram::User> object if looking for a list value.
 
 =cut
 sub get_access_token {
@@ -258,11 +257,11 @@ sub _get_obj {
 	my $method = "_create_${obj}_object";
 	$data      = ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data};
 
-	$self->_cache($cache)->{$id} //= $self->$method( $data );
+	my $return = $self->_cache($cache)->{$id} //= $self->$method( $data );
 
 	delete $self->_cache($cache)->{$id} if $self->no_cache;
 
-	$self->_cache($cache)->{$id};
+	return $return;
 }
 
 sub _create_media_object {
@@ -367,9 +366,7 @@ sub _delete_cache {
 
 =head1 BUGS
 
-Please tell me bugs if you find bug.
-
-C<< <gabriel.vieira at gmail.com> >>
+Please report me bugs if you find any.
 
 L<http://github.com/gabrielmad/API-Instagram>
 
