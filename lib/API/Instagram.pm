@@ -41,8 +41,9 @@ has response_type     => ( is => 'ro', default => sub { 'code'  } );
 has grant_type        => ( is => 'ro', default => sub { 'authorization_code' } );
 has code              => ( is => 'rw', isa => sub { confess "Code not provided"        unless $_[0] } );
 has access_token      => ( is => 'rw', isa => sub { confess "No access token provided" unless $_[0] } );
+has no_cache          => ( is => 'rw', default => 0 );
 
-has _http             => ( is => 'ro', default => sub { LWP::UserAgent->new() } );
+has _ua               => ( is => 'ro', default => sub { LWP::UserAgent->new() } );
 has _obj_cache        => ( is => 'ro', default => sub { { users => {}, medias => {}, locations => {}, tags => {} } } );
 has _endpoint_url     => ( is => 'ro', default => sub { 'https://api.instagram.com/v1'                 } );
 has _authorize_url    => ( is => 'ro', default => sub { 'https://api.instagram.com/oauth/authorize'    } );
@@ -191,7 +192,7 @@ sub get_access_token {
 	}
 
 	my $data = { map { $_ => $self->$_ } @access_token_fields };
-	my $json = from_json $self->_http->post( $self->_access_token_url, $data )->content;
+	my $json = from_json $self->_ua  ->post( $self->_access_token_url, $data )->content;
 
 	my $meta = $json->{meta};
 	confess "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
@@ -345,7 +346,7 @@ sub _request {
 	    $url = $uri->as_string;
 	}
 
-	my $res  = decode_json $self->_http->get( $url )->decoded_content;
+	my $res  = decode_json $self->_ua  ->get( $url )->decoded_content;
 	my $meta = $res->{meta};
 	carp "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
 
