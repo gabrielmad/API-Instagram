@@ -131,6 +131,7 @@ authenticated user credentials.
 			scope           => 'basic',
 			response_type   => 'code',
 			granty_type     => 'authorization_code',
+			no_cache        => 1,
 	});
 
 Returns a an L<API::Instagram> object.
@@ -142,6 +143,8 @@ C<scope> is the scope of access. See L<http://instagram.com/developer/authentica
 
 C<response_code> and C<granty_type> do no vary. See L<http://instagram.com/developer/authentication/>.
 
+By default, L<API::Instagram> caches created objects to avoid duplications. You can disable
+this feature setting a true value to C<no_chace> parameter.
 
 =head2 get_auth_url
 
@@ -246,9 +249,6 @@ sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
 
 
 
-
-
-
 sub _get_obj {
 	my ( $self, $obj, $url, $cache, $key, $data, $opts ) = @_;
 
@@ -259,6 +259,10 @@ sub _get_obj {
 	$data      = ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data};
 
 	$self->_cache($cache)->{$id} //= $self->$method( $data );
+
+	delete $self->_cache($cache)->{$id} if $self->no_cache;
+
+	$self->_cache($cache)->{$id};
 }
 
 sub _create_media_object {
