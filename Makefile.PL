@@ -19,15 +19,43 @@ my %WriteMakefileArgs = (
   "EXE_FILES" => [],
   "LICENSE" => "perl",
   "NAME" => "API::Instagram",
-  "PREREQ_PM" => {},
-  "VERSION" => "0.0011",
+  "PREREQ_PM" => {
+    "Carp" => 0,
+    "Data::Dumper" => 0,
+    "HTTP::Request" => 0,
+    "JSON" => 0,
+    "LWP::UserAgent" => 0,
+    "Moo" => 0,
+    "Time::Moment" => 0,
+    "URI" => 0,
+    "constant" => 0,
+    "strict" => 0,
+    "warnings" => 0
+  },
+  "TEST_REQUIRES" => {
+    "Test::More" => 0
+  },
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }
 );
 
 
-my %FallbackPrereqs = ();
+my %FallbackPrereqs = (
+  "Carp" => 0,
+  "Data::Dumper" => 0,
+  "HTTP::Request" => 0,
+  "JSON" => 0,
+  "LWP::UserAgent" => 0,
+  "Moo" => 0,
+  "Test::More" => 0,
+  "Time::Moment" => 0,
+  "URI" => 0,
+  "constant" => 0,
+  "strict" => 0,
+  "warnings" => 0
+);
 
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {

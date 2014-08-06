@@ -2,10 +2,11 @@
 
 API::Instagram - OO Interface to Instagram REST API
 
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
 =head1 VERSION
 
-version 0.0011
+version 0.002
 
 =cut
 
@@ -132,7 +133,7 @@ authenticated user credentials.
 			granty_type     => 'authorization_code',
 	});
 
-Returns a L<API::Instagram> object.
+Returns a an L<API::Instagram> object.
 
 Set C<client_id>, C<client_secret> and C<redirect_uri> with the ones registered
 to your application. See L<http://instagram.com/developer/clients/manage/>.
@@ -202,7 +203,7 @@ sub get_access_token {
 	my $media = $instagram->media( $media_id );
 	say $media->type;
 
-Get information about a media object. Returns a L<API::Instagram::Media> object.
+Get information about a media object. Returns an L<API::Instagram::Media> object.
 
 =cut
 sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
@@ -371,8 +372,11 @@ L<http://github.com/gabrielmad/API-Instagram>
 
 =head1 SEE ALSO
 
+=item *
+
 L<WebService::Instagram>
 
+=back
 
 =head1 AUTHOR
 
