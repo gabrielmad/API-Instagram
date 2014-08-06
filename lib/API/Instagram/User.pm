@@ -47,39 +47,39 @@ See L<http://instagr.am/developer/endpoints/users/> and L<http://instagram.com/d
 
 =head2 id
 
-	Returns user id.
+Returns user id.
 
 =head2 username
 
-	Returns user username.
+Returns user username.
 
 =head2 full_name
 
-	Returns user full name.
+Returns user full name.
 
 =head2 bio
 
-	Returns user biography text.
+Returns user biography text.
 
 =head2 website
 
-	Returns user website.
+Returns user website.
 
 =head2 profile_picute
 
-	Returns user profile picture url.
+Returns user profile picture url.
 
 =head2 media
 
-	Returns user total media.
+Returns user total media.
 
 =head2 follows
 
-	Returns user total follows.
+Returns user total follows.
 
 =head2 followed_by
 
-	Returns user total followers.
+Returns user total followers.
 
 =cut
 
