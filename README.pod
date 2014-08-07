@@ -1,3 +1,5 @@
+=pod
+
 =head1 NAME
 
 API::Instagram - OO Interface to Instagram REST API
@@ -6,7 +8,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -181,3 +183,5 @@ Copyright (c) 2014, Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>. All rig
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=cut
