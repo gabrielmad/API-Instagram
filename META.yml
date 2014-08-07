@@ -23,8 +23,7 @@ requires:
   strict: 0
   warnings: 0
 resources:
-  bugtracker: https://github.com/gabrielmad/API-Instagram/issues
-  homepage: http://github.com/gabrielmad/API-Instagram
-  repository: https://github.com/gabrielmad/API-Instagram
+  bugtracker: http://github.com/gabrielmad/${dist}/issues
+  homepage: http://metacpan.org/release/${dist}
+  repository: git://github.com/gabrielmad/${dist}
 version: 0.003
-x_contributors: []
