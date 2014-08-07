@@ -1,0 +1,143 @@
+==================================================
+Changes from 2013-08-07 00:00:00 +0000 to present.
+==================================================
+
+------------------------------------------
+version 0.003 at 2014-08-07 15:28:54 +0000
+------------------------------------------
+
+  Change: 91a75153006df74a8dce0f4b5a2aa280b174ea61
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-07 09:00:34 +0000
+
+    Updating build branch 
+
+  Change: b863993d7f26d3bb45d3cfd2071b2a36daa445c3
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-06 07:19:09 +0000
+
+    Fixing no_cache option 
+
+  Change: 5c4174f5063ffd5f7f05217ab61083568b8192dc
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-06 03:54:56 +0000
+
+    POD fixing 
+
+  Change: 1d2c669050ce2fd810ef04f62b814b0e9eefbbe1
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 21:57:32 +0000
+
+    Updating cache control code 
+
+  Change: 39234249b935cd343550e0d068576e115ba94462
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 21:47:26 +0000
+
+    POD and typo fixing 
+
+  Change: 2e24e3a9d4f6835265e873bb03dd20636544cd6d
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 21:33:12 +0000
+
+    Added Cache disabling. Fixed dist.ini 
+
+  Change: af656bcb97889e038e6105f7b888c89b7aaeb1e1
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 18:49:53 +0000
+
+    Fixing Travis button 
+
+  Change: a1ab3ce3b2509ddf411cecf84ce2b82ac2aeb56d
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 18:48:22 +0000
+
+    Fixing typos 
+
+  Change: f92338f5a94835552cd6decd15056d25d534f2de
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 18:28:09 +0000
+
+    Fixing typo (???) 
+
+  Change: 863d4f3af5004c825713bbf4dfd73c676fcb0164
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 17:31:40 +0000
+
+    Still working on Travis CI 6 
+
+  Change: cf98d9e8308ad96a84fb99534605dc22a69ee8ba
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 17:10:52 +0000
+
+    Still working on Travis CI 4 
+
+  Change: e79d0f8c9d63d9b249cce8fd84259e0399b9a7c9
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 17:07:34 +0000
+
+    Still working on Travis CI 3 
+
+  Change: ff0c14a1269ff8067c58f2dd041cbc244803ab5c
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 17:05:02 +0000
+
+    Still working on Travis CI 2 
+
+  Change: defebcb613c6adc73193ee8bcc7f301bc970db14
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 17:03:01 +0000
+
+    Still working on Travis CI 
+
+  Change: e5477d275e74d5308a7a102436aa4902307d552b
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 16:30:51 +0000
+
+    Testing Travis CI again and again again 
+
+  Change: 57681b1a8147f4aefd0119e6b0de7b34d0ea3825
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 15:55:01 +0000
+
+    Testing Travis CI again and again 
+
+  Change: 36cecdb537446754d7af0ab05b350bc083e5dbf7
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 15:42:22 +0000
+
+    Testing Travis CI again 
+
+  Change: a610fd886e3a8035fd312be9ab1d765572185090
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 15:18:25 +0000
+
+    Adding Travis CI button 
+
+  Change: 85eecbbd692834e5af4a0e468ed9327701dd5916
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 15:17:15 +0000
+
+    Adding Travis CI button 
+
+  Change: a6103b3d77581df57a2bda63d6f59dcad87b0356
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 14:53:02 +0000
+
+    Adding Travis CI 
+
+  Change: c7caf3f3d863b4072057aef8ef64fa3ee8374041
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 14:28:02 +0000
+
+    Added README.pod 
+
+  Change: d85f424bc2576afb40ac229fdbf5e2b5a6b6e8ef
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-05 14:22:07 +0000
+
+    First commit 
+
+================
+End of releases.
+================
