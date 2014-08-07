@@ -22,4 +22,8 @@ requires:
   URI: 0
   strict: 0
   warnings: 0
-version: 0.002
+resources:
+  bugtracker: https://github.com/gabrielmad/API-Instagram/issues
+  homepage: http://github.com/gabrielmad/API-Instagram
+  repository: https://github.com/gabrielmad/API-Instagram
+version: 0.003

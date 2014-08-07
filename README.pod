@@ -37,8 +37,8 @@ This module implements an OO interface to Instagram REST API.
 
 =head2 Authentication
 
-Instagram API uses the OAuth2 for authentication, requering a client_id and
-client_secret. See L<http://instagr.am/developer/register/> for details.
+Instagram API uses the OAuth2 for authentication, requering a C<client_id> and
+C<client_secret>. See L<http://instagr.am/developer/register/> for details.
 
 =head3 Authorize
 
@@ -55,13 +55,12 @@ Get the AUTH URL to authenticate.
 			granty_type     => 'authorization_code',
 	});
 
-	my $auth_url = $instagram->get_auth_url;
-	print $auth_url;
+	print $instagram->get_auth_url;
 
 
 =head3 Authenticate
 
-After authorization, Instagram will redirected the user to the url in
+After authorization, Instagram will redirected the user to the URL in
 C<redirect_uri> with a code as an URL query parameter. This code is needed
 to obtain an acess token.
 
@@ -70,7 +69,7 @@ to obtain an acess token.
 
 =head3 Request
 
-With the access token its possible to request Instagram API using the
+With the access token its possible to do Instagram API requests using the
 authenticated user credentials.
 
 	$instagram->access_token( $access_token );
@@ -106,10 +105,10 @@ this feature setting a true value to C<no_chace> parameter.
 
 =head2 get_auth_url
 
-Returns an Instagram authorization URL.
-
 	my $auth_url = $instagram->get_auth_url;
 	print $auth_url;
+
+Returns an Instagram authorization URL.
 
 =head2 get_access_token
 
@@ -121,7 +120,7 @@ Returns an Instagram authorization URL.
 
 Returns the access token string if the context is looking for a scalar, or an
 array containing the access token string and the authenticated user
-L<API::Instagram::User> object if looking a list value.
+L<API::Instagram::User> object if looking for a list value.
 
 =head2 media
 
@@ -156,9 +155,7 @@ Get information about a tag. Returns an L<API::Instagram::Tag> object.
 
 =head1 BUGS
 
-Please tell me bugs if you find bug.
-
-C<< <gabriel.vieira at gmail.com> >>
+Please report me bugs if you find any.
 
 L<http://github.com/gabrielmad/API-Instagram>
 

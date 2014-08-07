@@ -6,6 +6,7 @@ META.yml
 Makefile.PL
 README
 README.pod
+app.pl
 dist.ini
 lib/API/Instagram.pm
 lib/API/Instagram/Location.pm
