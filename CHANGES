@@ -3,14 +3,8 @@ Changes from 2013-08-07 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.003 at 2014-08-07 15:31:47 +0000
+version 0.003 at 2014-08-07 15:37:32 +0000
 ------------------------------------------
-
-  Change: 91a75153006df74a8dce0f4b5a2aa280b174ea61
-  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
-  Date : 2014-08-07 09:00:34 +0000
-
-    Updating build branch 
 
   Change: b863993d7f26d3bb45d3cfd2071b2a36daa445c3
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
@@ -23,24 +17,6 @@ version 0.003 at 2014-08-07 15:31:47 +0000
   Date : 2014-08-05 21:57:32 +0000
 
     Updating cache control code 
-
-  Change: 2e24e3a9d4f6835265e873bb03dd20636544cd6d
-  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
-  Date : 2014-08-05 21:33:12 +0000
-
-    Added Cache disabling. Fixed dist.ini 
-
-  Change: c7caf3f3d863b4072057aef8ef64fa3ee8374041
-  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
-  Date : 2014-08-05 14:28:02 +0000
-
-    Added README.pod 
-
-  Change: d85f424bc2576afb40ac229fdbf5e2b5a6b6e8ef
-  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
-  Date : 2014-08-05 14:22:07 +0000
-
-    First commit 
 
 ================
 End of releases.
