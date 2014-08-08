@@ -100,7 +100,7 @@ to your application. See L<http://instagram.com/developer/clients/manage/>.
 
 C<scope> is the scope of access. See L<http://instagram.com/developer/authentication/#scope>.
 
-C<response_code> and C<granty_type> do no vary. See L<http://instagram.com/developer/authentication/>.
+C<response_type> and C<granty_type> do no vary. See L<http://instagram.com/developer/authentication/>.
 
 By default, L<API::Instagram> caches created objects to avoid duplications. You can disable
 this feature setting a true value to C<no_chace> parameter.
@@ -139,7 +139,7 @@ Get information about a media object. Returns an L<API::Instagram::Media> object
 	my $user = $instagram->user( $user_id );
 	say $user->full_name;
 
-Get information about user. Returns an L<API::Instagram::User> object.
+Get information about an user. Returns an L<API::Instagram::User> object.
 
 =head2 location
 
@@ -159,7 +159,7 @@ Get information about a tag. Returns an L<API::Instagram::Tag> object.
 
 Please report me bugs if you find any.
 
-L<http://github.com/gabrielmad/API-Instagram>
+L<http://github.com/gabrielmad/API-Instagram/issues>
 
 
 =head1 SEE ALSO
