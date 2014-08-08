@@ -11,6 +11,9 @@ version 0.003
 =cut
 
 package API::Instagram;
+
+our $VERSION = '0.003';
+
 use Moo;
 
 use Carp;
