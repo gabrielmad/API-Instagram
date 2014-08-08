@@ -12,7 +12,7 @@ version 0.003
 
 package API::Instagram;
 
-$API::Instagram::VERSION = '0.003';
+our $VERSION = '0.003';
 
 use Moo;
 
