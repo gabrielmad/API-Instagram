@@ -6,13 +6,13 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =cut
 
 package API::Instagram;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 use Moo;
 
@@ -388,6 +388,9 @@ L<WebService::Instagram>
 
 Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>
 
+=head1 COPYRIGHT
+ 
+Copyright 2013 - Tatsuhiko Miyagawa
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -26,4 +26,4 @@ resources:
   bugtracker: http://github.com/gabrielmad/${dist}/issues
   homepage: http://metacpan.org/release/${dist}
   repository: git://github.com/gabrielmad/${dist}
-version: 0.003
+version: 0.004

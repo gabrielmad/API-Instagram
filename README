@@ -2,7 +2,7 @@ NAME
     API::Instagram - OO Interface to Instagram REST API
 
 VERSION
-    version 0.003
+    version 0.004
 
 SYNOPSIS
             use API::Instagram;
@@ -148,6 +148,9 @@ SEE ALSO
 
 AUTHOR
     Gabriel Vieira "<gabriel.vieira at gmail.com>"
+
+COPYRIGHT
+    Copyright 2013 - Tatsuhiko Miyagawa
 
 LICENSE AND COPYRIGHT
     Copyright (c) 2014, Gabriel Vieira "<gabriel.vieira at gmail.com>". All
