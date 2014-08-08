@@ -7,8 +7,6 @@ MANIFEST
 META.yml
 Makefile.PL
 README
-README.pod
-dist.ini
 lib/API/Instagram.pm
 lib/API/Instagram/Location.pm
 lib/API/Instagram/Media.pm
