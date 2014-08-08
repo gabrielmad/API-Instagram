@@ -85,7 +85,7 @@ METHODS
     "scope" is the scope of access. See
     <http://instagram.com/developer/authentication/#scope>.
 
-    "response_code" and "granty_type" do no vary. See
+    "response_type" and "granty_type" do no vary. See
     <http://instagram.com/developer/authentication/>.
 
     By default, API::Instagram caches created objects to avoid duplications.
@@ -123,7 +123,7 @@ METHODS
             my $user = $instagram->user( $user_id );
             say $user->full_name;
 
-    Get information about user. Returns an API::Instagram::User object.
+    Get information about an user. Returns an API::Instagram::User object.
 
   location
             my $location = $instagram->location( $location_id );
@@ -141,7 +141,7 @@ METHODS
 BUGS
     Please report me bugs if you find any.
 
-    <http://github.com/gabrielmad/API-Instagram>
+    <http://github.com/gabrielmad/API-Instagram/issues>
 
 SEE ALSO
     *   WebService::Instagram
