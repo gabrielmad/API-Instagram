@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-
+use 5.010;
 
 use ExtUtils::MakeMaker ;
 
@@ -22,6 +22,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Carp" => 0,
     "JSON" => 0,
+    "LWP::Protocol::https" => 0,
     "LWP::UserAgent" => 0,
     "Moo" => 0,
     "Time::Moment" => 0,
@@ -42,6 +43,7 @@ my %WriteMakefileArgs = (
 my %FallbackPrereqs = (
   "Carp" => 0,
   "JSON" => 0,
+  "LWP::Protocol::https" => 0,
   "LWP::UserAgent" => 0,
   "Moo" => 0,
   "Test::More" => 0,

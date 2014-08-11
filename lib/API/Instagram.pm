@@ -23,6 +23,7 @@ use warnings;
 use URI;
 use JSON;
 use LWP::UserAgent;
+use LWP::Protocol::https;
 # use LWP::Protocol::Net::Curl;
 
 use API::Instagram::User;

@@ -16,10 +16,12 @@ name: API-Instagram
 requires:
   Carp: 0
   JSON: 0
+  LWP::Protocol::https: 0
   LWP::UserAgent: 0
   Moo: 0
   Time::Moment: 0
   URI: 0
+  perl: 5.010
   strict: 0
   warnings: 0
 resources:
