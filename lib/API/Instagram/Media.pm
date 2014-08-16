@@ -158,4 +158,7 @@ sub get_comments {
 	[ map { $instagram->_create_comment_object($_) } $instagram->_get_list( %opts, url => $url ) ]
 }
 
+=for Pod::Coverage BUILD
+=cut
+
 1;

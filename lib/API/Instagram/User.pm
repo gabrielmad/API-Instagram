@@ -212,4 +212,7 @@ sub _reload {
 	$_[0] = $instagram->user( $_[0]->id );
 }
 
+=for Pod::Coverage BUILD
+=cut
+
 1;

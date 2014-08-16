@@ -41,6 +41,7 @@ Returns the text commented.
 
 Returns the comment date in a L<Time::Moment> object.
 
+=for Pod::Coverage BUILD
 =cut
 
 1;
