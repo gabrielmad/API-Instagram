@@ -31,7 +31,7 @@ API::Instagram::Media::Comment - Instagram Media Comment Object
 
 =head1 VERSION
 
-version 0.005
+version 0.005.1
 
 =head1 SYNOPSIS
 

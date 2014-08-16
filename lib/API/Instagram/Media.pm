@@ -68,7 +68,7 @@ API::Instagram::Media - Instagram Media Object
 
 =head1 VERSION
 
-version 0.005
+version 0.005.1
 
 =head1 SYNOPSIS
 

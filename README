@@ -2,7 +2,7 @@ NAME
     API::Instagram - OO Interface to Instagram REST API
 
 VERSION
-    version 0.005
+    version 0.005.1
 
 SYNOPSIS
             use API::Instagram;
