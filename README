@@ -1,5 +1,5 @@
 NAME
-    API::Instagram - OO Interface to Instagram REST API
+    API::Instagram
 
 VERSION
     version 0.005
@@ -63,6 +63,12 @@ DESCRIPTION
             $instagram->access_token( $access_token );
             my $me = $instagram->user;
             print $me->full_name;
+
+NAME
+    API::Instagram - OO Interface to Instagram REST API
+
+VERSION
+    version 0.005
 
 METHODS
   new
@@ -155,4 +161,13 @@ LICENSE AND COPYRIGHT
 
     This module is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself. See perlartistic.
+
+AUTHOR
+    Gabriel Vieira <gabriel.vieira@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2014 by Gabriel Vieira.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

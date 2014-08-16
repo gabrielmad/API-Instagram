@@ -3,7 +3,11 @@ abstract: 'OO Interface to Instagram REST API'
 author:
   - 'Gabriel Vieira <gabriel.vieira@gmail.com>'
 build_requires:
+  File::Spec: 0
+  IO::Handle: 0
+  IPC::Open3: 0
   Test::More: 0
+  perl: 5.010
 configure_requires:
   ExtUtils::MakeMaker: 0
 dynamic_config: 0
@@ -25,7 +29,7 @@ requires:
   strict: 0
   warnings: 0
 resources:
-  bugtracker: http://github.com/gabrielmad/${dist}/issues
-  homepage: http://metacpan.org/release/${dist}
-  repository: git://github.com/gabrielmad/${dist}
+  bugtracker: https://github.com/gabrielmad/api-instagram/issues
+  homepage: http://metacpan.org/release/API-Instagram
+  repository: git://github.com/gabrielmad/api-instagram.git
 version: 0.005

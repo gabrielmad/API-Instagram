@@ -14,6 +14,7 @@ lib/API/Instagram/Media.pm
 lib/API/Instagram/Media/Comment.pm
 lib/API/Instagram/Tag.pm
 lib/API/Instagram/User.pm
+t/00-compile.t
 t/00-load.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t

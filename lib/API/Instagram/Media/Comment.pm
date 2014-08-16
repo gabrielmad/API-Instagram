@@ -1,8 +1,3 @@
-=head1 NAME
-
-API::Instagram::Media::Comment - Instagram Media Comment Object
-
-=cut
 
 package API::Instagram::Media::Comment;
 
@@ -20,6 +15,23 @@ sub BUILD {
 	$self->{from} = $self->_instagram->user( $self->{from} );
 }
 
+
+1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+API::Instagram::Media::Comment
+
+=head1 VERSION
+
+version 0.005
+
 =head1 SYNOPSIS
 
 	print $comment->text . "\n-\n";
@@ -28,6 +40,10 @@ sub BUILD {
 =head1 DESCRIPTION
 
 See L<http://instagr.am/developer/endpoints/comments/>.
+
+=head1 NAME
+
+API::Instagram::Media::Comment - Instagram Media Comment Object
 
 =head1 ATTRIBUTES
 
@@ -47,6 +63,15 @@ Returns the text commented.
 
 Returns the comment date in a L<Time::Moment> object.
 
-=cut
+=head1 AUTHOR
 
-1;
+Gabriel Vieira <gabriel.vieira@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Gabriel Vieira.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
