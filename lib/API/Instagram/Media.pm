@@ -54,6 +54,7 @@ sub get_comments {
 	[ map { $instagram->_create_comment_object($_) } $instagram->_get_list( %opts, url => $url ) ]
 }
 
+
 1;
 
 __END__
@@ -65,6 +66,8 @@ __END__
 =head1 NAME
 
 API::Instagram::Media - Instagram Media Object
+
+=for Pod::Coverage BUILD
 
 =head1 VERSION
 

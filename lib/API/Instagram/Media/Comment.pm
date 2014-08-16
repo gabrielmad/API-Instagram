@@ -29,6 +29,8 @@ __END__
 
 API::Instagram::Media::Comment - Instagram Media Comment Object
 
+=for Pod::Coverage BUILD
+
 =head1 VERSION
 
 version 0.005.1

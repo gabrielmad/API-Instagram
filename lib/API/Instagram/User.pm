@@ -102,6 +102,7 @@ sub _reload {
 	$_[0] = $instagram->user( $_[0]->id );
 }
 
+
 1;
 
 __END__
@@ -113,6 +114,8 @@ __END__
 =head1 NAME
 
 API::Instagram::User - Instagram User Object
+
+=for Pod::Coverage BUILD
 
 =head1 VERSION
 
