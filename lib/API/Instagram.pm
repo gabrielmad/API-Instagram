@@ -110,7 +110,7 @@ After authorization, Instagram will redirected the user to the URL in
 C<redirect_uri> with a code as an URL query parameter. This code is needed
 to obtain an acess token.
 
-	$instagram->set_code( $code );
+	$instagram->code( $code );
 	my $access_token = $instagram->get_access_token;
 
 =head3 Request
@@ -119,7 +119,7 @@ With the access token its possible to do Instagram API requests using the
 authenticated user credentials.
 
 	$instagram->access_token( $access_token );
-	my $me = $instagram->get_user;
+	my $me = $instagram->user;
 	print $me->full_name;
 
 
