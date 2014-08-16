@@ -218,6 +218,8 @@ __END__
 
 API::Instagram - OO Interface to Instagram REST API
 
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
+
 =head1 VERSION
 
 version 0.005
@@ -362,8 +364,6 @@ Get information about a location. Returns an L<API::Instagram::Location> object.
 	say $tag->media_count;
 
 Get information about a tag. Returns an L<API::Instagram::Tag> object.
-
-=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
 =head1 AUTHOR
 

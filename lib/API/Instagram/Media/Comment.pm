@@ -42,19 +42,21 @@ version 0.005
 
 See L<http://instagr.am/developer/endpoints/comments/>.
 
-=attribute id
+=head1 ATTRIBUTES
+
+=head2 id
 
 Returns comment id.
 
-=attribute from
+=head2 from
 
 Returns commenter L<API::Instagram::User> object.
 
-=attribute text
+=head2 text
 
 Returns the text commented.
 
-=attribute created_time
+=head2 created_time
 
 Returns the comment date in a L<Time::Moment> object.
 

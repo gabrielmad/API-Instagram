@@ -130,6 +130,44 @@ version 0.005
 
 See L<http://instagr.am/developer/endpoints/users/> and L<http://instagram.com/developer/endpoints/relationships/>.
 
+=head1 ATTRIBUTES
+
+=head2 id
+
+Returns user id.
+
+=head2 username
+
+Returns user username.
+
+=head2 full_name
+
+Returns user full name.
+
+=head2 bio
+
+Returns user biography text.
+
+=head2 website
+
+Returns user website.
+
+=head2 profile_picute
+
+Returns user profile picture url.
+
+=head2 media
+
+Returns user total media.
+
+=head2 follows
+
+Returns user total follows.
+
+=head2 followed_by
+
+Returns user total followers.
+
 =head1 METHODS
 
 =head2 feed
@@ -185,42 +223,6 @@ Accepts C<count> as parameter.
 Returns a list of L<API::Instagram::Media> objects of user's recent medias.
 
 Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as parameters.
-
-=attribute id
-
-Returns user id.
-
-=attribute username
-
-Returns user username.
-
-=attribute full_name
-
-Returns user full name.
-
-=attribute bio
-
-Returns user biography text.
-
-=attribute website
-
-Returns user website.
-
-=attribute profile_picute
-
-Returns user profile picture url.
-
-=attribute media
-
-Returns user total media.
-
-=attribute follows
-
-Returns user total follows.
-
-=attribute followed_by
-
-Returns user total followers.
 
 =head1 AUTHOR
 

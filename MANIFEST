@@ -18,3 +18,4 @@ t/00-compile.t
 t/00-load.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
+weaver.ini
