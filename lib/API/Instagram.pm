@@ -1,5 +1,6 @@
-
 package API::Instagram;
+
+# ABSTRACT: OO Interface to Instagram REST API
 
 our $VERSION = '0.005';
 
@@ -204,6 +205,7 @@ sub _delete_cache {
 	delete $self->_obj_cache->{$cache}->{$id};
 }
 
+
 1;
 
 __END__
@@ -214,7 +216,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram
+API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
@@ -284,16 +286,6 @@ authenticated user credentials.
 	$instagram->access_token( $access_token );
 	my $me = $instagram->user;
 	print $me->full_name;
-
-=head1 NAME
-
-API::Instagram - OO Interface to Instagram REST API
-
-=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
-
-=head1 VERSION
-
-version 0.005
 
 =head1 METHODS
 
@@ -371,32 +363,7 @@ Get information about a location. Returns an L<API::Instagram::Location> object.
 
 Get information about a tag. Returns an L<API::Instagram::Tag> object.
 
-=head1 BUGS
-
-Please report me bugs if you find any.
-
-L<http://github.com/gabrielmad/API-Instagram/issues>
-
-=head1 SEE ALSO
-
-=over
-
-=item *
-
-L<WebService::Instagram>
-
-=back
-
-=head1 AUTHOR
-
-Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright (c) 2014, Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>. All rights reserved.
-
-This module is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself. See L<perlartistic>.
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
 =head1 AUTHOR
 

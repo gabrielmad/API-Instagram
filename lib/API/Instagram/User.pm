@@ -1,5 +1,6 @@
-
 package API::Instagram::User;
+
+# ABSTRACT: Instagram User Object
 
 use Moo;
 use Carp;
@@ -111,7 +112,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram::User
+API::Instagram::User - Instagram User Object
 
 =head1 VERSION
 
@@ -128,48 +129,6 @@ version 0.005
 =head1 DESCRIPTION
 
 See L<http://instagr.am/developer/endpoints/users/> and L<http://instagram.com/developer/endpoints/relationships/>.
-
-=head1 NAME
-
-API::Instagram::User - Instagram User Object
-
-=head1 ATTRIBUTES
-
-=head2 id
-
-Returns user id.
-
-=head2 username
-
-Returns user username.
-
-=head2 full_name
-
-Returns user full name.
-
-=head2 bio
-
-Returns user biography text.
-
-=head2 website
-
-Returns user website.
-
-=head2 profile_picute
-
-Returns user profile picture url.
-
-=head2 media
-
-Returns user total media.
-
-=head2 follows
-
-Returns user total follows.
-
-=head2 followed_by
-
-Returns user total followers.
 
 =head1 METHODS
 
@@ -226,6 +185,42 @@ Accepts C<count> as parameter.
 Returns a list of L<API::Instagram::Media> objects of user's recent medias.
 
 Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as parameters.
+
+=attribute id
+
+Returns user id.
+
+=attribute username
+
+Returns user username.
+
+=attribute full_name
+
+Returns user full name.
+
+=attribute bio
+
+Returns user biography text.
+
+=attribute website
+
+Returns user website.
+
+=attribute profile_picute
+
+Returns user profile picture url.
+
+=attribute media
+
+Returns user total media.
+
+=attribute follows
+
+Returns user total follows.
+
+=attribute followed_by
+
+Returns user total followers.
 
 =head1 AUTHOR
 

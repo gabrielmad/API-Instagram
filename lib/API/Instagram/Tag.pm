@@ -1,5 +1,6 @@
-
 package API::Instagram::Tag;
+
+# ABSTRACT: Instagram Tag Object
 
 use Moo;
 
@@ -24,7 +25,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram::Tag
+API::Instagram::Tag - Instagram Tag Object
 
 =head1 VERSION
 
@@ -47,20 +48,6 @@ version 0.005
 
 See L<http://instagr.am/developer/endpoints/tags/>.
 
-=head1 NAME
-
-API::Instagram::Tag - Instagram Tag Object
-
-=head1 ATTRIBUTES
-
-=head2 name
-
-Returns the Tag name.
-
-=head2 media_count
-
-Returns the total media tagged with it.
-
 =head1 METHODS
 
 =head2 recent_medias
@@ -71,6 +58,14 @@ Returns the total media tagged with it.
 Returns a list of L<API::Instagram::Media> objects of recent medias tagged with it.
 
 Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as parameters.
+
+=attribute name
+
+Returns the Tag name.
+
+=attribute media_count
+
+Returns the total media tagged with it.
 
 =head1 AUTHOR
 

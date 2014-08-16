@@ -1,5 +1,6 @@
-
 package API::Instagram::Location;
+
+# ABSTRACT: Instagram Location Object
 
 use Moo;
 
@@ -26,7 +27,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram::Location
+API::Instagram::Location - Instagram Location Object
 
 =head1 VERSION
 
@@ -49,29 +50,7 @@ version 0.005
 
 See L<http://instagr.am/developer/endpoints/locations/>.
 
-=head1 NAME
-
-API::Instagram::Location - Instagram Location Object
-
-=head1 ATTRIBUTES
-
-=head2 id
-
-Returns the location id.
-
-=head2 name
-
-Returns the name of the location.
-
-=head2 latitude
-
-Returns the latitude of the location.
-
-=head2 longitude
-
-Returns the longitude of the location.
-
-=METHODS
+=head1 METHODS
 
 =head2 recent_medias
 
@@ -81,6 +60,22 @@ Returns the longitude of the location.
 Returns a list of L<API::Instagram::Media> objects of recent medias from the location.
 
 Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as parameters.
+
+=attribute id
+
+Returns the location id.
+
+=attribute name
+
+Returns the name of the location.
+
+=attribute latitude
+
+Returns the latitude of the location.
+
+=attribute longitude
+
+Returns the longitude of the location.
 
 =head1 AUTHOR
 

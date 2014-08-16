@@ -1,5 +1,6 @@
-
 package API::Instagram::Media;
+
+# ABSTRACT: Instagram Media Object
 
 use Moo;
 use Time::Moment;
@@ -63,7 +64,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram::Media
+API::Instagram::Media - Instagram Media Object
 
 =head1 VERSION
 
@@ -83,83 +84,6 @@ version 0.005
 
 See L<http://instagr.am/developer/endpoints/media/>.
 
-=head1 NAME
-
-API::Instagram::Media - Instagram Media Object
-
-=head1 ATTRIBUTES
-
-=head2 id
-
-Returns media id.
-
-=head2 type
-
-Returns media type.
-
-=head2 user
-
-Returns the L<API::Instagram::User> object of the user who posted the media.
-
-=head2 link
-
-Returns media shortlink.
-
-=head2 filter
-
-Returns media filter.
-
-=head2 tags
-
-Returns a list L<API::Instagram::Tag> objects of media tags.
-
-=head2 location
-
-Returns media L<API::Instagram::Location> object.
-
-=head2 images
-
-	my $thumbnail = $media->images->{thumbnail};
-	printf "URL: %s (%d x %d)" $thumbnail->{url}, $thumbnail->{width}, $thumbnail->{height};
-
-Returns media images options and details.
-
-=head2 videos
-
-	my $standart = $media->videos->{standart_resolution};
-	printf "URL: %s (%d x %d)" $standart->{url}, $standart->{width}, $standart->{height};
-
-Returns media videos options and details, when video type.
-
-=head2 users_in_photo
-
-	for my $each ( @{ $media->users_in_photo } ) {
-
-		my $user     = $each->{user};
-		my $position = $each->{position};
-
-		printf "%s is at %f, %f\n", $user->username, $position->{x}, $position->{y};
-
-	}
-
-Returns a list of L<API::Instagram::User> objects of users tagged in the media with their coordinates.
-
-=head2 caption
-
-Returns media caption text.
-
-=head2 likes
-
-Returns media total likes.
-
-=head2 comments
-
-Returns media total comments.
-
-=head2 created_time
-
-Returns the media date in a L<Time::Moment> object.
-
 =head1 METHODS
 
 =head2 get_likes
@@ -177,6 +101,77 @@ Accepts C<count>.
 Returns a list of L<API::Instagram::Media::Comment> objects of the media.
 
 Accepts C<count>.
+
+=attribute id
+
+Returns media id.
+
+=attribute type
+
+Returns media type.
+
+=attribute user
+
+Returns the L<API::Instagram::User> object of the user who posted the media.
+
+=attribute link
+
+Returns media shortlink.
+
+=attribute filter
+
+Returns media filter.
+
+=attribute tags
+
+Returns a list L<API::Instagram::Tag> objects of media tags.
+
+=attribute location
+
+Returns media L<API::Instagram::Location> object.
+
+=attribute images
+
+	my $thumbnail = $media->images->{thumbnail};
+	printf "URL: %s (%d x %d)" $thumbnail->{url}, $thumbnail->{width}, $thumbnail->{height};
+
+Returns media images options and details.
+
+=attribute videos
+
+	my $standart = $media->videos->{standart_resolution};
+	printf "URL: %s (%d x %d)" $standart->{url}, $standart->{width}, $standart->{height};
+
+Returns media videos options and details, when video type.
+
+=attribute users_in_photo
+
+	for my $each ( @{ $media->users_in_photo } ) {
+
+		my $user     = $each->{user};
+		my $position = $each->{position};
+
+		printf "%s is at %f, %f\n", $user->username, $position->{x}, $position->{y};
+
+	}
+
+Returns a list of L<API::Instagram::User> objects of users tagged in the media with their coordinates.
+
+=attribute caption
+
+Returns media caption text.
+
+=attribute likes
+
+Returns media total likes.
+
+=attribute comments
+
+Returns media total comments.
+
+=attribute created_time
+
+Returns the media date in a L<Time::Moment> object.
 
 =head1 AUTHOR
 

@@ -1,5 +1,5 @@
 NAME
-    API::Instagram
+    API::Instagram - OO Interface to Instagram REST API
 
 VERSION
     version 0.005
@@ -63,12 +63,6 @@ DESCRIPTION
             $instagram->access_token( $access_token );
             my $me = $instagram->user;
             print $me->full_name;
-
-NAME
-    API::Instagram - OO Interface to Instagram REST API
-
-VERSION
-    version 0.005
 
 METHODS
   new
@@ -143,24 +137,6 @@ METHODS
             say $tag->media_count;
 
     Get information about a tag. Returns an API::Instagram::Tag object.
-
-BUGS
-    Please report me bugs if you find any.
-
-    <http://github.com/gabrielmad/API-Instagram/issues>
-
-SEE ALSO
-    *   WebService::Instagram
-
-AUTHOR
-    Gabriel Vieira "<gabriel.vieira at gmail.com>"
-
-LICENSE AND COPYRIGHT
-    Copyright (c) 2014, Gabriel Vieira "<gabriel.vieira at gmail.com>". All
-    rights reserved.
-
-    This module is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself. See perlartistic.
 
 AUTHOR
     Gabriel Vieira <gabriel.vieira@gmail.com>
