@@ -354,6 +354,8 @@ sub _delete_cache {
 	delete $self->_obj_cache->{$cache}->{$id};
 }
 
+=for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope
+
 =for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 =cut
 
