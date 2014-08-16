@@ -219,8 +219,7 @@ __END__
 API::Instagram - OO Interface to Instagram REST API
 
 =for Pod::Coverage client_id
-=for Pod::Coverage client_secret
-=for Pod::Coverage grant_type no_cache redirect_uri response_type scope
+=for Pod::Coverage client_secret grant_type no_cache redirect_uri response_type scope
 
 =for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
