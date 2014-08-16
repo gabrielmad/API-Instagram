@@ -1,10 +1,6 @@
-=head1 NAME
-
-API::Instagram::Location - Instagram Location Object
-
-=cut
-
 package API::Instagram::Location;
+
+# ABSTRACT: Instagram Location Object
 
 use Moo;
 
@@ -31,27 +27,23 @@ has name       => ( is => 'ro' );
 
 See L<http://instagr.am/developer/endpoints/locations/>.
 
-=head1 ATTRIBUTES
-
-=head2 id
+=attr id
 
 Returns the location id.
 
-=head2 name
+=attr name
 
 Returns the name of the location.
 
-=head2 latitude
+=attr latitude
 
 Returns the latitude of the location.
 
-=head2 longitude
+=attr longitude
 
 Returns the longitude of the location.
 
-=METHODS
-
-=head2 recent_medias
+=method recent_medias
 
 	my $medias = $location->recent_medias( count => 5 );
 	print $_->caption . $/ for @$medias;

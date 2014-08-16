@@ -1,16 +1,6 @@
-=head1 NAME
-
-API::Instagram - OO Interface to Instagram REST API
-
-=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
-
-=head1 VERSION
-
-version 0.005
-
-=cut
-
 package API::Instagram;
+
+# ABSTRACT: OO Interface to Instagram REST API
 
 our $VERSION = '0.005';
 
@@ -23,6 +13,7 @@ use warnings;
 use URI;
 use JSON;
 use LWP::UserAgent;
+use LWP::Protocol::https;
 # use LWP::Protocol::Net::Curl;
 
 use API::Instagram::User;
@@ -109,7 +100,7 @@ After authorization, Instagram will redirected the user to the URL in
 C<redirect_uri> with a code as an URL query parameter. This code is needed
 to obtain an acess token.
 
-	$instagram->set_code( $code );
+	$instagram->code( $code );
 	my $access_token = $instagram->get_access_token;
 
 =head3 Request
@@ -118,13 +109,11 @@ With the access token its possible to do Instagram API requests using the
 authenticated user credentials.
 
 	$instagram->access_token( $access_token );
-	my $me = $instagram->get_user;
+	my $me = $instagram->user;
 	print $me->full_name;
 
 
-=head1 METHODS
-
-=head2 new
+=method new
 
 	my $instagram = API::Instagram->new({
 			client_id   	=> $client_id,
@@ -148,7 +137,7 @@ C<response_type> and C<granty_type> do no vary. See L<http://instagram.com/devel
 By default, L<API::Instagram> caches created objects to avoid duplications. You can disable
 this feature setting a true value to C<no_chace> parameter.
 
-=head2 get_auth_url
+=method get_auth_url
 
 	my $auth_url = $instagram->get_auth_url;
 	print $auth_url;
@@ -172,7 +161,7 @@ sub get_auth_url {
 }
 
 
-=head2 get_access_token
+=method get_access_token
 
 	my $access_token = $instagram->get_access_token;
 
@@ -203,7 +192,7 @@ sub get_access_token {
 }
 
 
-=head2 media
+=method media
 
 	my $media = $instagram->media( $media_id );
 	say $media->type;
@@ -214,7 +203,7 @@ Get information about a media object. Returns an L<API::Instagram::Media> object
 sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
 
 
-=head2 user
+=method user
 
 	my $me = $instagram->user; # Authenticated user
 	say $me->username;
@@ -228,7 +217,7 @@ Get information about an user. Returns an L<API::Instagram::User> object.
 sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
 
 
-=head2 location
+=method location
 
 	my $location = $instagram->location( $location_id );
 	say $location->name;
@@ -239,7 +228,7 @@ Get information about a location. Returns an L<API::Instagram::Location> object.
 sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shift ) }
 
 
-=head2 tag
+=method tag
 
 	my $tag = $instagram->tag('perl');
 	say $tag->media_count;
@@ -365,32 +354,7 @@ sub _delete_cache {
 	delete $self->_obj_cache->{$cache}->{$id};
 }
 
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
+=cut
+
 1;
-
-=head1 BUGS
-
-Please report me bugs if you find any.
-
-L<http://github.com/gabrielmad/API-Instagram/issues>
-
-
-=head1 SEE ALSO
-
-=over
-
-=item *
-
-L<WebService::Instagram>
-
-=back
-
-=head1 AUTHOR
-
-Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright (c) 2014, Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>. All rights reserved.
-
-This module is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself. See L<perlartistic>.

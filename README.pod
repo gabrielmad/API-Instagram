@@ -1,5 +1,7 @@
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 API::Instagram - OO Interface to Instagram REST API
@@ -31,11 +33,9 @@ version 0.005
 
 	}
 
-
 =head1 DESCRIPTION
 
 This module implements an OO interface to Instagram REST API.
-
 
 =head2 Authentication
 
@@ -59,14 +59,13 @@ Get the AUTH URL to authenticate.
 
 	print $instagram->get_auth_url;
 
-
 =head3 Authenticate
 
 After authorization, Instagram will redirected the user to the URL in
 C<redirect_uri> with a code as an URL query parameter. This code is needed
 to obtain an acess token.
 
-	$instagram->set_code( $code );
+	$instagram->code( $code );
 	my $access_token = $instagram->get_access_token;
 
 =head3 Request
@@ -75,9 +74,8 @@ With the access token its possible to do Instagram API requests using the
 authenticated user credentials.
 
 	$instagram->access_token( $access_token );
-	my $me = $instagram->get_user;
+	my $me = $instagram->user;
 	print $me->full_name;
-
 
 =head1 METHODS
 
@@ -155,32 +153,15 @@ Get information about a location. Returns an L<API::Instagram::Location> object.
 
 Get information about a tag. Returns an L<API::Instagram::Tag> object.
 
-=head1 BUGS
-
-Please report me bugs if you find any.
-
-L<http://github.com/gabrielmad/API-Instagram/issues>
-
-
-=head1 SEE ALSO
-
-=over
-
-=item *
-
-L<WebService::Instagram>
-
-=back
-
 =head1 AUTHOR
 
-Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>
+Gabriel Vieira <gabriel.vieira@gmail.com>
 
-=head1 LICENSE AND COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2014, Gabriel Vieira C<< <gabriel.vieira at gmail.com> >>. All rights reserved.
+This software is copyright (c) 2014 by Gabriel Vieira.
 
-This module is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself. See L<perlartistic>.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

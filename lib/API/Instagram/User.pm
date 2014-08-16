@@ -1,10 +1,6 @@
-=head1 NAME
-
-API::Instagram::User - Instagram User Object
-
-=cut
-
 package API::Instagram::User;
+
+# ABSTRACT: Instagram User Object
 
 use Moo;
 use Carp;
@@ -43,49 +39,45 @@ sub BUILD {
 
 See L<http://instagr.am/developer/endpoints/users/> and L<http://instagram.com/developer/endpoints/relationships/>.
 
-=head1 ATTRIBUTES
-
-=head2 id
+=attr id
 
 Returns user id.
 
-=head2 username
+=attr username
 
 Returns user username.
 
-=head2 full_name
+=attr full_name
 
 Returns user full name.
 
-=head2 bio
+=attr bio
 
 Returns user biography text.
 
-=head2 website
+=attr website
 
 Returns user website.
 
-=head2 profile_picute
+=attr profile_picute
 
 Returns user profile picture url.
 
-=head2 media
+=attr media
 
 Returns user total media.
 
-=head2 follows
+=attr follows
 
 Returns user total follows.
 
-=head2 followed_by
+=attr followed_by
 
 Returns user total followers.
 
 =cut
 
-=head1 METHODS
-
-=head2 feed
+=method feed
 
 	my $medias = $user->feed( count => 5 );
 	print $_->caption . $/ for @$medias;
@@ -102,7 +94,7 @@ sub feed {
 	[ map { $self->_instagram->media($_) } @list ]
 }
 
-=head2 liked_media
+=method liked_media
 
 	my $medias = $user->liked_media( count => 5 );
 	print $_->caption . $/ for @$medias;
@@ -119,7 +111,7 @@ sub liked_media {
 	[ map { $self->_instagram->media($_) } @list ]
 }
 
-=head2 requested_by
+=method requested_by
 
 	my $requested_by = $user->get_requested_by( count => 5 );
 	print $_->username . $/ for @$requested_by;
@@ -136,7 +128,7 @@ sub requested_by {
 	[ map { $self->_instagram->user($_) } @list ]
 }
 
-=head2 get_follows
+=method get_follows
 
 	my $follows = $user->get_follows( count => 5 );
 	print $_->username . $/ for @$follows;
@@ -151,7 +143,7 @@ sub get_follows {
 	shift->_get_relashions( @_, relationship => 'follows' );
 }
 
-=head2 get_followers
+=method get_followers
 
 	my $followers = $user->get_followers( count => 5 );
 	print $_->username . $/ for @$followers;
@@ -166,7 +158,7 @@ sub get_followers {
 	shift->_get_relashions( @_, relationship => 'followed-by' );
 }
 
-=head2 recent_medias
+=method recent_medias
 
 	my $medias = $user->recent_medias( count => 5 );
 	print $_->caption . $/ for @$medias;

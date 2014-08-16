@@ -1,10 +1,6 @@
-=head1 NAME
-
-API::Instagram::Media - Instagram Media Object
-
-=cut
-
 package API::Instagram::Media;
+
+# ABSTRACT: Instagram Media Object
 
 use Moo;
 use Time::Moment;
@@ -56,51 +52,49 @@ sub BUILD {
 
 See L<http://instagr.am/developer/endpoints/media/>.
 
-=head1 ATTRIBUTES
-
-=head2 id
+=attr id
 
 Returns media id.
 
-=head2 type
+=attr type
 
 Returns media type.
 
-=head2 user
+=attr user
 
 Returns the L<API::Instagram::User> object of the user who posted the media.
 
-=head2 link
+=attr link
 
 Returns media shortlink.
 
-=head2 filter
+=attr filter
 
 Returns media filter.
 
-=head2 tags
+=attr tags
 
 Returns a list L<API::Instagram::Tag> objects of media tags.
 
-=head2 location
+=attr location
 
 Returns media L<API::Instagram::Location> object.
 
-=head2 images
+=attr images
 
 	my $thumbnail = $media->images->{thumbnail};
 	printf "URL: %s (%d x %d)" $thumbnail->{url}, $thumbnail->{width}, $thumbnail->{height};
 
 Returns media images options and details.
 
-=head2 videos
+=attr videos
 
 	my $standart = $media->videos->{standart_resolution};
 	printf "URL: %s (%d x %d)" $standart->{url}, $standart->{width}, $standart->{height};
 
 Returns media videos options and details, when video type.
 
-=head2 users_in_photo
+=attr users_in_photo
 
 	for my $each ( @{ $media->users_in_photo } ) {
 
@@ -113,25 +107,23 @@ Returns media videos options and details, when video type.
 
 Returns a list of L<API::Instagram::User> objects of users tagged in the media with their coordinates.
 
-=head2 caption
+=attr caption
 
 Returns media caption text.
 
-=head2 likes
+=attr likes
 
 Returns media total likes.
 
-=head2 comments
+=attr comments
 
 Returns media total comments.
 
-=head2 created_time
+=attr created_time
 
 Returns the media date in a L<Time::Moment> object.
 
-=head1 METHODS
-
-=head2 get_likes
+=method get_likes
 
 	my @likers = $media->get_likes( count => 5 );
 
@@ -148,7 +140,7 @@ sub get_likes {
 	[ map { $instagram->user($_) } $instagram->_get_list( %opts, url => $url ) ]
 }
 
-=head2 get_comments
+=method get_comments
 
 	my @comments = $media->get_comments( count => 5 );
 

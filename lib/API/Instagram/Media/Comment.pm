@@ -1,10 +1,6 @@
-=head1 NAME
-
-API::Instagram::Media::Comment - Instagram Media Comment Object
-
-=cut
-
 package API::Instagram::Media::Comment;
+
+# ABSTRACT: Instagram Media Comment Object
 
 use Moo;
 use Time::Moment;
@@ -29,21 +25,19 @@ sub BUILD {
 
 See L<http://instagr.am/developer/endpoints/comments/>.
 
-=head1 ATTRIBUTES
-
-=head2 id
+=attr id
 
 Returns comment id.
 
-=head2 from
+=attr from
 
 Returns commenter L<API::Instagram::User> object.
 
-=head2 text
+=attr text
 
 Returns the text commented.
 
-=head2 created_time
+=attr created_time
 
 Returns the comment date in a L<Time::Moment> object.
 
