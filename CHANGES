@@ -3,8 +3,14 @@ Changes from 2013-08-17 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.006 at 2014-08-17 04:35:34 +0000
+version 0.006 at 2014-08-17 04:37:52 +0000
 ------------------------------------------
+
+  Change: ee143d09d124ba0f37b4710008b43d79d786ff73
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-17 01:37:20 +0000
+
+    Removed use API::Instagram::Direct request 
 
   Change: 905fe6e5d9a8c1a161372a85a297e785f11113b0
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
