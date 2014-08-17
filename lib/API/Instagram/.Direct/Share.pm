@@ -5,6 +5,9 @@ package API::Instagram::Direct::Share;
 use Moo;
 use Time::Moment;
 
+use API::Instagram::Direct::Share::Recipient;
+use API::Instagram::Direct::Share::Comment;
+
 has _instagram       => ( is => 'ro' );
 has id               => ( is => 'ro' );
 has caption          => ( is => 'ro', coerce => sub { $_[0] ? $_[0]->{text} : '' } );

@@ -21,11 +21,7 @@ use API::Instagram::Location;
 use API::Instagram::Tag;
 use API::Instagram::Media;
 use API::Instagram::Media::Comment;
-
-
-# https://instagram.com/api/v1/direct_share/pending/
-# https://instagram.com/api/v1/direct_share/inbox/
-
+use API::Instagram::Direct;
 
 has client_id         => ( is => 'ro', required => 1 );
 has client_secret     => ( is => 'ro', required => 1 );
@@ -42,7 +38,6 @@ has _obj_cache        => ( is => 'ro', default => sub { { users => {}, medias =>
 has _endpoint_url     => ( is => 'ro', default => sub { 'https://api.instagram.com/v1'                 } );
 has _authorize_url    => ( is => 'ro', default => sub { 'https://api.instagram.com/oauth/authorize'    } );
 has _access_token_url => ( is => 'ro', default => sub { 'https://api.instagram.com/oauth/access_token' } );
-
 
 sub get_auth_url { 
 	my $self = shift;
@@ -69,7 +64,7 @@ sub get_access_token {
 	}
 
 	my $data = { map { $_ => $self->$_ } @access_token_fields };
-	my $json = from_json $self->_ua  ->post( $self->_access_token_url, $data )->content;
+	my $json = from_json $self->_ua->post( $self->_access_token_url, $data )->content;
 
 	my $meta = $json->{meta};
 	confess "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
@@ -89,8 +84,6 @@ sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shi
 
 sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
 
-
-
 sub _get_obj {
 	my ( $self, $obj, $url, $cache, $key, $data, $opts ) = @_;
 
@@ -98,9 +91,10 @@ sub _get_obj {
 	return if ref $id || !$id;
 
 	my $method = "_create_${obj}_object";
-	$data      = ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data};
 
-	my $return = $self->_cache($cache)->{$id} //= $self->$method( $data );
+	my $return = $self->_cache($cache)->{$id} //= $self->$method(
+					ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data}
+				);
 
 	delete $self->_cache($cache)->{$id} if $self->no_cache;
 
@@ -185,14 +179,28 @@ sub _request {
 		my $uri = URI->new( $self->_endpoint_url );
 		$uri->path_segments( $uri->path_segments, split '/', $url );
 		$uri->query_form($params);
-	    $url = $uri->as_string;
+		$url = $uri->as_string;
 	}
 
-	my $res  = decode_json $self->_ua  ->get( $url )->decoded_content;
+	my $res  = decode_json $self->_ua->get( $url )->decoded_content;
 	my $meta = $res->{meta};
 	carp "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
 
 	$res;
+}
+
+sub _simple_request {
+	my $self   = shift;
+	my $url    = shift;
+	my $params = shift;
+
+	confess "A valid access_token is required" unless defined $self->access_token;
+	$params->{access_token} = $self->access_token;
+
+	my $uri = URI->new( $url );
+	$uri->query_form($params);
+
+	decode_json $self->_ua->get( $uri->as_string )->decoded_content;
 }
 
 sub _cache {

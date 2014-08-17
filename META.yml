@@ -18,6 +18,10 @@ meta-spec:
   version: 1.4
 name: API-Instagram
 requires:
+  API::Instagram::Direct: 0
+  API::Instagram::Direct::Share: 0
+  API::Instagram::Direct::Share::Comment: 0
+  API::Instagram::Direct::Share::Recipient: 0
   Carp: 0
   JSON: 0
   LWP::Protocol::https: 0

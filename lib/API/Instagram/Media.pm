@@ -11,7 +11,7 @@ has type           => ( is => 'ro' );
 has user           => ( is => 'ro' );
 has link           => ( is => 'ro' );
 has filter         => ( is => 'ro' );
-has tags           => ( is => 'ro' );
+has tags           => ( is => 'ro', lazy => 1, builder => 1 );
 has location       => ( is => 'ro' );
 has images         => ( is => 'ro' );
 has videos         => ( is => 'ro' );
@@ -26,7 +26,6 @@ sub BUILD {
 	my $instagram           = $self->_instagram;
 	$self->{user}           = $instagram->user( $self->{user} );
 	$self->{location}       = $instagram->location( $self->{location} );
-	$self->{tags}           = [ map { $instagram->tag($_) } @{$self->{tags}} ];
 	$self->{users_in_photo} = [
 		map {
 			{
@@ -35,6 +34,11 @@ sub BUILD {
 			}
 		} @{$self->{users_in_photo}}
 	];
+}
+
+sub _build_tags {
+	my $self = shift;
+	[ map { $self->_instagram->tag($_) } @{$self->{tags}} ]
 }
 
 sub get_likes {

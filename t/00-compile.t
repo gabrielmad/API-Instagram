@@ -10,10 +10,10 @@ use Test::More  tests => 10 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
 my @module_files = (
     'API/Instagram.pm',
-    'API/Instagram/Direct.pm',
-    'API/Instagram/Direct/Share.pm',
-    'API/Instagram/Direct/Share/Comment.pm',
-    'API/Instagram/Direct/Share/Recipient.pm',
+    'API/Instagram/.Direct.pm',
+    'API/Instagram/.Direct/Share.pm',
+    'API/Instagram/.Direct/Share/Comment.pm',
+    'API/Instagram/.Direct/Share/Recipient.pm',
     'API/Instagram/Location.pm',
     'API/Instagram/Media.pm',
     'API/Instagram/Media/Comment.pm',

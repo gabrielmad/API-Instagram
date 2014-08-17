@@ -20,6 +20,10 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "API::Instagram",
   "PREREQ_PM" => {
+    "API::Instagram::Direct" => 0,
+    "API::Instagram::Direct::Share" => 0,
+    "API::Instagram::Direct::Share::Comment" => 0,
+    "API::Instagram::Direct::Share::Recipient" => 0,
     "Carp" => 0,
     "JSON" => 0,
     "LWP::Protocol::https" => 0,
@@ -44,6 +48,10 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "API::Instagram::Direct" => 0,
+  "API::Instagram::Direct::Share" => 0,
+  "API::Instagram::Direct::Share::Comment" => 0,
+  "API::Instagram::Direct::Share::Recipient" => 0,
   "Carp" => 0,
   "File::Spec" => 0,
   "IO::Handle" => 0,

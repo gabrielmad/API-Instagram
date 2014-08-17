@@ -5,16 +5,17 @@ package API::Instagram::Direct;
 use Moo;
 use Carp;
 
+use API::Instagram::Direct::Share;
+
 has _instagram => ( is => 'ro' );
 has new_shares => ( is => 'ro' );
 has shares     => ( is => 'ro' );
-# has last_counted_at => ( is => 'ro', coerce => sub { Time::Moment->from_epoch( $_[0] ) } ); );
 
 sub BUILD {
 	my $self   = shift;
 	my $params = shift;
 
-	confess 'Error during Instagram Direct access' if $params->{status} ne 'ok';
+	# confess 'Error during Instagram Direct access' if $params->{status} ne 'ok';
 
 	$self->{new_shares} = $params->{new_shares_info}->{count} || 0;
 
