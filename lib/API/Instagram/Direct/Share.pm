@@ -21,6 +21,7 @@ has last_activity_at => ( is => 'ro', coerce => sub { Time::Moment->from_epoch( 
 
 sub BUILD {
 	my $self      = shift;
+	my $params    = shift;
 	my $instagram = $self->_instagram;
 	$self->{user} = $instagram->user( $self->{user} );
 
@@ -29,7 +30,7 @@ sub BUILD {
 		map {
 			$_->{_instagram} = $instagram;
 			API::Instagram::Direct::Share::Recipient->new( $_ );
-		} @$recipients;
+		} @$recipients
 	];
 
 	my $comments = $params->{comments};
@@ -37,7 +38,7 @@ sub BUILD {
 		map {
 			$_->{_instagram} = $instagram;
 			API::Instagram::Direct::Share::Comment->new( $_ );
-		} @$comments;
+		} @$comments
 	];
 }
 

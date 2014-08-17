@@ -62,7 +62,7 @@ Returns IDS commenter L<API::Instagram::User> object.
 
 Returns the text commented.
 
-=head2 created_time
+=head2 created_at
 
 Returns the IDS comment date in a L<Time::Moment> object.
 

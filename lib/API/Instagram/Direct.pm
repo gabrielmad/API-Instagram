@@ -3,6 +3,7 @@ package API::Instagram::Direct;
 # ABSTRACT: Instagram Direct Object
 
 use Moo;
+use Carp;
 
 has _instagram => ( is => 'ro' );
 has new_shares => ( is => 'ro' );
@@ -22,7 +23,7 @@ sub BUILD {
 		map {
 			$_->{_instagram} = $self->_instagram;
 			API::Instagram::Direct::Share->new( $_ );
-		} @$shares;
+		} @$shares
 	];
 }
 
