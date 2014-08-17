@@ -21,7 +21,6 @@ use API::Instagram::Location;
 use API::Instagram::Tag;
 use API::Instagram::Media;
 use API::Instagram::Media::Comment;
-use API::Instagram::Direct;
 
 has client_id         => ( is => 'ro', required => 1 );
 has client_secret     => ( is => 'ro', required => 1 );
