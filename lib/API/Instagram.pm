@@ -2,7 +2,7 @@ package API::Instagram;
 
 # ABSTRACT: OO Interface to Instagram REST API
 
-our $VERSION = '0.006';
+our $VERSION = '0.007';
 
 use Moo;
 
@@ -102,35 +102,35 @@ sub _get_obj {
 
 sub _create_media_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Media->new( $obj );
 }
 
 sub _create_user_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::User->new( $obj );
 }
 
 sub _create_location_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Location->new( $obj );
 }
 
 sub _create_tag_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Tag->new( $obj );
 }
 
 sub _create_comment_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Media::Comment->new( $obj );
 }
@@ -183,7 +183,7 @@ sub _request {
 
 	my $res  = decode_json $self->_ua->get( $url )->decoded_content;
 	my $meta = $res->{meta};
-	carp "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
+	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
 
 	$res;
 }
@@ -231,7 +231,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
