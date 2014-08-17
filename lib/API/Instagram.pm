@@ -238,9 +238,9 @@ version 0.006
 	use API::Instagram;
 
 	my $instagram = API::Instagram->new({
-			client_id   	=> $client_id,
-			client_secret	=> $client_secret,
-			redirect_uri	=> 'http://localhost',
+			client_id     => $client_id,
+			client_secret => $client_secret,
+			redirect_uri  => 'http://localhost',
 	});
 
 	# Authenticated user feed
@@ -270,12 +270,12 @@ Get the AUTH URL to authenticate.
 	use API::Instagram;
 
 	my $instagram = API::Instagram->new({
-			client_id		=> 'xxxxxxxxxx',
-			client_secret	=> 'xxxxxxxxxx',
-			redirect_uri	=> 'http://localhost',
-			scope           => 'basic',
-			response_type   => 'code',
-			granty_type     => 'authorization_code',
+			client_id     => 'xxxxxxxxxx',
+			client_secret => 'xxxxxxxxxx',
+			redirect_uri  => 'http://localhost',
+			scope         => 'basic',
+			response_type => 'code',
+			granty_type   => 'authorization_code',
 	});
 
 	print $instagram->get_auth_url;
@@ -303,13 +303,13 @@ authenticated user credentials.
 =head2 new
 
 	my $instagram = API::Instagram->new({
-			client_id   	=> $client_id,
-			client_secret	=> $client_secret,
-			redirect_uri	=> 'http://localhost',
-			scope           => 'basic',
-			response_type   => 'code',
-			granty_type     => 'authorization_code',
-			no_cache        => 1,
+			client_id     => $client_id,
+			client_secret => $client_secret,
+			redirect_uri  => 'http://localhost',
+			scope         => 'basic',
+			response_type => 'code',
+			granty_type   => 'authorization_code',
+			no_cache      => 1,
 	});
 
 Returns an L<API::Instagram> object.
