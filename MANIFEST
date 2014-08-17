@@ -9,10 +9,6 @@ Makefile.PL
 README
 dist.ini
 lib/API/Instagram.pm
-lib/API/Instagram/.Direct.pm
-lib/API/Instagram/.Direct/Share.pm
-lib/API/Instagram/.Direct/Share/Comment.pm
-lib/API/Instagram/.Direct/Share/Recipient.pm
 lib/API/Instagram/Location.pm
 lib/API/Instagram/Media.pm
 lib/API/Instagram/Media/Comment.pm
