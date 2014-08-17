@@ -43,7 +43,7 @@ API::Instagram::Direct - Instagram Direct Object
 
 =head1 VERSION
 
-version 0.005.1
+version 0.006
 
 =head1 DESCRIPTION
 
@@ -66,7 +66,7 @@ Returns total of new Direct Shares.
 
 	}
 
-Returns a list of L<API::Instagram::Direct::Share> objects of the media direct shared.
+Returns a list of L<API::Instagram::Direct::Share> objects of the direct shared medias.
 
 =head1 AUTHOR
 

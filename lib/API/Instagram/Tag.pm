@@ -29,7 +29,7 @@ API::Instagram::Tag - Instagram Tag Object
 
 =head1 VERSION
 
-version 0.005.1
+version 0.006
 
 =head1 SYNOPSIS
 

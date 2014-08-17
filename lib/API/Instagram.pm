@@ -2,7 +2,7 @@ package API::Instagram;
 
 # ABSTRACT: OO Interface to Instagram REST API
 
-our $VERSION = '0.005.1';
+our $VERSION = '0.006';
 
 use Moo;
 
@@ -224,7 +224,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.005.1
+version 0.006
 
 =head1 SYNOPSIS
 
