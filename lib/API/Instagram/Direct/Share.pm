@@ -108,7 +108,7 @@ Returns a list of L<API::Instagram::Direct::Share::Comment> objects of the comme
 
 Returns if the authenticated user has liked the IDS or not.
 
-=head2 images_versions
+=head2 image_versions
 
 	for my $image ( @{ $share->image_versions } ) {
 		printf "URL: %s (type %d: %d x %d)" $image->{url}, $image->{type}, $image->{width}, $image->{height};
