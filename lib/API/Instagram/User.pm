@@ -5,20 +5,23 @@ package API::Instagram::User;
 use Moo;
 use Carp;
 
-has _instagram     => ( is => 'ro' );
-has id             => ( is => 'ro' );
-has username       => ( is => 'ro' );
-has full_name      => ( is => 'ro' );
-has bio            => ( is => 'ro' );
-has website        => ( is => 'ro' );
-has profile_picute => ( is => 'ro', lazy => 1, builder => 1 );
-has media          => ( is => 'ro', lazy => 1, builder => 1 );
-has follows        => ( is => 'ro', lazy => 1, builder => 1 );
-has followed_by    => ( is => 'ro', lazy => 1, builder => 1 );
+has _instagram      => ( is => 'ro' );
+has id              => ( is => 'ro' );
+has username        => ( is => 'ro' );
+has full_name       => ( is => 'ro' );
+has bio             => ( is => 'ro' );
+has website         => ( is => 'ro' );
+has profile_picture => ( is => 'ro', lazy => 1, builder => 1 );
+has media           => ( is => 'ro', lazy => 1, builder => 1 );
+has follows         => ( is => 'ro', lazy => 1, builder => 1 );
+has followed_by     => ( is => 'ro', lazy => 1, builder => 1 );
 
 sub BUILD {
 	my $self   = shift;
 	my $params = shift;
+
+	$self->{profile_picture} = $params->{profile_picture} || $params->{profile_pic_url};
+
 	if ( $params->{counts} ){
 		$self->{media}       = $params->{counts}{media};
 		$self->{follows}     = $params->{counts}{follows};
@@ -59,7 +62,7 @@ Returns user biography text.
 
 Returns user website.
 
-=attr profile_picute
+=attr profile_picture
 
 Returns user profile picture url.
 
@@ -198,7 +201,7 @@ sub _self_requests {
 	$self->_instagram->_get_list( %opts, url => $url )
 }
 
-sub _build_profile_picute { shift->_reload->{profile_picute} }
+sub _build_profile_picture { shift->_reload->{profile_picture} }
 
 sub _build_media { shift->_reload->{media} }
 
@@ -208,8 +211,21 @@ sub _build_followed_by { shift->_reload->{followed_by} }
 
 sub _reload {
 	my $instagram = $_[0]->_instagram;
+	my $user_hash = { %{$_[0]} };
+
 	$instagram->_delete_cache( 'users', $_[0]->id );
-	$_[0] = $instagram->user( $_[0]->id );
+
+	my $user = eval { $instagram->user( $_[0]->id )	};
+	unless ( $@ ) { $_[0] = $user }
+	else {
+		$_[0] = $instagram->user( $user_hash );
+		$_[0]->{media}           //= '';
+		$_[0]->{follows}         //= '';
+		$_[0]->{followed_by}     //= '';
+		$_[0]->{profile_picture} //= '';
+	}
+
+	$_[0];
 }
 
 =for Pod::Coverage BUILD

@@ -2,7 +2,7 @@ package API::Instagram;
 
 # ABSTRACT: OO Interface to Instagram REST API
 
-our $VERSION = '0.006';
+our $VERSION = '0.007';
 
 use Moo;
 
@@ -43,9 +43,9 @@ has _access_token_url => ( is => 'ro', default => sub { 'https://api.instagram.c
 	use API::Instagram;
 
 	my $instagram = API::Instagram->new({
-			client_id   	=> $client_id,
-			client_secret	=> $client_secret,
-			redirect_uri	=> 'http://localhost',
+			client_id     => $client_id,
+			client_secret => $client_secret,
+			redirect_uri  => 'http://localhost',
 	});
 
 	# Authenticated user feed
@@ -77,12 +77,12 @@ Get the AUTH URL to authenticate.
 	use API::Instagram;
 
 	my $instagram = API::Instagram->new({
-			client_id		=> 'xxxxxxxxxx',
-			client_secret	=> 'xxxxxxxxxx',
-			redirect_uri	=> 'http://localhost',
-			scope           => 'basic',
-			response_type   => 'code',
-			granty_type     => 'authorization_code',
+			client_id     => 'xxxxxxxxxx',
+			client_secret => 'xxxxxxxxxx',
+			redirect_uri  => 'http://localhost',
+			scope         => 'basic',
+			response_type => 'code',
+			granty_type   => 'authorization_code',
 	});
 
 	print $instagram->get_auth_url;
@@ -110,13 +110,13 @@ authenticated user credentials.
 =method new
 
 	my $instagram = API::Instagram->new({
-			client_id   	=> $client_id,
-			client_secret	=> $client_secret,
-			redirect_uri	=> 'http://localhost',
-			scope           => 'basic',
-			response_type   => 'code',
-			granty_type     => 'authorization_code',
-			no_cache        => 1,
+			client_id     => $client_id,
+			client_secret => $client_secret,
+			redirect_uri  => 'http://localhost',
+			scope         => 'basic',
+			response_type => 'code',
+			granty_type   => 'authorization_code',
+			no_cache      => 1,
 	});
 
 Returns an L<API::Instagram> object.
@@ -251,35 +251,35 @@ sub _get_obj {
 
 sub _create_media_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Media->new( $obj );
 }
 
 sub _create_user_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::User->new( $obj );
 }
 
 sub _create_location_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Location->new( $obj );
 }
 
 sub _create_tag_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Tag->new( $obj );
 }
 
 sub _create_comment_object {
 	my $self = shift;
-	my $obj  = shift;
+	my $obj  = shift or return;
 	$obj->{_instagram} = $self;
 	API::Instagram::Media::Comment->new( $obj );
 }
@@ -332,7 +332,7 @@ sub _request {
 
 	my $res  = decode_json $self->_ua->get( $url )->decoded_content;
 	my $meta = $res->{meta};
-	carp "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
+	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
 
 	$res;
 }
