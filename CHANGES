@@ -3,8 +3,16 @@ Changes from 2013-08-17 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.006 at 2014-08-17 04:23:16 +0000
+version 0.006 at 2014-08-17 04:35:34 +0000
 ------------------------------------------
+
+  Change: 905fe6e5d9a8c1a161372a85a297e785f11113b0
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-17 01:28:00 +0000
+
+    Media Tags attribute is lazy now - only when requested the tags
+    objects are generated. Fixed Data request when generating an object.
+    It was doing resquests even when not needed. Starting version 0.006. 
 
   Change: fddb24512b62762eabbc4bd6d7998a94de7d7aaa
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
