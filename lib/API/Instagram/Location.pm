@@ -3,18 +3,36 @@ package API::Instagram::Location;
 # ABSTRACT: Instagram Location Object
 
 use Moo;
+use Carp;
 
-has _instagram => ( is => 'ro' );
-has id         => ( is => 'ro' );
-has latitude   => ( is => 'ro' );
-has longitude  => ( is => 'ro' );
-has name       => ( is => 'ro' );
+has _api      => ( is => 'ro', required => 1 );
+has id        => ( is => 'lazy', predicate => 1 );
+has latitude  => ( is => 'lazy' );
+has longitude => ( is => 'lazy' );
+has name      => ( is => 'lazy' );
+has _data     => ( is => 'lazy' );
 
 
 sub recent_medias {
 	my $self = shift;
+
+	unless ( $self->has_id ) {
+		carp "Not available yet.";
+		return [];
+	}
+
 	my $url  = "/locations/" . $self->id . "/media/recent";
-	$self->_instagram->_recent_medias( $url, @_ );
+	$self->_api->_recent_medias( $url, @_ );
+}
+
+sub _build_name      { shift->_data->{name}      }
+sub _build_latitude  { shift->_data->{latitude}  }
+sub _build_longitute { shift->_data->{longitute} }
+
+sub _build__data {
+	my $self = shift;
+	my $url  = sprintf "locations/%s", $self->id;
+	$self->_api->_request_data( $url );
 }
 
 1;

@@ -4,15 +4,26 @@ package API::Instagram::Tag;
 
 use Moo;
 
-has _instagram  => ( is => 'ro' );
-has name        => ( is => 'ro' );
-has media_count => ( is => 'ro' );
+has _api        => ( is => 'ro', required => 1 );
+has name        => ( is => 'ro', required => 1 );
+
+sub media_count { shift->_load('media_count') }
 
 
 sub recent_medias {
 	my $self = shift;
-	my $url  = "/tags/" . $self->name . "/media/recent";
-	$self->_instagram->_recent_medias( $url, @_ );
+	my $url  = sprintf "tags/%s/media/recent", $self->name;
+	$self->_api->_recent_medias( $url, @_ );
+}
+
+sub _load {
+	my $self = shift;
+	my $attr = shift;
+
+	my $url  = sprintf "tags/%s", $self->name;
+	my $res  = $self->_api->_request_data($url);
+
+	$attr ? $res->{$attr} : $res;
 }
 
 1;

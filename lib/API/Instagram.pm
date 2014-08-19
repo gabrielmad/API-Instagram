@@ -30,7 +30,7 @@ has response_type     => ( is => 'ro', default => sub { 'code'  } );
 has grant_type        => ( is => 'ro', default => sub { 'authorization_code' } );
 has code              => ( is => 'rw', isa => sub { confess "Code not provided"        unless $_[0] } );
 has access_token      => ( is => 'rw', isa => sub { confess "No access token provided" unless $_[0] } );
-has no_cache          => ( is => 'rw', default => 0 );
+has no_cache          => ( is => 'rw', default => sub { 0 } );
 
 has _ua               => ( is => 'ro', default => sub { LWP::UserAgent->new() } );
 has _obj_cache        => ( is => 'ro', default => sub { { users => {}, medias => {}, locations => {}, tags => {} } } );
@@ -72,16 +72,52 @@ sub get_access_token {
 }
 
 
-sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
+# sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
+sub media {
+	my $self = shift;
+	my $code = shift or return;
 
+	my $data = ref $code eq 'HASH' ? $code : { id => $code };
+	$data->{_api} = $self;
 
-sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
+	API::Instagram::Media->new( $data );
+}
 
+# sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
+sub user {
+	my $self = shift;
+	my $code = shift || 'self';
 
-sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shift ) }
+	my $data = ref $code eq 'HASH' ? $code : { id => $code };
+	$data->{_api} = $self;
 
+	API::Instagram::User->new( $data );
+}
 
-sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
+# sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shift ) }
+sub location {
+	my $self = shift;
+	my $code = shift or return;
+
+	carp 'id param required' and return unless defined $code;
+
+	my $data = ref $code eq 'HASH' ? $code : { id => $code };
+	$data->{_api} = $self;
+
+	API::Instagram::Location->new( $data );
+}
+
+# sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
+sub tag {
+	my $self = shift;
+	my $code = shift or return;
+
+	my $data = ref $code eq 'HASH' ? $code : { name => $code };
+	$data->{_api} = $self;
+
+	API::Instagram::Tag->new( $data );
+}
+
 
 sub _get_obj {
 	my ( $self, $obj, $url, $cache, $key, $data, $opts ) = @_;
@@ -92,7 +128,7 @@ sub _get_obj {
 	my $method = "_create_${obj}_object";
 
 	my $return = $self->_cache($cache)->{$id} //= $self->$method(
-					ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data}
+					ref $data eq 'HASH' ? $data : $self->_request_data( "$url/$id" )
 				);
 
 	delete $self->_cache($cache)->{$id} if $self->no_cache;
@@ -103,35 +139,28 @@ sub _get_obj {
 sub _create_media_object {
 	my $self = shift;
 	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
+	$obj->{_api} = $self;
 	API::Instagram::Media->new( $obj );
 }
 
 sub _create_user_object {
 	my $self = shift;
 	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
+	$obj->{_api} = $self;
 	API::Instagram::User->new( $obj );
 }
 
 sub _create_location_object {
 	my $self = shift;
 	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
+	$obj->{_api} = $self;
 	API::Instagram::Location->new( $obj );
-}
-
-sub _create_tag_object {
-	my $self = shift;
-	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
-	API::Instagram::Tag->new( $obj );
 }
 
 sub _create_comment_object {
 	my $self = shift;
 	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
+	$obj->{_api} = $self;
 	API::Instagram::Media::Comment->new( $obj );
 }
 
@@ -159,12 +188,13 @@ sub _get_list {
 		last unless $pagination->{next_url};
 
 		$request = $self->_request( $pagination->{next_url}, \%opts, { pagination => 1 } );
-		push @$data, @{$request->{data}};
+		push @$data, @{ $request->{data} };
 	}
 
 	return @$data;
 }
 
+sub _request_data { shift->_request(@_)->{data} || {} }
 sub _request {
 	my ( $self, $url, $params, $opts ) = @_;
 
@@ -180,6 +210,8 @@ sub _request {
 		$uri->query_form($params);
 		$url = $uri->as_string;
 	}
+
+print "RESQUESTING: $url$/";
 
 	my $res  = decode_json $self->_ua->get( $url )->decoded_content;
 	my $meta = $res->{meta};

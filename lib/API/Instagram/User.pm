@@ -5,50 +5,53 @@ package API::Instagram::User;
 use Moo;
 use Carp;
 
-has _instagram      => ( is => 'ro' );
-has id              => ( is => 'ro' );
-has username        => ( is => 'ro' );
-has full_name       => ( is => 'ro' );
-has bio             => ( is => 'ro' );
-has website         => ( is => 'ro' );
-has profile_picture => ( is => 'ro', lazy => 1, builder => 1 );
-has media           => ( is => 'ro', lazy => 1, builder => 1 );
-has follows         => ( is => 'ro', lazy => 1, builder => 1 );
-has followed_by     => ( is => 'ro', lazy => 1, builder => 1 );
+has _api            => ( is => 'ro', required => 1 );
+has id              => ( is => 'ro', required => 1 );
+has username        => ( is => 'lazy' );
+has full_name       => ( is => 'lazy' );
+has bio             => ( is => 'lazy' );
+has website         => ( is => 'lazy' );
+has profile_picture => ( is => 'lazy' );
+has _data           => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
 
-sub BUILD {
-	my $self   = shift;
-	my $params = shift;
 
-	$self->{profile_picture} = $params->{profile_picture} || $params->{profile_pic_url};
+sub media {
+	my $self = shift;
+	$self->_clear_data;
+	return $_->{media} for $self->_data->{counts}
+}
 
-	if ( $params->{counts} ){
-		$self->{media}       = $params->{counts}{media};
-		$self->{follows}     = $params->{counts}{follows};
-		$self->{followed_by} = $params->{counts}{followed_by};
-	}
-};
+sub follows {
+	my $self = shift;
+	$self->_clear_data;
+	return $_->{follows} for $self->_data->{counts}
+}
 
+sub followed_by {
+	my $self = shift;
+	$self->_clear_data;
+	return $_->{followed_by} for $self->_data->{counts}
+}
 
 
 sub feed {
 	my $self = shift;
 	my @list = $self->_self_requests( 'feed', '/users/self/feed', @_ );
-	[ map { $self->_instagram->media($_) } @list ]
+	[ map { $self->_api->media($_) } @list ]
 }
 
 
 sub liked_media {
 	my $self = shift;
 	my @list = $self->_self_requests( 'liked-media', '/users/self/media/liked', @_ );
-	[ map { $self->_instagram->media($_) } @list ]
+	[ map { $self->_api->media($_) } @list ]
 }
 
 
 sub requested_by {
 	my $self = shift;
 	my @list = $self->_self_requests( 'requested-by', '/users/self/requested-by', @_ );
-	[ map { $self->_instagram->user($_) } @list ]
+	[ map { $self->_api->user($_) } @list ]
 }
 
 
@@ -65,7 +68,7 @@ sub get_followers {
 sub recent_medias {
 	my $self = shift;
 	my $url  = "/users/" . $self->id . "/media/recent";
-	$self->_instagram->_recent_medias( $url, @_ );
+	$self->_api->_recent_medias( $url, @_ );
 }
 
 
@@ -76,47 +79,44 @@ sub _get_relashions {
 	my $self = shift;
 	my %opts = @_;
 	my $url  = "/users/" . $self->id . "/" . $opts{relationship};
-	my $instagram = $self->_instagram;
-	[ map { $instagram->user($_) } $instagram->_get_list( %opts, url => $url ) ]
+	my $api  = $self->_api;
+	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
 sub _self_requests {
 	my ($self, $type, $url, %opts) = @_;
 
-	if ( $self->id ne $self->_instagram->user->id ){
+	if ( $self->id ne $self->_api->user->id ){
 		carp "The $type is only available for the authenticated user";
 		return [];
 	}
 
-	$self->_instagram->_get_list( %opts, url => $url )
+	$self->_api->_get_list( %opts, url => $url )
 }
 
-sub _build_profile_picture { shift->_reload->{profile_picture} }
 
-sub _build_media { shift->_reload->{media} }
+sub BUILDARGS {
+	my $self = shift;
+	my $opts = shift;
 
-sub _build_follows { shift->_reload->{follows} }
+	$opts->{profile_picture} //= delete $opts->{profile_pic_url} if $opts->{profile_pic_url};
 
-sub _build_followed_by { shift->_reload->{followed_by} }
-
-sub _reload {
-	my $instagram = $_[0]->_instagram;
-	my $user_hash = { %{$_[0]} };
-
-	$instagram->_delete_cache( 'users', $_[0]->id );
-
-	my $user = eval { $instagram->user( $_[0]->id )	};
-	unless ( $@ ) { $_[0] = $user }
-	else {
-		$_[0] = $instagram->user( $user_hash );
-		$_[0]->{media}           //= '';
-		$_[0]->{follows}         //= '';
-		$_[0]->{followed_by}     //= '';
-		$_[0]->{profile_picture} //= '';
-	}
-
-	$_[0];
+	return $opts;
 }
+
+
+sub _build_username        { shift->_data->{username}        }
+sub _build_full_name       { shift->_data->{full_name}       }
+sub _build_bio             { shift->_data->{bio}             }
+sub _build_website         { shift->_data->{website}         }
+sub _build_profile_picture { shift->_data->{profile_picture} }
+
+sub _build__data {
+	my $self = shift;
+	my $url  = sprintf "users/%s", $self->id;
+	$self->_api->_request_data( $url );
+}
+
 
 
 1;
@@ -131,7 +131,7 @@ __END__
 
 API::Instagram::User - Instagram User Object
 
-=for Pod::Coverage BUILD
+=for Pod::Coverage BUILDARGS
 
 =head1 VERSION
 
