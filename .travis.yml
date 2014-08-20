@@ -11,6 +11,5 @@ branches:
     - /^build/
 
 after_success:
-  - cpanm --quiet --notest --skip-satisfied --installdeps Dist::Zilla::App::Command::cover Devel::Cover::Report::Coveralls Dist::Zilla::PluginBundle::Author::GABRIEL
-  - dzil cover -test
-  - dzil cover -report coveralls
+  - cpanm --quiet --notest Devel::Cover::Report::Coveralls
+  - cover -report coveralls
