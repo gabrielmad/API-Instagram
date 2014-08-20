@@ -20,9 +20,8 @@ name: API-Instagram
 requires:
   Carp: 0
   Digest::MD5: 0
+  Furl: 0
   JSON: 0
-  LWP::Protocol::https: 0
-  LWP::UserAgent: 0
   Moo: 0
   Time::Moment: 0
   URI: 0
