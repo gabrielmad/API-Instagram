@@ -17,19 +17,19 @@ has _data           => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
 
 sub media {
 	my $self = shift;
-	$self->_clear_data;
+	$self->_clear_data if shift;
 	return $_->{media} for $self->_data->{counts}
 }
 
 sub follows {
 	my $self = shift;
-	$self->_clear_data;
+	$self->_clear_data if shift;
 	return $_->{follows} for $self->_data->{counts}
 }
 
 sub followed_by {
 	my $self = shift;
-	$self->_clear_data;
+	$self->_clear_data if shift;
 	return $_->{followed_by} for $self->_data->{counts}
 }
 
@@ -135,7 +135,7 @@ API::Instagram::User - Instagram User Object
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 

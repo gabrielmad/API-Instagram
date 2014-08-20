@@ -19,7 +19,7 @@ meta-spec:
 name: API-Instagram
 requires:
   Carp: 0
-  Data::Dumper: 0
+  Digest::MD5: 0
   JSON: 0
   LWP::Protocol::https: 0
   LWP::UserAgent: 0
@@ -33,4 +33,4 @@ resources:
   bugtracker: https://github.com/gabrielmad/api-instagram/issues
   homepage: http://metacpan.org/release/API-Instagram
   repository: git://github.com/gabrielmad/api-instagram.git
-version: 0.007
+version: 0.008

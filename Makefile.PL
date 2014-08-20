@@ -21,7 +21,7 @@ my %WriteMakefileArgs = (
   "NAME" => "API::Instagram",
   "PREREQ_PM" => {
     "Carp" => 0,
-    "Data::Dumper" => 0,
+    "Digest::MD5" => 0,
     "JSON" => 0,
     "LWP::Protocol::https" => 0,
     "LWP::UserAgent" => 0,
@@ -37,7 +37,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.007",
+  "VERSION" => "0.008",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -46,7 +46,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
-  "Data::Dumper" => 0,
+  "Digest::MD5" => 0,
   "File::Spec" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,

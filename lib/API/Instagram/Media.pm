@@ -46,7 +46,7 @@ sub get_comments {
 	my %opts = @_;
 	my $url  = "/media/" . $self->id . "/comments";
 	my $api  = $self->_api;
-	[ map { $api->_create_comment_object($_) } $api->_get_list( %opts, url => $url ) ]
+	[ map { $api->comment($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
 
@@ -110,13 +110,10 @@ sub _coerce_user {
 
 sub _coerce_location {
 	my ( $self, $data ) = @{$_[0]};
-use Data::Dumper;
-print Dumper $data if defined $data;
 	$self->location( $data ) if defined $data;
 };
 
 sub _coerce_tags {
-	return unless defined $_[0];
 	my ( $self, $data ) = @{$_[0]};
 	[ map { $self->tag($_) } @$data ] if defined $data and ref $data eq 'ARRAY';
 };
@@ -148,7 +145,7 @@ API::Instagram::Media - Instagram Media Object
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 

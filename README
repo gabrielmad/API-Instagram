@@ -2,7 +2,7 @@ NAME
     API::Instagram - OO Interface to Instagram REST API
 
 VERSION
-    version 0.007
+    version 0.008
 
 SYNOPSIS
             use API::Instagram;
@@ -137,6 +137,13 @@ METHODS
             say $tag->media_count;
 
     Get information about a tag. Returns an API::Instagram::Tag object.
+
+  comment
+            my $comment = $instagram->comment('1234567');
+            say $comment->text;
+
+    Get information about a comment. Returns an
+    API::Instagram::Media::Comment object.
 
 AUTHOR
     Gabriel Vieira <gabriel.vieira@gmail.com>
