@@ -366,11 +366,9 @@ sub _cache { shift->_obj_cache->{ shift() } }
 
 =for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope
 
-=for HTML
+=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
-<a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
-
-<a href='https://coveralls.io/r/gabrielmad/API-Instagram'><img src='https://coveralls.io/repos/gabrielmad/API-Instagram/badge.png' alt='Coverage Status' /></a>
+=for HTML <a href='https://coveralls.io/r/gabrielmad/API-Instagram'><img src='https://coveralls.io/repos/gabrielmad/API-Instagram/badge.png' alt='Coverage Status' /></a>
 
 =cut
 
