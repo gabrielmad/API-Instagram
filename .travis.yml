@@ -11,5 +11,6 @@ branches:
     - /^build/
 
 after_success:
+  - HARNESS_PERL_SWITCHES=-MDevel::Cover=-db,$TRAVIS_BUILD_DIR/cover_db
   - cpanm --quiet --notest Devel::Cover::Report::Coveralls
   - cover -report coveralls
