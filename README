@@ -1,14 +1,6 @@
 NAME
     API::Instagram - OO Interface to Instagram REST API
 
-    <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img
-    src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fm
-    aster"></a>
-
-    <a href='https://coveralls.io/r/gabrielmad/API-Instagram'><img
-    src='https://coveralls.io/repos/gabrielmad/API-Instagram/badge.png'
-    alt='Coverage Status' /></a>
-
 VERSION
     version 0.008
 
