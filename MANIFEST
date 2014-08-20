@@ -7,7 +7,6 @@ MANIFEST
 META.yml
 Makefile.PL
 README
-cover_db
 dist.ini
 lib/API/Instagram.pm
 lib/API/Instagram/Location.pm
