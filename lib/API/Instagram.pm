@@ -222,7 +222,16 @@ API::Instagram - OO Interface to Instagram REST API
 
 =for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope
 
-=for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
+=begin HTML
+
+
+
+
+=end HTML
+
+<a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
+
+<a href='https://coveralls.io/r/gabrielmad/API-Instagram'><img src='https://coveralls.io/repos/gabrielmad/API-Instagram/badge.png' alt='Coverage Status' /></a>
 
 =head1 VERSION
 
