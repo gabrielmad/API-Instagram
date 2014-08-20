@@ -3,8 +3,14 @@ Changes from 2013-08-20 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.008 at 2014-08-20 15:24:53 +0000
+version 0.008 at 2014-08-20 20:26:02 +0000
 ------------------------------------------
+
+  Change: 69cab747152bf33aaa444479634466fa543e66d0
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-20 12:27:07 +0000
+
+    Removing Coveralls badge 
 
   Change: e27f80a2a218910cb8df05e35a833d5097199ffa
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
