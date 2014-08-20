@@ -10,9 +10,6 @@ branches:
   only:
     - /^build/
 
-install:
-  - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
-
 after_success:
   - cpanm --quiet --notest --skip-satisfied Dist::Zilla::App::Command::cover Devel::Cover::Report::Coveralls
   - dzil cover -test
