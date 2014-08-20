@@ -2,13 +2,14 @@ package API::Instagram;
 
 # ABSTRACT: OO Interface to Instagram REST API
 
-our $VERSION = '0.007';
+our $VERSION = '0.008';
 
 use Moo;
 
 use Carp;
 use strict;
 use warnings;
+use Digest::MD5 'md5_hex';
 
 use URI;
 use JSON;
@@ -30,13 +31,16 @@ has response_type     => ( is => 'ro', default => sub { 'code'  } );
 has grant_type        => ( is => 'ro', default => sub { 'authorization_code' } );
 has code              => ( is => 'rw', isa => sub { confess "Code not provided"        unless $_[0] } );
 has access_token      => ( is => 'rw', isa => sub { confess "No access token provided" unless $_[0] } );
-has no_cache          => ( is => 'rw', default => 0 );
+has no_cache          => ( is => 'rw', default => sub { 0 } );
 
 has _ua               => ( is => 'ro', default => sub { LWP::UserAgent->new() } );
-has _obj_cache        => ( is => 'ro', default => sub { { users => {}, medias => {}, locations => {}, tags => {} } } );
+has _obj_cache        => ( is => 'ro', default => sub { { User => {}, Media => {}, Location => {}, Tag => {}, 'Media::Comment' => {} } } );
 has _endpoint_url     => ( is => 'ro', default => sub { 'https://api.instagram.com/v1'                 } );
 has _authorize_url    => ( is => 'ro', default => sub { 'https://api.instagram.com/oauth/authorize'    } );
 has _access_token_url => ( is => 'ro', default => sub { 'https://api.instagram.com/oauth/access_token' } );
+
+has _debug => ( is => 'rw', lazy => 1 );
+
 
 =head1 SYNOPSIS
 
@@ -194,8 +198,7 @@ sub get_access_token {
 Get information about a media object. Returns an L<API::Instagram::Media> object.
 
 =cut
-sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
-
+sub media { shift->_get_obj( 'Media', 'id', shift ) }
 
 =method user
 
@@ -208,8 +211,7 @@ sub media { shift->_get_obj( 'media', '/medias', 'medias', 'id', shift ) }
 Get information about an user. Returns an L<API::Instagram::User> object.
 
 =cut
-sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
-
+sub user { shift->_get_obj( 'User', 'id', shift // 'self' ) }
 
 =method location
 
@@ -219,8 +221,7 @@ sub user { shift->_get_obj( 'user', '/users', 'users', 'id', shift || 'self' ) }
 Get information about a location. Returns an L<API::Instagram::Location> object.
 
 =cut
-sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shift ) }
-
+sub location { shift->_get_obj( 'Location', 'id', shift, 1 ) }
 
 =method tag
 
@@ -230,66 +231,59 @@ sub location { shift->_get_obj( 'location', '/locations', 'locations', 'id', shi
 Get information about a tag. Returns an L<API::Instagram::Tag> object.
 
 =cut
-sub tag { shift->_get_obj( 'tag', '/tags', 'tags', 'name', shift ) }
+sub tag { shift->_get_obj( 'Tag', 'name', shift ) }
 
+=method comment
+
+	my $comment = $instagram->comment('1234567');
+	say $comment->text;
+
+Get information about a comment. Returns an L<API::Instagram::Media::Comment> object.
+
+=cut
+sub comment { shift->_get_obj( 'Media::Comment', 'id', shift ) }
+
+
+#####################################################
+# Returns cached wanted object or creates a new one #
+#####################################################
 sub _get_obj {
-	my ( $self, $obj, $url, $cache, $key, $data, $opts ) = @_;
+	my ( $self, $type, $key, $code, $optional_code ) = @_;
 
-	my $id = ref $data eq 'HASH' ? $data->{$key} : $data;
-	return if ref $id || !$id;
+	my $data = { $key => $code };
+	$data = $code if ref $code eq 'HASH';
+	$code = $data->{$key};
 
-	my $method = "_create_${obj}_object";
+	# Returns if CODE is not optional and not defined or if it's not a string
+	return if (!$optional_code and !defined $code) or ref $code;
 
-	my $return = $self->_cache($cache)->{$id} //= $self->$method(
-					ref $data eq 'HASH' ? $data : $self->_request( "$url/$id" )->{data}
-				);
+	# Code used as cache key
+	my $cache_code = md5_hex( $code // $data);
 
-	delete $self->_cache($cache)->{$id} if $self->no_cache;
+	# Adds this Instagram instance
+	$data->{_api} = $self;
+
+	# Returns cached value or creates a new object
+	my $return = $self->_cache($type)->{$cache_code} //= ("API::Instagram::$type")->new( $data );
+
+	# Deletes cache if no-cache is set
+	delete $self->_cache($type)->{$code} if $self->no_cache;
 
 	return $return;
 }
 
-sub _create_media_object {
-	my $self = shift;
-	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
-	API::Instagram::Media->new( $obj );
-}
-
-sub _create_user_object {
-	my $self = shift;
-	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
-	API::Instagram::User->new( $obj );
-}
-
-sub _create_location_object {
-	my $self = shift;
-	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
-	API::Instagram::Location->new( $obj );
-}
-
-sub _create_tag_object {
-	my $self = shift;
-	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
-	API::Instagram::Tag->new( $obj );
-}
-
-sub _create_comment_object {
-	my $self = shift;
-	my $obj  = shift or return;
-	$obj->{_instagram} = $self;
-	API::Instagram::Media::Comment->new( $obj );
-}
-
+###################################
+# Returns a list of Media Objects #
+###################################
 sub _recent_medias {
 	my ($self, $url, %opts) = @_;
 	$opts{count} //= 33;
 	[ map { $self->media($_) } $self->_get_list( %opts, url => $url ) ]
 }
 
+####################################################################
+# Returns a list of the requested items. Does pagination if needed #
+####################################################################
 sub _get_list {
 	my $self = shift;
 	my %opts = @_;
@@ -302,40 +296,54 @@ sub _get_list {
 	my $request = $self->_request( $url, \%opts );
 	my $data    = $request->{data};
 
+	# Keeps requesting if total items is less than requested
+	# and still there is pagination
 	while ( my $pagination = $request->{pagination} ){
 
 		last if     @$data >= $count;
 		last unless $pagination->{next_url};
 
-		$request = $self->_request( $pagination->{next_url}, \%opts, { pagination => 1 } );
-		push @$data, @{$request->{data}};
+		$request = $self->_request( $pagination->{next_url}, \%opts, { prepared_url => 1 } );
+		push @$data, @{ $request->{data} };
 	}
 
 	return @$data;
 }
 
+##############################################################
+# Requests the data from the given URL with QUERY parameters #
+##############################################################
 sub _request {
 	my ( $self, $url, $params, $opts ) = @_;
 
 	confess "A valid access_token is required" unless defined $self->access_token;
 
-	unless ( $opts->{pagination} ){
+	# If URL is not prepared, prepares it
+	unless ( $opts->{prepared_url} ){
 
 		$url =~ s|^/||;
 		$params->{access_token} = $self->access_token;
 
+		# Prepares the URL
 		my $uri = URI->new( $self->_endpoint_url );
 		$uri->path_segments( $uri->path_segments, split '/', $url );
 		$uri->query_form($params);
 		$url = $uri->as_string;
 	}
+	# For debugging purposes
+	print "Requesting: $url$/" if $self->_debug;
 
+	# Treats response content
 	my $res  = decode_json $self->_ua->get( $url )->decoded_content;
+
+	# Verifies meta node
 	my $meta = $res->{meta};
 	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
 
 	$res;
 }
+
+sub _request_data { shift->_request(@_)->{data} || {} }
 
 sub _simple_request {
 	my $self   = shift;
@@ -351,15 +359,10 @@ sub _simple_request {
 	decode_json $self->_ua->get( $uri->as_string )->decoded_content;
 }
 
-sub _cache {
-	my ( $self, $cache ) = @_;
-	$self->_obj_cache->{$cache};
-}
-
-sub _delete_cache {
-	my ( $self, $cache, $id) = @_;
-	delete $self->_obj_cache->{$cache}->{$id};
-}
+################################
+# Returns requested cache hash #
+################################
+sub _cache { shift->_obj_cache->{ shift() } }
 
 =for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope
 

@@ -5,41 +5,21 @@ package API::Instagram::Media;
 use Moo;
 use Time::Moment;
 
-has _instagram     => ( is => 'ro' );
-has id             => ( is => 'ro' );
-has type           => ( is => 'ro' );
-has user           => ( is => 'ro' );
-has link           => ( is => 'ro' );
-has filter         => ( is => 'ro' );
-has tags           => ( is => 'ro', lazy => 1, builder => 1 );
-has location       => ( is => 'ro' );
-has images         => ( is => 'ro' );
-has videos         => ( is => 'ro' );
-has users_in_photo => ( is => 'ro' );
-has caption        => ( is => 'ro', coerce => sub { $_[0]->{text}  } );
-has likes          => ( is => 'ro', coerce => sub { $_[0]->{count} } );
-has comments       => ( is => 'ro', coerce => sub { $_[0]->{count} } );
-has created_time   => ( is => 'ro', coerce => sub { Time::Moment->from_epoch( $_[0] ) } );
+has _api           => ( is => 'ro', required => 1 );
+has id             => ( is => 'ro', required => 1 );
+has type           => ( is => 'lazy' );
+has link           => ( is => 'lazy' );
+has filter         => ( is => 'lazy' );
+has images         => ( is => 'lazy' );
+has videos         => ( is => 'lazy' );
+has user           => ( is => 'lazy', coerce => \&_coerce_user           );
+has tags           => ( is => 'lazy', coerce => \&_coerce_tags           );
+has location       => ( is => 'lazy', coerce => \&_coerce_location       );
+has users_in_photo => ( is => 'lazy', coerce => \&_coerce_users_in_photo );
+has caption        => ( is => 'lazy', coerce => sub { $_[0]->{text} } );
+has created_time   => ( is => 'lazy', coerce => sub { Time::Moment->from_epoch( $_[0] ) } );
+has _data          => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
 
-sub BUILD {
-	my $self = shift;
-	my $instagram           = $self->_instagram;
-	$self->{user}           = $instagram->user( $self->{user} );
-	$self->{location}       = $instagram->location( $self->{location} );
-	$self->{users_in_photo} = [
-		map {
-			{
-				user     => $instagram->user( $_->{user} ),
-				position => $_->{position},
-			}
-		} @{$self->{users_in_photo}}
-	];
-}
-
-sub _build_tags {
-	my $self = shift;
-	[ map { $self->_instagram->tag($_) } @{$self->{tags}} ]
-}
 
 =head1 SYNOPSIS
 
@@ -115,13 +95,43 @@ Returns a list of L<API::Instagram::User> objects of users tagged in the media w
 
 Returns media caption text.
 
-=attr likes
+=method likes
+
+	printf "Total Likes: %d\n", $media->likes; # Total likes when object was created
+
+	or
+
+	printf "Total Likes: %d\n", $media->likes(1); # Up to date total likes
 
 Returns media total likes.
+If you set C<1> as parameter it will renew all media data and return an up-do-date total likes.
 
-=attr comments
+Hint: it also updates total comments.
+=cut
+sub likes {
+	my $self = shift;
+	$self->_clear_data if shift;
+	$self->_data->{likes}->{count}
+}
+
+=method comments
+
+	printf "Total Comments: %d\n", $media->comments; # Total comments when object was created
+
+	or
+
+	printf "Total Comments: %d\n", $media->comments(1); # Up to date total comments
 
 Returns media total comments.
+If you set C<1> as parameter it will renew all media data and return an up-do-date total comments.
+
+Hint: it also updates total likes.
+=cut
+sub comments {
+	my $self = shift;
+	$self->_clear_data if shift;
+	$self->_data->{comments}->{count}
+}
 
 =attr created_time
 
@@ -140,8 +150,8 @@ sub get_likes {
 	my $self = shift;
 	my %opts = @_;
 	my $url  = "/media/" . $self->id . "/likes";
-	my $instagram = $self->_instagram;
-	[ map { $instagram->user($_) } $instagram->_get_list( %opts, url => $url ) ]
+	my $api  = $self->_api;
+	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
 =method get_comments
@@ -153,16 +163,94 @@ Returns a list of L<API::Instagram::Media::Comment> objects of the media.
 Accepts C<count>.
 
 =cut
-
 sub get_comments {
 	my $self = shift;
 	my %opts = @_;
 	my $url  = "/media/" . $self->id . "/comments";
-	my $instagram = $self->_instagram;
-	[ map { $instagram->_create_comment_object($_) } $instagram->_get_list( %opts, url => $url ) ]
+	my $api  = $self->_api;
+	[ map { $api->comment($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
-=for Pod::Coverage BUILD
+
+sub BUILDARGS {
+	my ( $self, $opts ) = @_;
+
+	my @need_api = (
+		['user',          ''            ],
+		['user',          'HASH'        ],
+		['location',      ''            ],
+		['location',      'HASH',       ],
+		['tags',          'ARRAY',''    ],
+		['users_in_photo','ARRAY','HASH'],
+	);
+
+	for my $each ( @need_api ){
+
+		my ( $attr, $ref, $item_ref ) = @$each;
+
+		if ( exists $opts->{$attr} and ref $opts->{$attr} eq $ref ){
+
+			my $data = $opts->{$attr};
+
+			next if defined $item_ref    and
+					ref $data eq 'ARRAY' and
+					ref $data->[0] ne $item_ref;
+
+			$opts->{$attr} = [ $opts->{_api}, $data ];
+		}
+	}
+
+	return $opts;
+};
+
+
+sub _build_user           { [ $_[0]->_api, shift->_data->{user}           ] }
+sub _build_tags           { [ $_[0]->_api, shift->_data->{tags}           ] }
+sub _build_location       { [ $_[0]->_api, shift->_data->{location}       ] }
+sub _build_users_in_photo { [ $_[0]->_api, shift->_data->{users_in_photo} ] }
+sub _build_type           {                shift->_data->{type}             }
+sub _build_link           {                shift->_data->{link}             }
+sub _build_filter         {                shift->_data->{filter}           }
+sub _build_images         {                shift->_data->{images}           }
+sub _build_videos         {                shift->_data->{videos}           }
+sub _build_caption        {                shift->_data->{caption }         }
+sub _build_created_time   {                shift->_data->{created_time}     }
+
+sub _build__data {
+	my $self = shift;
+	my $url  = sprintf "media/%s", $self->id;
+	$self->_api->_request_data( $url );
+}
+
+############################################################
+# Attributes coercion that API::Instagram object reference #
+############################################################
+sub _coerce_user {
+	my ( $self, $data ) = @{$_[0]};
+	$self->user( $data ) if defined $data;
+};
+
+sub _coerce_location {
+	my ( $self, $data ) = @{$_[0]};
+	$self->location( $data ) if defined $data;
+};
+
+sub _coerce_tags {
+	my ( $self, $data ) = @{$_[0]};
+	[ map { $self->tag($_) } @$data ] if defined $data and ref $data eq 'ARRAY';
+};
+	
+sub _coerce_users_in_photo {
+	my ( $self, $data ) = @{$_[0]};
+	[
+		map {{
+			user     => $self->user( $_->{user} ),
+			position => $_->{position},
+		}} @$data
+	] if defined $data and ref $data eq 'ARRAY'
+};
+
+=for Pod::Coverage BUILDARGS
 =cut
 
 1;

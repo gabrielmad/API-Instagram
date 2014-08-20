@@ -4,9 +4,8 @@ package API::Instagram::Tag;
 
 use Moo;
 
-has _instagram  => ( is => 'ro' );
-has name        => ( is => 'ro' );
-has media_count => ( is => 'ro' );
+has _api        => ( is => 'ro', required => 1 );
+has name        => ( is => 'ro', required => 1 );
 
 =head1 SYNOPSIS
 
@@ -33,6 +32,9 @@ Returns the Tag name.
 
 Returns the total media tagged with it.
 
+=cut
+sub media_count { shift->_load('media_count') }
+
 =method recent_medias
 
 	my $medias = $tag->recent_medias( count => 5 );
@@ -46,8 +48,18 @@ Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as
 
 sub recent_medias {
 	my $self = shift;
-	my $url  = "/tags/" . $self->name . "/media/recent";
-	$self->_instagram->_recent_medias( $url, @_ );
+	my $url  = sprintf "tags/%s/media/recent", $self->name;
+	$self->_api->_recent_medias( $url, @_ );
+}
+
+sub _load {
+	my $self = shift;
+	my $attr = shift;
+
+	my $url  = sprintf "tags/%s", $self->name;
+	my $res  = $self->_api->_request_data($url);
+
+	$attr ? $res->{$attr} : $res;
 }
 
 1;

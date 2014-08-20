@@ -5,16 +5,26 @@ package API::Instagram::Media::Comment;
 use Moo;
 use Time::Moment;
 
-has _instagram   => ( is => 'ro' );
-has id           => ( is => 'ro' );
-has from         => ( is => 'ro' );
-has text         => ( is => 'ro' );
+has _api         => ( is => 'ro', required => 1 );
+has id           => ( is => 'ro', required => 1 );
+has from         => ( is => 'ro', required => 1, coerce => \&_coerce_from );
+has text         => ( is => 'ro', required => 1 );
 has created_time => ( is => 'ro', coerce => sub { Time::Moment->from_epoch( $_[0] ) } );
 
-sub BUILD {
+sub BUILDARGS {
 	my $self = shift;
-	$self->{from} = $self->_instagram->user( $self->{from} );
+	my $opts = shift;
+	$opts->{from} = [ $opts->{_api}, $opts->{from} ];
+	return $opts;
 }
+
+############################################################
+# Attributes coercion that API::Instagram object reference #
+############################################################
+sub _coerce_from {
+	my ( $self, $data ) = @{$_[0]};
+	$self->user( $data ) if defined $data;
+};
 
 =head1 SYNOPSIS
 
@@ -41,7 +51,7 @@ Returns the text commented.
 
 Returns the comment date in a L<Time::Moment> object.
 
-=for Pod::Coverage BUILD
+=for Pod::Coverage BUILDARGS
 =cut
 
 1;
