@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 20;
+use Test::More tests => 21;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -24,6 +24,7 @@ my $media = $api->media(3);
 isa_ok( $media, 'API::Instagram::Media' );
 is( $media->id,               3,                        'media_id'             );
 is( $media->type,             'video',                  'media_video'          );
+is( $media->filter,           'Vesper',                 'media_filter'         );
 is( $media->likes,            1,                        'media_likes'          );
 is( $media->comments,         2,                        'media_comments'       );
 is( $media->users_in_photo,   undef,                    'media_users_in_photo' );
