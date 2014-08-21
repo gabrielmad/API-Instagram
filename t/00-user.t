@@ -46,10 +46,14 @@ is( $user->liked_media, undef, 'user_liked_media' );
 is( $user->requested_by, undef, 'user_requested_by' );
 
 $data->{data}->{id} = 'self';
+$data->{data}->{profile_pic_url} = $data->{data}->{profile_picture};
+delete $data->{data}->{profile_picture};
+
 my $user2 = $api->user( $data->{data} );
 isa_ok( $user2, 'API::Instagram::User' );
 
 is( $user2->id, 'self', 'user2_id' );
+is( $user2->profile_picture, 'http://distillery.s3.amazonaws.com/profiles/profile_1574083_75sq_1295469061.jpg', 'user2_profile_picture' );
 is( ref $user2->feed, 'ARRAY', 'user2_feed' );
 is( ref $user2->liked_media, 'ARRAY', 'user2_liked_media' );
 is( ref $user2->requested_by, 'ARRAY', 'user2_requested_by' );
