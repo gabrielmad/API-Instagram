@@ -55,6 +55,9 @@ is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 
 
+delete $data->{data}->{user};
+delete $data->{data}->{location};
+delete $data->{data}->{tags};
 $data->{data}->{users_in_photo} = [
     {
         "user" => {

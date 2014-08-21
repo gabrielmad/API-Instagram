@@ -120,13 +120,13 @@ sub _coerce_location {
 
 sub _coerce_tags {
 	my ( $self, $data ) = @{$_[0]};
-	return if !defined $data or ref $data ne 'ARRAY';
+	return if ref $data ne 'ARRAY';
 	[ map { $self->tag($_) } @$data ]
 };
 	
 sub _coerce_users_in_photo {
 	my ( $self, $data ) = @{$_[0]};
-	return if !defined $data or ref $data ne 'ARRAY';
+	return if ref $data ne 'ARRAY';
 	[
 		map {{
 			user     => $self->user( $_->{user} ),
