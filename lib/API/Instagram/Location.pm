@@ -6,7 +6,7 @@ use Moo;
 use Carp;
 
 has _api      => ( is => 'ro', required => 1 );
-has id        => ( is => 'lazy', predicate => 1 );
+has id        => ( is => 'ro' );
 has latitude  => ( is => 'lazy' );
 has longitude => ( is => 'lazy' );
 has name      => ( is => 'lazy' );
