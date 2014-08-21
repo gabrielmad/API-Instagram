@@ -47,7 +47,7 @@ sub get_auth_url {
 
 	my @auth_fields = qw(client_id redirect_uri response_type scope);
 	for ( @auth_fields ) {
-		confess "ERROR: $_ required for generating authorization URL" unless defined $self->$_;
+		carp "ERROR: $_ required for generating authorization URL" and return unless defined $self->$_;
 	}
 
 	my $uri = URI->new( $self->_authorize_url );
@@ -61,14 +61,14 @@ sub get_access_token {
 
 	my @access_token_fields = qw(client_id redirect_uri grant_type client_secret code);
 	for ( @access_token_fields ) {
-		confess "ERROR: $_ required for generating access token." unless defined $self->$_;
+		carp "ERROR: $_ required for generating access token." and return unless defined $self->$_;
 	}
 
 	my $data = { map { $_ => $self->$_ } @access_token_fields };
 	my $json = from_json $self->_ua->post( $self->_access_token_url, [], $data )->decoded_content;
 
 	my $meta = $json->{meta};
-	confess "ERROR $meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
+	carp "ERROR $meta->{error_type}: $meta->{error_message}" and return if $meta->{code} ne '200';
 
 	wantarray ? ( $json->{access_token}, $self->user( $json->{user} ) ) : $json->{access_token};
 }
@@ -157,7 +157,7 @@ sub _get_list {
 sub _request {
 	my ( $self, $url, $params, $opts ) = @_;
 
-	confess "A valid access_token is required" unless defined $self->access_token;
+	carp "A valid access_token is required" and return {} unless defined $self->access_token;
 
 	# If URL is not prepared, prepares it
 	unless ( $opts->{prepared_url} ){
