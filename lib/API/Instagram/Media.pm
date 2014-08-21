@@ -105,27 +105,35 @@ sub _build__data {
 ############################################################
 sub _coerce_user {
 	my ( $self, $data ) = @{$_[0]};
-	$self->user( $data ) if defined $data;
+	return unless defined $data;
+	$self->user( $data )
 };
 
 sub _coerce_location {
 	my ( $self, $data ) = @{$_[0]};
-	$self->location( $data ) if defined $data;
+	return unless defined $data;
+	$self->location( $data )
 };
 
 sub _coerce_tags {
 	my ( $self, $data ) = @{$_[0]};
-	[ map { $self->tag($_) } @$data ] if defined $data and ref $data eq 'ARRAY';
+	return if !defined $data or ref $data ne 'ARRAY';
+	[ map { $self->tag($_) } @$data ]
 };
 	
 sub _coerce_users_in_photo {
+	return if !defined $_[0] or ref $_[0] ne 'ARRAY';
 	my ( $self, $data ) = @{$_[0]};
+use Data::Dumper;
+print "aaaaaa";
+	print Dumper $data;
+	return if !defined $data or ref $data ne 'ARRAY';
 	[
 		map {{
 			user     => $self->user( $_->{user} ),
 			position => $_->{position},
 		}} @$data
-	] if defined $data and ref $data eq 'ARRAY'
+	]
 };
 
 

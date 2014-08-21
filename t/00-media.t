@@ -15,10 +15,18 @@ my $api = Test::MockObject::Extends->new(
 			redirect_uri  => 'http://localhost',
 	})
 );
-
-$api->mock('_request', sub { decode_json join '', <DATA> });
+my $x;
+$api->mock('_request', sub { $x=decode_json join '', <DATA> });
 
 my $media = $api->media(3);
+
+use Data::Dumper;
+print Dumper $x;
+
+print Dumper $media->{users_in_photo};
+
+
+
 isa_ok( $media,               'API::Instagram::Media');
 isa_ok( $media->user,         'API::Instagram::User' );
 isa_ok( $media->created_time, 'Time::Moment'         );
@@ -32,8 +40,7 @@ is( $media->created_time->year, 2010,    'media_created_time' );
 is( ref $media->images,         'HASH',  'media_images'        );
 is( ref $media->videos,         'HASH',  'media_videos'        );
 
-is_deeply( $media->users_in_photo, [], 'media_users_in_photo' );
-
+ok( !$media->users_in_photo, 'media_users_in_photo' );
 ok( !$media->caption,  'media_caption'  );
 ok( !$media->location, 'media_location' );
 

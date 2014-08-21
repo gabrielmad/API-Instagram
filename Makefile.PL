@@ -21,6 +21,7 @@ my %WriteMakefileArgs = (
   "NAME" => "API::Instagram",
   "PREREQ_PM" => {
     "Carp" => 0,
+    "Data::Dumper" => 0,
     "Digest::MD5" => 0,
     "Furl" => 0,
     "JSON" => 0,
@@ -46,6 +47,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
+  "Data::Dumper" => 0,
   "Digest::MD5" => 0,
   "File::Spec" => 0,
   "Furl" => 0,
