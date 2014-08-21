@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 24;
+use Test::More tests => 30;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -55,9 +55,37 @@ is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 
 
-my $media2 = $api->media($data->{data});
+$data->{data}->{users_in_photo} = [
+    {
+        "user" => {
+            "username" => "kevin",
+            "full_name" => "Kevin S",
+            "id" => "3",
+            "profile_picture" => "..."
+        },
+        "position" => {
+            "x" => 0.315,
+            "y" => 0.9111
+        }
+    }
+];
+
+my $media2 = $api->media( $data->{data} );
 isa_ok( $media2, 'API::Instagram::Media' );
 
+my $uip = $media2->users_in_photo;
+is( ref $uip, 'ARRAY', 'media2_users_in_photo' );
+
+my $item = $uip->[0];
+is( ref $item, 'HASH', 'media2_users_in_photo_content' );
+
+my $item_user = $item->{user};
+isa_ok( $item_user, 'API::Instagram::User' );
+is( $item_user->username, 'kevin', 'media2_users_in_photo_content_user_username' );
+
+my $item_pos = $item->{position};
+is( ref $item_pos, 'HASH', 'media2_users_in_photo_content_position' );
+is( $item_pos->{y}, 0.9111, 'media2_users_in_photo_content_position_y' );
 
 __DATA__
 {
