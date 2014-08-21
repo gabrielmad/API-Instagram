@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 24;
+use Test::More tests => 30;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -58,6 +58,18 @@ is( $user2->profile_picture, 'http://distillery.s3.amazonaws.com/profiles/profil
 is( ref $user2->feed, 'ARRAY', 'user2_feed' );
 is( ref $user2->liked_media, 'ARRAY', 'user2_liked_media' );
 is( ref $user2->requested_by, 'ARRAY', 'user2_requested_by' );
+
+$data->{data}->{id} = '123';
+$data->{data}->{profile_picture} = "http://test.com/picture.jpg";
+
+my $user3 = $api->user( $data->{data} );
+isa_ok( $user3, 'API::Instagram::User' );
+
+is( $user3->id, 123, 'user2_id' );
+is( $user3->profile_picture, 'http://test.com/picture.jpg' );
+is( $user3->feed, undef, 'user_feed' );
+is( $user3->liked_media, undef, 'user_liked_media' );
+is( $user3->requested_by, undef, 'user_requested_by' );
 
 __DATA__
 {

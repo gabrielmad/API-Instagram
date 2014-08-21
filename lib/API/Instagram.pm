@@ -186,20 +186,6 @@ sub _request {
 
 sub _request_data { shift->_request(@_)->{data} || {} }
 
-sub _simple_request {
-	my $self   = shift;
-	my $url    = shift;
-	my $params = shift;
-
-	confess "A valid access_token is required" unless defined $self->access_token;
-	$params->{access_token} = $self->access_token;
-
-	my $uri = URI->new( $url );
-	$uri->query_form($params);
-
-	decode_json $self->_ua->get( $uri->as_string )->decoded_content;
-}
-
 ################################
 # Returns requested cache hash #
 ################################
