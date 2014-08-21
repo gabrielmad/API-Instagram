@@ -74,10 +74,17 @@ cover_db/runs/1408651702.49400.31968/cover.14
 cover_db/runs/1408651702.49402.39419/cover.14
 cover_db/runs/1408651703.49404.48840/cover.14
 cover_db/runs/1408651703.49407.53911/cover.14
+cover_db/runs/1408652014.50052.00813/cover.14
+cover_db/runs/1408652014.50054.34428/cover.14
+cover_db/runs/1408652015.50056.64309/cover.14
+cover_db/runs/1408652016.50058.37068/cover.14
+cover_db/runs/1408652016.50060.05248/cover.14
+cover_db/runs/1408652017.50063.12019/cover.14
 cover_db/structure/1a8663ee15b83c7b42b9391a0b6e6d75
 cover_db/structure/2e5debc58553436c64e3d69c50a981e9
 cover_db/structure/768412d8a6a2862450f06d7a60dd29be
 cover_db/structure/80e8f49dd169c47344010c7e56ee0963
+cover_db/structure/ac5e601b6defa8bf074fd2d2c307fbf8
 cover_db/structure/c0e3acfde6248ade0051086afa738ccd
 cover_db/structure/c5b6473a362bac2e66a6b2cca42d93aa
 cover_db/structure/d2018c053169647b3c833f3f63348c97
@@ -85,7 +92,6 @@ cover_db/structure/db0ee919e85340227bb52948792d0842
 cover_db/structure/e09b9428140ddc6a710e450ec1cd5263
 cover_db/structure/f32ca1f0f24bea45e635e468f3acf8ad
 cover_db/structure/f4d1ac65ad8049eec4971ef7f47ebf46
-cover_db/structure/f8f6015bf181088d3a67bb8744d597a5
 dist.ini
 lib/API/Instagram.pm
 lib/API/Instagram/Location.pm

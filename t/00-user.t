@@ -23,6 +23,7 @@ $api->mock('_request', sub { $json });
 $api->mock('_get_list', sub { [] });
 
 # First Object
+delete $json->{data}->{profile_picture};
 my $user = $api->user("1574083");
 isa_ok( $user, 'API::Instagram::User' );
 
@@ -31,7 +32,7 @@ is( $user->username, 'snoopdogg', 'user_username' );
 is( $user->full_name, 'Snoop Dogg', 'user_fullname' );
 is( $user->bio, 'This is my bio', 'user_bio' );
 is( $user->website, 'http://snoopdogg.com', 'user_website' );
-is( $user->profile_picture, 'http://distillery.s3.amazonaws.com/profiles/profile_1574083_75sq_1295469061.jpg', 'user_profile_picture' );
+is( $user->profile_picture, undef, 'user_profile_picture' );
 
 is( $user->media, 1320, 'user_media' );
 is( $user->follows, 420, 'user_follows' );
