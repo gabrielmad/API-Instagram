@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 33;
+use Test::More tests => 35;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -57,6 +57,7 @@ is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 
 # Second Object
+$json = decode_json $data;
 delete $json->{data}->{user};
 delete $json->{data}->{location};
 undef  $json->{data}->{tags};
@@ -94,6 +95,17 @@ is( $item_user->username, 'kevin', 'media2_users_in_photo_content_user_username'
 my $item_pos = $item->{position};
 is( ref $item_pos, 'HASH', 'media2_users_in_photo_content_position' );
 is( $item_pos->{y}, 0.9111, 'media2_users_in_photo_content_position_y' );
+
+# Third Object
+$json = decode_json $data;
+$json->{data}->{users_in_photo} = [];
+
+my $media3 = $api->media( $json->{data} );
+isa_ok( $media3, 'API::Instagram::Media' );
+
+my $uip2 = $media3->users_in_photo;
+is( ref $uip2, '', 'media3_users_in_photo' );
+
 
 __DATA__
 {
