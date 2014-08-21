@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 18;
+use Test::More tests => 20;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -16,7 +16,8 @@ my $api = Test::MockObject::Extends->new(
 	})
 );
 
-$api->mock('_request', sub { decode_json join '', <DATA> });
+my $data = decode_json join '', <DATA>;
+$api->mock('_request', sub { $data });
 $api->mock('_get_list', sub { [] });
 
 my $media = $api->media(3);
@@ -39,10 +40,10 @@ is( $user->username, 'kevin', 'media_user' );
 
 my $tags = $media->tags;
 is( ref $tags, 'ARRAY', 'media_videos' );
-isa_ok( $tags->[0], 'API:Instagram::Tag' );
+isa_ok( $tags->[0], 'API::Instagram::Tag' );
 
 my $location = $media->location;
-isa_ok( $location, 'API:Instagram::Location');
+isa_ok( $location, 'API::Instagram::Location');
 is( $location->latitude, 0.2, 'media_location' );
 
 isa_ok( $media->created_time, 'Time::Moment' );
@@ -66,7 +67,7 @@ __DATA__
         },
         "users_in_photo": null,
         "filter": "Vesper",
-        "tags": ['test'],
+        "tags": ["test"],
         "comments": {
             "data": [{
                 "created_time": "1279332030",
