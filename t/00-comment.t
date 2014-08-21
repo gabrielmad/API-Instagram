@@ -17,7 +17,7 @@ my $api = Test::MockObject::Extends->new(
 );
 
 my $data = decode_json join '', <DATA>;
-$api->mock('_request', sub { ${\$data} });
+$api->mock('_request', sub { $data });
 
 my $media = $api->media(1);
 isa_ok( $media, 'API::Instagram::Media' );

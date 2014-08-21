@@ -20,6 +20,7 @@ t/00-load.t
 t/00-location.t
 t/00-media.t
 t/00-tag.t
+t/00-user.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
 weaver.ini

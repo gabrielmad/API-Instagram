@@ -17,7 +17,7 @@ my $api = Test::MockObject::Extends->new(
 );
 
 my $data = decode_json join '', <DATA>;
-$api->mock('_request', sub { ${\$data} });
+$api->mock('_request', sub { $data });
 $api->mock('_get_list', sub { [] });
 
 my $location = $api->location('1');
