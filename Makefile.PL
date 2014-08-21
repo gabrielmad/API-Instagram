@@ -31,6 +31,7 @@ my %WriteMakefileArgs = (
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
+    "Data::Dumper" => 0,
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
@@ -46,6 +47,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
+  "Data::Dumper" => 0,
   "Digest::MD5" => 0,
   "File::Spec" => 0,
   "Furl" => 0,

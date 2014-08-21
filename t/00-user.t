@@ -17,10 +17,12 @@ my $api = Test::MockObject::Extends->new(
 	})
 );
 
-my $data = decode_json join '', <DATA>;
-$api->mock('_request', sub { $data });
+my $data = join '', <DATA>;
+my $json = decode_json $data;
+$api->mock('_request', sub { $json });
 $api->mock('_get_list', sub { [] });
 
+# First Object
 my $user = $api->user("1574083");
 isa_ok( $user, 'API::Instagram::User' );
 
@@ -47,11 +49,13 @@ is( $user->feed, undef, 'user_feed' );
 is( $user->liked_media, undef, 'user_liked_media' );
 is( $user->requested_by, undef, 'user_requested_by' );
 
-$data->{data}->{id} = 'self';
-$data->{data}->{profile_pic_url} = $data->{data}->{profile_picture};
-delete $data->{data}->{profile_picture};
+# Second Object
+$json = decode_json $data;
+$json->{data}->{id} = 'self';
+$json->{data}->{profile_pic_url} = $json->{data}->{profile_picture};
+delete $json->{data}->{profile_picture};
 
-my $user2 = $api->user( $data->{data} );
+my $user2 = $api->user( $json->{data} );
 isa_ok( $user2, 'API::Instagram::User' );
 
 is( $user2->id, 'self', 'user2_id' );
@@ -60,18 +64,19 @@ is( ref $user2->feed, 'ARRAY', 'user2_feed' );
 is( ref $user2->liked_media, 'ARRAY', 'user2_liked_media' );
 is( ref $user2->requested_by, 'ARRAY', 'user2_requested_by' );
 
-$data->{data}->{id} = '123';
-$data->{data}->{profile_picture} = "http://test.com/picture.jpg";
+# Third Object
+$json = decode_json $data;
+$json->{data}->{id} = '123';
+$json->{data}->{profile_picture} = "http://test.com/picture.jpg";
 
-my $user3 = $api->user( $data->{data} );
-
+my $user3 = $api->user( $json->{data} );
 isa_ok( $user3, 'API::Instagram::User' );
 
-is( $user3->id, 123, 'user2_id' );
+is( $user3->id, 123, 'user3_id' );
 is( $user3->profile_picture, 'http://test.com/picture.jpg' );
-is( $user3->feed, undef, 'user_feed' );
-is( $user3->liked_media, undef, 'user_liked_media' );
-is( $user3->requested_by, undef, 'user_requested_by' );
+is( $user3->feed, undef, 'user3_feed' );
+is( $user3->liked_media, undef, 'user3_liked_media' );
+is( $user3->requested_by, undef, 'user3_requested_by' );
 
 __DATA__
 {

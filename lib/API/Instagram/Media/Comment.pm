@@ -23,7 +23,8 @@ sub BUILDARGS {
 ############################################################
 sub _coerce_from {
 	my ( $self, $data ) = @{$_[0]};
-	$self->user( $data ) if defined $data;
+	return unless defined $data;
+	$self->user( $data );
 };
 
 

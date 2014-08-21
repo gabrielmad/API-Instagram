@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 30;
+use Test::More tests => 33;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -17,10 +17,12 @@ my $api = Test::MockObject::Extends->new(
 	})
 );
 
-my $data = decode_json join '', <DATA>;
-$api->mock('_request', sub { $data });
+my $data = join '', <DATA>;
+my $json = decode_json $data;
+$api->mock('_request', sub { $json });
 $api->mock('_get_list', sub { [] });
 
+# First Object
 my $media = $api->media(3);
 isa_ok( $media, 'API::Instagram::Media' );
 is( $media->id,               3,                        'media_id'             );
@@ -54,11 +56,11 @@ is( $media->created_time->year, 2010, 'media_created_time' );
 is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 
-
-delete $data->{data}->{user};
-delete $data->{data}->{location};
-delete $data->{data}->{tags};
-$data->{data}->{users_in_photo} = [
+# Second Object
+delete $json->{data}->{user};
+delete $json->{data}->{location};
+delete $json->{data}->{tags};
+$json->{data}->{users_in_photo} = [
     {
         "user" => {
             "username" => "kevin",
@@ -73,8 +75,11 @@ $data->{data}->{users_in_photo} = [
     }
 ];
 
-my $media2 = $api->media( $data->{data} );
+my $media2 = $api->media( $json->{data} );
 isa_ok( $media2, 'API::Instagram::Media' );
+is( $media2->user, undef, 'media2_user');
+is( $media2->location, undef, 'media2_location');
+is( $media2->tags, undef, 'media2_tags');
 
 my $uip = $media2->users_in_photo;
 is( ref $uip, 'ARRAY', 'media2_users_in_photo' );

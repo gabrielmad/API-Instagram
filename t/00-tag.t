@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -16,8 +16,9 @@ my $api = Test::MockObject::Extends->new(
 	})
 );
 
-my $data = decode_json join '', <DATA>;
-$api->mock('_request', sub { $data });
+my $data = join '', <DATA>;
+my $json = decode_json $data;
+$api->mock('_request', sub { $json });
 $api->mock('_get_list', sub { [] });
 
 my $tag = $api->tag('nofilter');
