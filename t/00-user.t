@@ -29,6 +29,7 @@ is( $user->username, 'snoopdogg', 'user_username' );
 is( $user->full_name, 'Snoop Dogg', 'user_fullname' );
 is( $user->bio, 'This is my bio', 'user_bio' );
 is( $user->website, 'http://snoopdogg.com', 'user_website' );
+is( $user->profile_picture, 'http://distillery.s3.amazonaws.com/profiles/profile_1574083_75sq_1295469061.jpg', 'user_profile_picture' );
 
 is( $user->media, 1320, 'user_media' );
 is( $user->follows, 420, 'user_follows' );
@@ -63,6 +64,7 @@ $data->{data}->{id} = '123';
 $data->{data}->{profile_picture} = "http://test.com/picture.jpg";
 
 my $user3 = $api->user( $data->{data} );
+
 isa_ok( $user3, 'API::Instagram::User' );
 
 is( $user3->id, 123, 'user2_id' );

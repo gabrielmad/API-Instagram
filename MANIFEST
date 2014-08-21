@@ -7,6 +7,16 @@ MANIFEST
 META.yml
 Makefile.PL
 README
+cover_db/digests
+cover_db/runs/1408645149.40266.17953/cover.14
+cover_db/runs/1408645161.40282.11296/cover.14
+cover_db/structure/2e5debc58553436c64e3d69c50a981e9
+cover_db/structure/5d6d64d139e42509c53f9d0762bac39d
+cover_db/structure/675fcd87bcc1d76a154d786644123a4e
+cover_db/structure/c5b6473a362bac2e66a6b2cca42d93aa
+cover_db/structure/c94dd76399ff57dc58e6fc2c4261011b
+cover_db/structure/f4d1ac65ad8049eec4971ef7f47ebf46
+cover_db/structure/fa33d9f07faf05c5a60e30d2506b7ef3
 dist.ini
 lib/API/Instagram.pm
 lib/API/Instagram/Location.pm
