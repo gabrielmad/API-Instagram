@@ -52,8 +52,7 @@ is( $user->requested_by, undef, 'user_requested_by' );
 # Second Object
 $json = decode_json $data;
 $json->{data}->{id} = 'self';
-$json->{data}->{profile_pic_url} = $json->{data}->{profile_picture};
-delete $json->{data}->{profile_picture};
+$json->{data}->{profile_pic_url} = "http://test.com/picture.jpg";
 
 my $user2 = $api->user( $json->{data} );
 isa_ok( $user2, 'API::Instagram::User' );
