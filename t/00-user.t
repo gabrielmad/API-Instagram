@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 30;
+use Test::More tests => 31;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
