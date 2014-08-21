@@ -3,6 +3,7 @@ abstract: 'OO Interface to Instagram REST API'
 author:
   - 'Gabriel Vieira <gabriel.vieira@gmail.com>'
 build_requires:
+  Data::Dumper: 0
   File::Spec: 0
   IO::Handle: 0
   IPC::Open3: 0
@@ -20,7 +21,6 @@ meta-spec:
 name: API-Instagram
 requires:
   Carp: 0
-  Data::Dumper: 0
   Digest::MD5: 0
   Furl: 0
   JSON: 0

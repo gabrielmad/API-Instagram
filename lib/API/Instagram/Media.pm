@@ -122,11 +122,7 @@ sub _coerce_tags {
 };
 	
 sub _coerce_users_in_photo {
-	return if !defined $_[0] or ref $_[0] ne 'ARRAY';
 	my ( $self, $data ) = @{$_[0]};
-use Data::Dumper;
-print "aaaaaa";
-	print Dumper $data;
 	return if !defined $data or ref $data ne 'ARRAY';
 	[
 		map {{
