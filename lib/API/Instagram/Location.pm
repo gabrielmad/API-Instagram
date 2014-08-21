@@ -6,7 +6,7 @@ use Moo;
 use Carp;
 
 has _api      => ( is => 'ro', required => 1 );
-has id        => ( is => 'ro' );
+has id        => ( is => 'ro', predicate => 1 );
 has latitude  => ( is => 'lazy' );
 has longitude => ( is => 'lazy' );
 has name      => ( is => 'lazy' );
@@ -18,7 +18,7 @@ sub recent_medias {
 	my $self = shift;
 
 	unless ( $self->has_id ) {
-		carp "Recent medias not available for this location yet.";
+		carp "Recent medias not available for this location with no id yet.";
 		return [];
 	}
 

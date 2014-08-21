@@ -6,13 +6,14 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 23;
+use Test::More tests => 24;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
+            no_cache      => 1,
 	})
 );
 
@@ -52,6 +53,11 @@ is( $media->created_time->year, 2010, 'media_created_time' );
 
 is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
+
+
+my $media2 = $api->media($data->{data});
+isa_ok( $media2, 'API::Instagram::Media' );
+
 
 __DATA__
 {

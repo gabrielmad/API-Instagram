@@ -49,7 +49,6 @@ sub get_comments {
 	[ map { $api->comment($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
-
 sub BUILDARGS {
 	my ( $self, $opts ) = @_;
 
@@ -64,17 +63,21 @@ sub BUILDARGS {
 
 	for my $each ( @need_api ){
 
-		my ( $attr, $ref, $item_ref ) = @$each;
+		my ( $attr_name, $ref, $item_ref ) = @$each;
 
-		if ( exists $opts->{$attr} and ref $opts->{$attr} eq $ref ){
+		if ( exists $opts->{$attr_name} ){
 
-			my $data = $opts->{$attr};
+			my $attr = $opts->{$attr_name};
 
-			next if defined $item_ref    and
-					ref $data eq 'ARRAY' and
-					ref $data->[0] ne $item_ref;
+			next if defined $attr and (
+										ref $attr ne $ref or (
+																defined $item_ref    and
+																ref $attr eq 'ARRAY' and
+																ref $attr->[0] ne $item_ref
+															)
+										);
 
-			$opts->{$attr} = [ $opts->{_api}, $data ];
+			$opts->{$attr_name} = [ $opts->{_api}, $attr ];
 		}
 	}
 

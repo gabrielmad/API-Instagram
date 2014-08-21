@@ -108,7 +108,7 @@ sub _get_obj {
 	my $return = $self->_cache($type)->{$cache_code} //= ("API::Instagram::$type")->new( $data );
 
 	# Deletes cache if no-cache is set
-	delete $self->_cache($type)->{$code} if $self->no_cache;
+	delete $self->_cache($type)->{$cache_code} if $self->no_cache;
 
 	return $return;
 }
