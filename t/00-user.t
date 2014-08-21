@@ -67,7 +67,8 @@ is( ref $user2->requested_by, 'ARRAY', 'user2_requested_by' );
 # Third Object
 $json = decode_json $data;
 $json->{data}->{id} = '123';
-$json->{data}->{profile_picture} = "http://test.com/picture.jpg";
+$json->{data}->{profile_pic_url} = "http://test.com/picture.jpg";
+delete $json->{data}->{profile_picture};
 
 my $user3 = $api->user( $json->{data} );
 isa_ok( $user3, 'API::Instagram::User' );
