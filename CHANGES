@@ -3,8 +3,14 @@ Changes from 2013-08-21 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.008 at 2014-08-21 02:35:14 +0000
+version 0.008 at 2014-08-21 02:56:32 +0000
 ------------------------------------------
+
+  Change: 78e1204e2c853e2e2f4f33261b0ac0a59b71f6e6
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-20 23:37:40 +0000
+
+    Adding API::Instagram::Media tests 
 
   Change: 1014b57b8f0a5135a8e2c0c366160b70d9ec1a4e
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
