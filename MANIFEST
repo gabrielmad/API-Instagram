@@ -16,6 +16,7 @@ lib/API/Instagram/Tag.pm
 lib/API/Instagram/User.pm
 t/00-compile.t
 t/00-load.t
+t/00-media.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
 weaver.ini

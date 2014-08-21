@@ -222,7 +222,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
-=for HTML <a href='https://coveralls.io/r/gabrielmad/API-Instagram'><img src='https://coveralls.io/repos/gabrielmad/API-Instagram/badge.png' alt='Coverage Status' /></a>
+=for HTML <a href='https://coveralls.io/r/gabrielmad/API-Instagram?branch=build%2Fmaster'><img src='https://coveralls.io/repos/gabrielmad/API-Instagram/badge.png?branch=build%2Fmaster' alt='Coverage Status' /></a>
 
 =head1 VERSION
 

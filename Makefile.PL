@@ -34,6 +34,7 @@ my %WriteMakefileArgs = (
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
+    "Test::MockObject::Extends" => 0,
     "Test::More" => 0
   },
   "VERSION" => "0.008",
@@ -52,6 +53,7 @@ my %FallbackPrereqs = (
   "IPC::Open3" => 0,
   "JSON" => 0,
   "Moo" => 0,
+  "Test::MockObject::Extends" => 0,
   "Test::More" => 0,
   "Time::Moment" => 0,
   "URI" => 0,

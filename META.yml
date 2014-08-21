@@ -6,6 +6,7 @@ build_requires:
   File::Spec: 0
   IO::Handle: 0
   IPC::Open3: 0
+  Test::MockObject::Extends: 0
   Test::More: 0
   perl: 5.010
 configure_requires:
