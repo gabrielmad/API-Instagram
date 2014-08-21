@@ -16,7 +16,7 @@ has user           => ( is => 'lazy', coerce => \&_coerce_user           );
 has tags           => ( is => 'lazy', coerce => \&_coerce_tags           );
 has location       => ( is => 'lazy', coerce => \&_coerce_location       );
 has users_in_photo => ( is => 'lazy', coerce => \&_coerce_users_in_photo );
-has caption        => ( is => 'lazy', coerce => sub { $_[0]->{text} } );
+has caption        => ( is => 'lazy', coerce => sub { $_[0]->{text} if $_[0] and ref $_[0] eq 'HASH' } );
 has created_time   => ( is => 'lazy', coerce => sub { Time::Moment->from_epoch( $_[0] ) } );
 has _data          => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
 

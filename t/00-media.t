@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 21;
+use Test::More tests => 23;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -49,6 +49,9 @@ is( $location->latitude, 0.2, 'media_location' );
 
 isa_ok( $media->created_time, 'Time::Moment' );
 is( $media->created_time->year, 2010, 'media_created_time' );
+
+is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
+is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 
 __DATA__
 {
