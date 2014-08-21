@@ -59,7 +59,7 @@ is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 # Second Object
 delete $json->{data}->{user};
 delete $json->{data}->{location};
-delete $json->{data}->{tags};
+undef  $json->{data}->{tags};
 $json->{data}->{users_in_photo} = [
     {
         "user" => {
