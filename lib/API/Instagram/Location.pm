@@ -27,7 +27,7 @@ sub recent_medias {
 
 sub _build_name      { shift->_data->{name}      }
 sub _build_latitude  { shift->_data->{latitude}  }
-sub _build_longitute { shift->_data->{longitute} }
+sub _build_longitude { shift->_data->{longitute} }
 
 sub _build__data {
 	my $self = shift;
