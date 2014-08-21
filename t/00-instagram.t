@@ -17,9 +17,9 @@ my $api = API::Instagram->new({
 
 isa_ok( $api, 'API::Instagram');
 ok( $api->get_auth_url, 'get_auth_url' );
+is( $api->get_access_token, undef, 'get_access_token' );
 
 $api->code('789');
-
 is( $api->code, 789, 'code' );
-is( $api->access_token, undef, 'access_token' );
 is( $api->user->username, undef, 'user' );
+
