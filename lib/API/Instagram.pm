@@ -31,7 +31,7 @@ has code              => ( is => 'rw', isa => sub { confess "Code not provided" 
 has access_token      => ( is => 'rw', isa => sub { confess "No access token provided" unless $_[0] } );
 has no_cache          => ( is => 'rw', default => sub { 0 } );
 
-has _ua               => ( is => 'ro', default => sub { Furl->new()} );
+has _ua               => ( is => 'ro', default => sub { Furl->new() } );
 has _obj_cache        => ( is => 'ro', default => sub { { User => {}, Media => {}, Location => {}, Tag => {}, 'Media::Comment' => {} } } );
 has _endpoint_url     => ( is => 'ro', default => sub { 'https://api.instagram.com/v1'                 } );
 has _authorize_url    => ( is => 'ro', default => sub { 'https://api.instagram.com/oauth/authorize'    } );
@@ -175,7 +175,7 @@ sub _request {
 	print "Requesting: $url$/" if $self->_debug;
 
 	# Treats response content
-	my $res  = decode_json $self->_ua->get( $url )->decoded_content;
+	my $res = decode_json $self->_ua->get( $url )->decoded_content;
 
 	# Verifies meta node
 	my $meta = $res->{meta};

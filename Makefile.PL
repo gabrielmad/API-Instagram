@@ -32,6 +32,7 @@ my %WriteMakefileArgs = (
   },
   "TEST_REQUIRES" => {
     "File::Spec" => 0,
+    "Furl::Response" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
     "Test::MockObject::Extends" => 0,
@@ -49,6 +50,7 @@ my %FallbackPrereqs = (
   "Digest::MD5" => 0,
   "File::Spec" => 0,
   "Furl" => 0,
+  "Furl::Response" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
   "JSON" => 0,
