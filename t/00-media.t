@@ -20,25 +20,33 @@ $api->mock('_request', sub { decode_json join '', <DATA> });
 $api->mock('_get_list', sub { [] });
 
 my $media = $api->media(3);
-isa_ok( $media,               'API::Instagram::Media');
-isa_ok( $media->user,         'API::Instagram::User' );
-isa_ok( $media->created_time, 'Time::Moment'         );
+isa_ok( $media, 'API::Instagram::Media' );
+is( $media->id,               3,                        'media_id'             );
+is( $media->type,             'video',                  'media_video'          );
+is( $media->likes,            1,                        'media_likes'          );
+is( $media->comments,         2,                        'media_comments'       );
+is( $media->users_in_photo,   undef,                    'media_users_in_photo' );
+is( $media->caption,          undef,                    'media_caption'        );
+is( $media->link,             'http://instagr.am/p/D/', 'media_link'           );
+is( ref $media->images,       'HASH',                   'media_images'         );
+is( ref $media->videos,       'HASH',                   'media_videos'         );
+is( ref $media->get_likes,    'ARRAY',                  'media_get_likes'      );
+is( ref $media->get_comments, 'ARRAY',                  'media_get_comments'   );
 
-is( $media->id,                 3,                        'media_id'             );
-is( $media->type,               'video',                  'media_video'          );
-is( $media->likes,              1,                        'media_likes'          );
-is( $media->comments,           2,                        'media_comments'       );
-is( $media->user->username,     'kevin',                  'media_user'           );
-is( $media->created_time->year, 2010,                     'media_created_time'   );
-is( $media->users_in_photo,     undef,                    'media_users_in_photo' );
-is( $media->caption,            undef,                    'media_caption'        );
-is( $media->location,           undef,                    'media_location'       );
-is( $media->link,               'http://instagr.am/p/D/', 'media_link'           );
-is( ref $media->images,         'HASH',                   'media_images'         );
-is( ref $media->videos,         'HASH',                   'media_videos'         );
-is( ref $media->tags,           'ARRAY',                  'media_videos'         );
-is( ref $media->get_likes,      'ARRAY',                  'media_get_likes'      );
-is( ref $media->get_comments,   'ARRAY',                  'media_get_comments'   );
+my $user = $media->user;
+isa_ok( $user, 'API::Instagram::User' );
+is( $user->username, 'kevin', 'media_user' );
+
+my $tags = $media->tags;
+is( ref $tags, 'ARRAY', 'media_videos' );
+isa_ok( $tags->[0], 'API:Instagram::Tag' );
+
+my $location = $media->location;
+isa_ok( $location, 'API:Instagram::Location');
+is( $location->latitude, 0.2, 'media_location' );
+
+isa_ok( $media->created_time, 'Time::Moment' );
+is( $media->created_time->year, 2010, 'media_created_time' );
 
 __DATA__
 {
@@ -58,7 +66,7 @@ __DATA__
         },
         "users_in_photo": null,
         "filter": "Vesper",
-        "tags": [],
+        "tags": ['test'],
         "comments": {
             "data": [{
                 "created_time": "1279332030",
@@ -121,6 +129,6 @@ __DATA__
             }
         },
         "id": "3",
-        "location": null
+        "location": { "latitude":"0.2", "longitude":"0.3"}
     }
 }
