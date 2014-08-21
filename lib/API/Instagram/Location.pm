@@ -10,14 +10,15 @@ has id        => ( is => 'lazy', predicate => 1 );
 has latitude  => ( is => 'lazy' );
 has longitude => ( is => 'lazy' );
 has name      => ( is => 'lazy' );
-has _data     => ( is => 'lazy' );
+has _data     => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
+
 
 
 sub recent_medias {
 	my $self = shift;
 
 	unless ( $self->has_id ) {
-		carp "Not available yet.";
+		carp "Recent medias not available for this location yet.";
 		return [];
 	}
 
