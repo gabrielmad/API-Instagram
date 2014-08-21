@@ -26,7 +26,7 @@ isa_ok( $media->created_time, 'Time::Moment'         );
 is( $media->id,                 '3',     'media_id'           );
 is( $media->type,               'video', 'media_video'        );
 is( $media->comments,           2,       'media_comments'     );
-is( $media->location,           undef,   'media_location'     );
+is( $media->location,           '',      'media_location'     );
 is( $media->user->username,     'kevin', 'media_user'         );
 is( $media->created_time->year, '2010',  'media_created_time' );
 
