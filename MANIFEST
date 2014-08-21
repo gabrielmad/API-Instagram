@@ -40,9 +40,17 @@ cover_db/runs/1408657700.52872.43985/cover.14
 cover_db/runs/1408657701.52874.11097/cover.14
 cover_db/runs/1408657701.52876.46353/cover.14
 cover_db/runs/1408657702.52880.33883/cover.14
+cover_db/runs/1408657953.53113.32880/cover.14
+cover_db/runs/1408657955.53115.36168/cover.14
+cover_db/runs/1408657958.53119.41004/cover.14
+cover_db/runs/1408657960.53125.35108/cover.14
+cover_db/runs/1408657962.53129.07569/cover.14
+cover_db/runs/1408657964.53134.32879/cover.14
+cover_db/runs/1408657967.53138.17471/cover.14
 cover_db/structure/0cb9eb9e5a8ed23935f4050405bd0788
 cover_db/structure/2c1b963f64dec353d27c5a3998a7395a
 cover_db/structure/2e5debc58553436c64e3d69c50a981e9
+cover_db/structure/6430ccce8467476499219ce220573326
 cover_db/structure/9d9dbbdafddf1ad2fe6585e3dfcaac2f
 cover_db/structure/a229b56abab211a9dd1fa6c83f058ce4
 cover_db/structure/a6b5c2f987f3a7dd32090e85f2bde13e
@@ -61,6 +69,7 @@ lib/API/Instagram/Tag.pm
 lib/API/Instagram/User.pm
 t/00-comment.t
 t/00-compile.t
+t/00-instagram.t
 t/00-load.t
 t/00-location.t
 t/00-media.t
