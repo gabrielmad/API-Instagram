@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 35;
+use Test::More tests => 37;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -35,6 +35,8 @@ is( $media->caption,          undef,                    'media_caption'        )
 is( $media->link,             'http://instagr.am/p/D/', 'media_link'           );
 is( ref $media->images,       'HASH',                   'media_images'         );
 is( ref $media->videos,       'HASH',                   'media_videos'         );
+is( ref $media->last_likes,   'ARRAY',                  'media_last_likes'     );
+is( ref $media->last_comments,'ARRAY',                  'media_last_comments'  );
 is( ref $media->get_likes,    'ARRAY',                  'media_get_likes'      );
 is( ref $media->get_comments, 'ARRAY',                  'media_get_comments'   );
 

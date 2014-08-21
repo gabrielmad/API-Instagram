@@ -32,6 +32,19 @@ sub comments {
 	$self->_clear_data if shift;
 	$self->_data->{comments}->{count}
 }
+sub last_likes {
+	my $self = shift;
+	$self->_clear_data if shift;
+	my $api  = $self->_api;
+	[ map { $api->user($_) } @{ $self->_data->{likes}->{data} || [] } ]
+}
+
+sub last_comments {
+	my $self = shift;
+	$self->_clear_data if shift;
+	my $api  = $self->_api;
+	[ map { $api->comment($_) } @{ $self->_data->{comments}->{data} || [] } ]
+}
 
 sub get_likes {
 	my $self = shift;
@@ -246,7 +259,7 @@ Returns the media date in a L<Time::Moment> object.
 Returns media total likes.
 If you set C<1> as parameter it will renew all media data and return an up-do-date total likes.
 
-Hint: it also updates total comments.
+Hint: C<1> as parameter also updates total comments, last likes and last comments.
 
 =head2 comments
 
@@ -259,7 +272,29 @@ Hint: it also updates total comments.
 Returns media total comments.
 If you set C<1> as parameter it will renew all media data and return an up-do-date total comments.
 
-Hint: it also updates total likes.
+Hint: C<1> as parameter also updates total likes, last likes and last comments.
+
+=head2 last_likes
+
+	for my $user ( @{ $media->last_likes } ) {
+		say $user->username;
+	}
+
+Returns a list of C<API::Instagram::User> of the last users who liked the media.
+If you set C<1> as parameter it will renew all media data and return an up-do-date list.
+
+Hint: C<1> as parameter also updates total likes, total comments and last comments.
+
+=head2 last_comments
+
+	for my $comment ( @{ $media->last_comments } ) {
+		printf "%s: %s\n", $comment->from->username, $comment->text;
+	}
+
+Returns a list of C<API::Instagram::Media::Comment> of the last comments on the media.
+If you set C<1> as parameter it will renew all media data and return an up-do-date list.
+
+Hint: C<1> as parameter also updates total likes, total comments and last likes.
 
 =head2 get_likes
 
