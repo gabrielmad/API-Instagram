@@ -8,7 +8,7 @@ use JSON;
 use Furl;
 use Furl::Response;
 use API::Instagram;
-use Test::More tests => 9;
+use Test::More tests => 10;
 
 my $data = join '', <DATA>;
 my $ua   = Test::MockObject::Extends->new( Furl->new() );
@@ -42,6 +42,8 @@ is( $api->access_token, 123456789, 'get_access_token' );
 
 isa_ok( $me, 'API::Instagram::User');
 is( $me->username, "snoopdogg", 'auth_user' );
+
+is( ref $api->_request('media'), 'HASH', '_request' );
 
 __DATA__
 {
