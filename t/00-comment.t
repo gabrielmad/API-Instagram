@@ -17,8 +17,6 @@ my $api = Test::MockObject::Extends->new(
 	})
 );
 
-use Data::Dumper;
-
 my $data = join '', <DATA>;
 my $json = decode_json $data;
 $api->mock('_request', sub { $json });
