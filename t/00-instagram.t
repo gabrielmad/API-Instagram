@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 5;
+use Test::More tests => 3;
 
 my $api = API::Instagram->new({
 			client_id     => '123',
@@ -16,7 +16,8 @@ my $api = API::Instagram->new({
 });
 
 isa_ok( $api, 'API::Instagram');
-is( $api->client_id, 123, 'client_id' );
-is( $api->client_secret, 456, 'client_secret' );
-is( $api->redirect_uri, 'http://localhost', 'redirect_uri' );
-is( $api->no_cache, 1, 'no_cache' );
+ok( $api->get_auth_url, 'get_auth_url' );
+
+$api->code('789');
+
+is( $api->code, 789, 'code' );
