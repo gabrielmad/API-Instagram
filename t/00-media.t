@@ -15,18 +15,10 @@ my $api = Test::MockObject::Extends->new(
 			redirect_uri  => 'http://localhost',
 	})
 );
-my $x;
-$api->mock('_request', sub { $x=decode_json join '', <DATA> });
+
+$api->mock('_request', sub { decode_json join '', <DATA> });
 
 my $media = $api->media(3);
-
-use Data::Dumper;
-print Dumper $x;
-
-print Dumper $media->{users_in_photo};
-
-
-
 isa_ok( $media,               'API::Instagram::Media');
 isa_ok( $media->user,         'API::Instagram::User' );
 isa_ok( $media->created_time, 'Time::Moment'         );
@@ -37,12 +29,12 @@ is( $media->likes,              1,       'media_likes'        );
 is( $media->comments,           2,       'media_comments'     );
 is( $media->user->username,     'kevin', 'media_user'         );
 is( $media->created_time->year, 2010,    'media_created_time' );
-is( ref $media->images,         'HASH',  'media_images'        );
-is( ref $media->videos,         'HASH',  'media_videos'        );
+is( $media->users_in_photo,     undef, 'media_users_in_photo' );
+is( $media->caption,            undef, 'media_caption'        );
+is( $media->location,           undef, 'media_location'       );
+is( ref $media->images,         'HASH',  'media_images'       );
+is( ref $media->videos,         'HASH',  'media_videos'       );
 
-ok( !$media->users_in_photo, 'media_users_in_photo' );
-ok( !$media->caption,  'media_caption'  );
-ok( !$media->location, 'media_location' );
 
 __DATA__
 {
