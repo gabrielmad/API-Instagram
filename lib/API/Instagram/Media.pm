@@ -36,14 +36,14 @@ sub last_likes {
 	my $self = shift;
 	$self->_clear_data if shift;
 	my $api  = $self->_api;
-	[ map { $api->user($_) } @{ $self->_data->{likes}->{data} || [] } ]
+	[ map { $api->user($_) } @{ $self->_data->{likes}->{data} } ]
 }
 
 sub last_comments {
 	my $self = shift;
 	$self->_clear_data if shift;
 	my $api  = $self->_api;
-	[ map { $api->comment($_) } @{ $self->_data->{comments}->{data} || [] } ]
+	[ map { $api->comment($_) } @{ $self->_data->{comments}->{data} } ]
 }
 
 sub get_likes {

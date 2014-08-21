@@ -58,6 +58,9 @@ is( $media->created_time->year, 2010, 'media_created_time' );
 is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
 
+is( ref $media->get_likes(1),    'ARRAY', 'media_get_likes'    );
+is( ref $media->get_comments(1), 'ARRAY', 'media_get_comments' );
+
 # Second Object
 $json = decode_json $data;
 delete $json->{data}->{user};
