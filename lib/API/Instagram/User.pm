@@ -99,7 +99,7 @@ sub BUILDARGS {
 	my $self = shift;
 	my $opts = shift;
 
-	$opts->{profile_picture} //= delete $opts->{profile_pic_url} if $opts->{profile_pic_url};
+	$opts->{profile_picture} //= delete $opts->{profile_pic_url} if exists $opts->{profile_pic_url};
 
 	return $opts;
 }
