@@ -6,13 +6,14 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 23;
+use Test::More tests => 24;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
+            no_cache      => 1
 	})
 );
 
