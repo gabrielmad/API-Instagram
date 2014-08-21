@@ -21,3 +21,4 @@ ok( $api->get_auth_url, 'get_auth_url' );
 $api->code('789');
 
 is( $api->code, 789, 'code' );
+is( $api->access_token, undef, 'access_token' );
