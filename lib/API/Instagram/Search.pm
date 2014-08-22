@@ -23,6 +23,7 @@ sub find {
 	[ map { $api->$type($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
+
 1;
 
 __END__
@@ -35,7 +36,15 @@ __END__
 
 API::Instagram::Search - Instagram Search Object
 
-=find
+=for Pod::Coverage type
+
+=head1 VERSION
+
+version 0.010
+
+=head1 METHODS
+
+=head2 find
 
 	my $users = $instagram->search('user')->find( q => 'larry' );
 
@@ -92,10 +101,6 @@ B<location> parameters:
 	);
 
 See L<http://instagram.com/developer/endpoints/locations/#get_locations_search>.
-
-=head1 VERSION
-
-version 0.010
 
 =head1 AUTHOR
 
