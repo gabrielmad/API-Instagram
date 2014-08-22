@@ -8,7 +8,7 @@ use JSON;
 use Furl;
 use Furl::Response;
 use API::Instagram;
-use Test::More tests => 10;
+use Test::More tests => 11;
 
 my $data = join '', <DATA>;
 my $ua   = Test::MockObject::Extends->new( Furl->new() );
