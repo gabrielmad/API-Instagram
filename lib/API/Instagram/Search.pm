@@ -1,5 +1,7 @@
 package API::Instagram::Search;
 
+# ABSTRACT: Instagram Search Object
+
 use Moo;
 
 my $search = {
@@ -31,7 +33,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram::Search
+API::Instagram::Search - Instagram Search Object
 
 =find
 

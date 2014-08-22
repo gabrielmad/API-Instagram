@@ -94,15 +94,6 @@ sub search {
 }
 
 
-sub get_likes {
-	my $self = shift;
-	my %opts = @_;
-	my $url  = "/media/" . $self->id . "/likes";
-	my $api  = $self->_api;
-	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
-}
-
-
 #####################################################
 # Returns cached wanted object or creates a new one #
 #####################################################
