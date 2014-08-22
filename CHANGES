@@ -3,8 +3,14 @@ Changes from 2013-08-22 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.010 at 2014-08-22 14:22:34 +0000
+version 0.010 at 2014-08-22 14:24:25 +0000
 ------------------------------------------
+
+  Change: 9d38ad15993ac27178e3ab9413ad29889ffaa45d
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-22 11:24:00 +0000
+
+    Fixed 00-instagram.t error 
 
   Change: c5d019cd43e4e218f56f8529160f31a9de5b2680
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
