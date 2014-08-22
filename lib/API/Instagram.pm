@@ -252,7 +252,7 @@ sub comment { shift->_get_obj( 'Media::Comment', 'id', shift ) }
 		say $user->username;
 	}
 
-Returns a L<API::Instagram::Search> object, capable of searching for the given C<type>.
+Returns an L<API::Instagram::Search> object, capable to search for the given B<type>.
 
 Where B<type> can be: C<user>, C<media>, C<tag> or C<location>.
 
