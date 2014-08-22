@@ -3,8 +3,14 @@ Changes from 2013-08-22 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.009 at 2014-08-22 00:37:57 +0000
+version 0.009 at 2014-08-22 00:39:58 +0000
 ------------------------------------------
+
+  Change: 3ad5168aebfb3b4f0bfbb5ea35c9804143c1001c
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-21 21:38:52 +0000
+
+    Starting version 0.009 
 
   Change: c11b9ff04f2128df3e536b08fc54f108d659fad6
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
