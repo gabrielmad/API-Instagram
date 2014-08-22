@@ -3,8 +3,14 @@ Changes from 2013-08-22 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.010 at 2014-08-22 14:17:26 +0000
+version 0.010 at 2014-08-22 14:22:34 +0000
 ------------------------------------------
+
+  Change: c5d019cd43e4e218f56f8529160f31a9de5b2680
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-22 11:18:15 +0000
+
+    Now API::Instagram is a singleton. Starting version 0.010 
 
   Change: 3ad5168aebfb3b4f0bfbb5ea35c9804143c1001c
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
