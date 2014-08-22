@@ -6,20 +6,23 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 23;
+use Test::More tests => 39;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
+            no_cache      => 1,
 	})
 );
 
-my $data = decode_json join '', <DATA>;
-$api->mock('_request', sub { $data });
+my $data = join '', <DATA>;
+my $json = decode_json $data;
+$api->mock('_request', sub { $json });
 $api->mock('_get_list', sub { [] });
 
+# First Object
 my $media = $api->media(3);
 isa_ok( $media, 'API::Instagram::Media' );
 is( $media->id,               3,                        'media_id'             );
@@ -32,6 +35,8 @@ is( $media->caption,          undef,                    'media_caption'        )
 is( $media->link,             'http://instagr.am/p/D/', 'media_link'           );
 is( ref $media->images,       'HASH',                   'media_images'         );
 is( ref $media->videos,       'HASH',                   'media_videos'         );
+is( ref $media->last_likes,   'ARRAY',                  'media_last_likes'     );
+is( ref $media->last_comments,'ARRAY',                  'media_last_comments'  );
 is( ref $media->get_likes,    'ARRAY',                  'media_get_likes'      );
 is( ref $media->get_comments, 'ARRAY',                  'media_get_comments'   );
 
@@ -50,8 +55,63 @@ is( $location->latitude, 0.2, 'media_location' );
 isa_ok( $media->created_time, 'Time::Moment' );
 is( $media->created_time->year, 2010, 'media_created_time' );
 
+$json = decode_json $data;
 is( $media->likes(1),    1, 'media_likes_after_clear_data'    );
 is( $media->comments(1), 2, 'media_comments_after_clear_data' );
+
+is( ref $media->last_likes(1),    'ARRAY', 'media_last_likes_clear_data'    );
+is( ref $media->last_comments(1), 'ARRAY', 'media_last_comments_clear_data' );
+
+# Second Object
+$json = decode_json $data;
+delete $json->{data}->{user};
+delete $json->{data}->{location};
+undef  $json->{data}->{tags};
+$json->{data}->{users_in_photo} = [
+    {
+        "user" => {
+            "username" => "kevin",
+            "full_name" => "Kevin S",
+            "id" => "3",
+            "profile_picture" => "..."
+        },
+        "position" => {
+            "x" => 0.315,
+            "y" => 0.9111
+        }
+    }
+];
+
+my $media2 = $api->media( $json->{data} );
+isa_ok( $media2, 'API::Instagram::Media' );
+is( $media2->user, undef, 'media2_user');
+is( $media2->location, undef, 'media2_location');
+is( $media2->tags, undef, 'media2_tags');
+
+my $uip = $media2->users_in_photo;
+is( ref $uip, 'ARRAY', 'media2_users_in_photo' );
+
+my $item = $uip->[0];
+is( ref $item, 'HASH', 'media2_users_in_photo_content' );
+
+my $item_user = $item->{user};
+isa_ok( $item_user, 'API::Instagram::User' );
+is( $item_user->username, 'kevin', 'media2_users_in_photo_content_user_username' );
+
+my $item_pos = $item->{position};
+is( ref $item_pos, 'HASH', 'media2_users_in_photo_content_position' );
+is( $item_pos->{y}, 0.9111, 'media2_users_in_photo_content_position_y' );
+
+# Third Object
+$json = decode_json $data;
+$json->{data}->{users_in_photo} = [];
+
+my $media3 = $api->media( $json->{data} );
+isa_ok( $media3, 'API::Instagram::Media' );
+
+my $uip2 = $media3->users_in_photo;
+is( ref $uip2, '', 'media3_users_in_photo' );
+
 
 __DATA__
 {
