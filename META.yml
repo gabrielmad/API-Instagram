@@ -1,5 +1,5 @@
 ---
-abstract: 'OO Interface to Instagram REST API'
+abstract: 'Object Oriented Interface for the Instagram REST and Search APIs'
 author:
   - 'Gabriel Vieira <gabriel.vieira@gmail.com>'
 build_requires:

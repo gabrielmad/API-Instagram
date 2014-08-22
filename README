@@ -1,5 +1,6 @@
 NAME
-    API::Instagram - OO Interface to Instagram REST API
+    API::Instagram - Object Oriented Interface for the Instagram REST and
+    Search APIs
 
 VERSION
     version 0.010
@@ -144,6 +145,20 @@ METHODS
 
     Get information about a comment. Returns an
     API::Instagram::Media::Comment object.
+
+  search
+            my $search = $instagram->search('user');
+            my $users = $search->find( q => 'larry' );
+            for my $user ( @$users ) {
+                    say $user->username;
+            }
+
+    Returns a API::Instagram::Search object, capable of searching for the
+    given "type".
+
+    Where type can be: "user", "media", "tag" or "location".
+
+    See API::Instagram::Search for more details and examples.
 
 AUTHOR
     Gabriel Vieira <gabriel.vieira@gmail.com>

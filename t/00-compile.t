@@ -4,7 +4,7 @@ use warnings;
 
 # this test was generated with Dist::Zilla::Plugin::Test::Compile 2.045
 
-use Test::More  tests => 6 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
+use Test::More  tests => 7 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
 
 
@@ -13,6 +13,7 @@ my @module_files = (
     'API/Instagram/Location.pm',
     'API/Instagram/Media.pm',
     'API/Instagram/Media/Comment.pm',
+    'API/Instagram/Search.pm',
     'API/Instagram/Tag.pm',
     'API/Instagram/User.pm'
 );

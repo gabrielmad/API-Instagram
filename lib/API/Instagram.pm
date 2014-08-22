@@ -1,6 +1,6 @@
 package API::Instagram;
 
-# ABSTRACT: OO Interface to Instagram REST API
+# ABSTRACT: Object Oriented Interface for the Instagram REST and Search APIs
 
 our $VERSION = '0.010';
 
@@ -21,6 +21,7 @@ use API::Instagram::Location;
 use API::Instagram::Tag;
 use API::Instagram::Media;
 use API::Instagram::Media::Comment;
+use API::Instagram::Search;
 
 has client_id         => ( is => 'ro', required => 1 );
 has client_secret     => ( is => 'ro', required => 1 );
@@ -84,6 +85,22 @@ sub location { shift->_get_obj( 'Location', 'id', shift, 1 ) }
 sub tag { shift->_get_obj( 'Tag', 'name', shift ) }
 
 sub comment { shift->_get_obj( 'Media::Comment', 'id', shift ) }
+
+
+sub search {
+	my $self = shift;
+	my $type = shift;
+	API::Instagram::Search->new( type => $type )
+}
+
+
+sub get_likes {
+	my $self = shift;
+	my %opts = @_;
+	my $url  = "/media/" . $self->id . "/likes";
+	my $api  = $self->_api;
+	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
+}
 
 
 #####################################################
@@ -200,7 +217,7 @@ __END__
 
 =head1 NAME
 
-API::Instagram - OO Interface to Instagram REST API
+API::Instagram - Object Oriented Interface for the Instagram REST and Search APIs
 
 =for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope
 
@@ -359,6 +376,20 @@ Get information about a tag. Returns an L<API::Instagram::Tag> object.
 	say $comment->text;
 
 Get information about a comment. Returns an L<API::Instagram::Media::Comment> object.
+
+=head2 search
+
+	my $search = $instagram->search('user');
+	my $users = $search->find( q => 'larry' );
+	for my $user ( @$users ) {
+		say $user->username;
+	}
+
+Returns a L<API::Instagram::Search> object, capable of searching for the given C<type>.
+
+Where B<type> can be: C<user>, C<media>, C<tag> or C<location>.
+
+See L<API::Instagram::Search> for more details and examples.
 
 =head1 AUTHOR
 

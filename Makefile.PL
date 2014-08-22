@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker ;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "OO Interface to Instagram REST API",
+  "ABSTRACT" => "Object Oriented Interface for the Instagram REST and Search APIs",
   "AUTHOR" => "Gabriel Vieira <gabriel.vieira\@gmail.com>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0
