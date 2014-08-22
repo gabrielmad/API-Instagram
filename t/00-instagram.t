@@ -19,6 +19,7 @@ $ua->mock('post', sub { $res });
 
 my $api = API::Instagram->instance({
 			client_id     => '123',
+			client_secret => '456',
 			redirect_uri  => 'http://localhost',
             no_cache      => 1,
             _ua           => $ua,
@@ -31,7 +32,6 @@ is( $api->get_access_token, undef, 'get_access_token' );
 
 $api->code('789');
 is( $api->code, 789, 'code' );
-
 ok( $api->get_auth_url, 'get_auth_url' );
 is( $api->user->username, undef, 'user' );
 
