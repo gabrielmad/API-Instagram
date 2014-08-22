@@ -279,7 +279,7 @@ authenticated user credentials.
 
 =head1 METHODS
 
-=head2 new
+=head2 instance
 
 	my $instagram = API::Instagram->instance({
 			client_id     => $client_id,

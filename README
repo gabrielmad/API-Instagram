@@ -65,7 +65,7 @@ DESCRIPTION
             print $me->full_name;
 
 METHODS
-  new
+  instance
             my $instagram = API::Instagram->instance({
                             client_id     => $client_id,
                             client_secret => $client_secret,
