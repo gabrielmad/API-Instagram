@@ -5,7 +5,6 @@ package API::Instagram::Media;
 use Moo;
 use Time::Moment;
 
-has _api           => ( is => 'ro', required => 1 );
 has id             => ( is => 'ro', required => 1 );
 has type           => ( is => 'lazy' );
 has link           => ( is => 'lazy' );
@@ -18,8 +17,8 @@ has location       => ( is => 'lazy', coerce => \&_coerce_location       );
 has users_in_photo => ( is => 'lazy', coerce => \&_coerce_users_in_photo );
 has caption        => ( is => 'lazy', coerce => sub { $_[0]->{text} if $_[0] and ref $_[0] eq 'HASH' } );
 has created_time   => ( is => 'lazy', coerce => sub { Time::Moment->from_epoch( $_[0] ) } );
+has _api           => ( is => 'lazy' );
 has _data          => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
-
 
 =head1 SYNOPSIS
 
@@ -207,53 +206,19 @@ sub get_comments {
 	[ map { $api->comment($_) } $api->_get_list( %opts, url => $url ) ]
 }
 
-sub BUILDARGS {
-	my ( $self, $opts ) = @_;
 
-	my @need_api = (
-		['user',          ''            ],
-		['user',          'HASH'        ],
-		['location',      ''            ],
-		['location',      'HASH',       ],
-		['tags',          'ARRAY',''    ],
-		['users_in_photo','ARRAY','HASH'],
-	);
-
-	for my $each ( @need_api ){
-
-		my ( $attr_name, $ref, $item_ref ) = @$each;
-
-		if ( exists $opts->{$attr_name} ){
-
-			my $attr = $opts->{$attr_name};
-
-			next if defined $attr and (
-										ref $attr ne $ref or (
-																defined $item_ref    and
-																ref $attr eq 'ARRAY' and
-																ref $attr->[0] ne $item_ref
-															)
-										);
-
-			$opts->{$attr_name} = [ $opts->{_api}, $attr ];
-		}
-	}
-
-	return $opts;
-};
-
-
-sub _build_user           { [ $_[0]->_api, shift->_data->{user}           ] }
-sub _build_tags           { [ $_[0]->_api, shift->_data->{tags}           ] }
-sub _build_location       { [ $_[0]->_api, shift->_data->{location}       ] }
-sub _build_users_in_photo { [ $_[0]->_api, shift->_data->{users_in_photo} ] }
-sub _build_type           {                shift->_data->{type}             }
-sub _build_link           {                shift->_data->{link}             }
-sub _build_filter         {                shift->_data->{filter}           }
-sub _build_images         {                shift->_data->{images}           }
-sub _build_videos         {                shift->_data->{videos}           }
-sub _build_caption        {                shift->_data->{caption }         }
-sub _build_created_time   {                shift->_data->{created_time}     }
+sub _build__api           { API::Instagram->instance       }
+sub _build_user           { shift->_data->{user}           }
+sub _build_tags           { shift->_data->{tags}           }
+sub _build_location       { shift->_data->{location}       }
+sub _build_users_in_photo { shift->_data->{users_in_photo} }
+sub _build_type           { shift->_data->{type}           }
+sub _build_link           { shift->_data->{link}           }
+sub _build_filter         { shift->_data->{filter}         }
+sub _build_images         { shift->_data->{images}         }
+sub _build_videos         { shift->_data->{videos}         }
+sub _build_caption        { shift->_data->{caption }       }
+sub _build_created_time   { shift->_data->{created_time}   }
 
 sub _build__data {
 	my $self = shift;
@@ -264,36 +229,25 @@ sub _build__data {
 ############################################################
 # Attributes coercion that API::Instagram object reference #
 ############################################################
-sub _coerce_user {
-	my ( $self, $data ) = @{$_[0]};
-	return unless defined $data;
-	$self->user( $data )
-};
-
-sub _coerce_location {
-	my ( $self, $data ) = @{$_[0]};
-	return unless defined $data;
-	$self->location( $data )
-};
+sub _coerce_user     { API::Instagram->instance->user    ( $_[0] ) };
+sub _coerce_location { API::Instagram->instance->location( $_[0] ) if $_[0] };
 
 sub _coerce_tags {
-	my ( $self, $data ) = @{$_[0]};
+	my $data = $_[0];
 	return if ref $data ne 'ARRAY';
-	[ map { $self->tag($_) } @$data ]
+	[ map { API::Instagram->instance->tag($_) } @$data ]
 };
 	
 sub _coerce_users_in_photo {
-	my ( $self, $data ) = @{$_[0]};
+	my $data = $_[0];
 	return if ref $data ne 'ARRAY';
 	[
 		map {{
-			user     => $self->user( $_->{user} ),
+			user     => API::Instagram->instance->user( $_->{user} ),
 			position => $_->{position},
 		}} @$data
 	]
 };
 
-=for Pod::Coverage BUILDARGS
-=cut
 
 1;

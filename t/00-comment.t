@@ -6,10 +6,10 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 13;
+use Test::More tests => 9;
 
 my $api = Test::MockObject::Extends->new(
-	API::Instagram->new({
+	API::Instagram->instance({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
@@ -41,17 +41,6 @@ my $time = $comment->created_time;
 isa_ok( $time, 'Time::Moment' );
 is( $time->year, 2010, 'comment_created_time' );
 
-# Second Object
-$json = decode_json $data;
-delete $json->{data}->[0]->{from};
-
-my $get_comments2 = $media->get_comments;
-is( ref $get_comments2, 'ARRAY', 'media_get_comments2' );
-
-my $comment2 = $get_comments2->[0];
-isa_ok( $comment2, 'API::Instagram::Media::Comment' );
-is( $comment2->id, 420, 'comment2_id' );
-is( $comment2->from, undef, 'comment2_from' );
 
 __DATA__
 {

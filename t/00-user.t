@@ -9,7 +9,7 @@ use API::Instagram;
 use Test::More tests => 33;
 
 my $api = Test::MockObject::Extends->new(
-	API::Instagram->new({
+	API::Instagram->instance({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
@@ -78,7 +78,7 @@ is( $user3->feed, undef, 'user3_feed' );
 is( $user3->liked_media, undef, 'user3_liked_media' );
 is( $user3->requested_by, undef, 'user3_requested_by' );
 
-# Third Object
+# Fourth Object
 $json = decode_json $data;
 $json->{data}->{profile_pic_url} = undef;
 $json->{data}->{profile_picture} = undef;
