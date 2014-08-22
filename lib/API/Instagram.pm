@@ -216,7 +216,7 @@ version 0.010
 
 	use API::Instagram;
 
-	my $instagram = API::Instagram->new({
+	my $instagram = API::Instagram->instance({
 			client_id     => $client_id,
 			client_secret => $client_secret,
 			redirect_uri  => 'http://localhost',
@@ -248,7 +248,7 @@ Get the AUTH URL to authenticate.
 
 	use API::Instagram;
 
-	my $instagram = API::Instagram->new({
+	my $instagram = API::Instagram->instance({
 			client_id     => 'xxxxxxxxxx',
 			client_secret => 'xxxxxxxxxx',
 			redirect_uri  => 'http://localhost',
@@ -281,7 +281,7 @@ authenticated user credentials.
 
 =head2 new
 
-	my $instagram = API::Instagram->new({
+	my $instagram = API::Instagram->instance({
 			client_id     => $client_id,
 			client_secret => $client_secret,
 			redirect_uri  => 'http://localhost',

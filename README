@@ -7,7 +7,7 @@ VERSION
 SYNOPSIS
             use API::Instagram;
 
-            my $instagram = API::Instagram->new({
+            my $instagram = API::Instagram->instance({
                             client_id     => $client_id,
                             client_secret => $client_secret,
                             redirect_uri  => 'http://localhost',
@@ -37,7 +37,7 @@ DESCRIPTION
 
             use API::Instagram;
 
-            my $instagram = API::Instagram->new({
+            my $instagram = API::Instagram->instance({
                             client_id     => 'xxxxxxxxxx',
                             client_secret => 'xxxxxxxxxx',
                             redirect_uri  => 'http://localhost',
@@ -66,7 +66,7 @@ DESCRIPTION
 
 METHODS
   new
-            my $instagram = API::Instagram->new({
+            my $instagram = API::Instagram->instance({
                             client_id     => $client_id,
                             client_secret => $client_secret,
                             redirect_uri  => 'http://localhost',
