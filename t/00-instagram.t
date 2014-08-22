@@ -44,7 +44,9 @@ isa_ok( $me, 'API::Instagram::User');
 is( $me->username, "snoopdogg", 'auth_user' );
 
 is( ref $api->_request('media'), 'HASH', '_request' );
-is( ref $api->_get_list( count => 2 ), 'ARRAY', '_get_list' );
+
+my @list = $api->_get_list( url => 'media', count => 2 );
+is( ~~@list , 2, '_get_list' );
 
 __DATA__
 {
