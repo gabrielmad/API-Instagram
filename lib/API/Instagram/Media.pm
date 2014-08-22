@@ -84,7 +84,7 @@ sub _build__data {
 ############################################################
 # Attributes coercion that API::Instagram object reference #
 ############################################################
-sub _coerce_user     { API::Instagram->instance->user    ( $_[0] ) if $_[0] };
+sub _coerce_user     { API::Instagram->instance->user    ( $_[0] ) };
 sub _coerce_location { API::Instagram->instance->location( $_[0] ) if $_[0] };
 
 sub _coerce_tags {
