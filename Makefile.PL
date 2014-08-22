@@ -25,6 +25,7 @@ my %WriteMakefileArgs = (
     "Furl" => 0,
     "JSON" => 0,
     "Moo" => 0,
+    "MooX::Singleton" => 0,
     "Time::Moment" => 0,
     "URI" => 0,
     "strict" => 0,
@@ -38,7 +39,7 @@ my %WriteMakefileArgs = (
     "Test::MockObject::Extends" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.009",
+  "VERSION" => "0.010",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -55,6 +56,7 @@ my %FallbackPrereqs = (
   "IPC::Open3" => 0,
   "JSON" => 0,
   "Moo" => 0,
+  "MooX::Singleton" => 0,
   "Test::MockObject::Extends" => 0,
   "Test::More" => 0,
   "Time::Moment" => 0,

@@ -4,7 +4,6 @@ package API::Instagram::Tag;
 
 use Moo;
 
-has _api  => ( is => 'ro', required => 1 );
 has name  => ( is => 'ro', required => 1 );
 has _data => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
 
@@ -18,13 +17,13 @@ sub media_count {
 sub recent_medias {
 	my $self = shift;
 	my $url  = sprintf "tags/%s/media/recent", $self->name;
-	$self->_api->_recent_medias( $url, @_ );
+	API::Instagram->instance->_recent_medias( $url, @_ );
 }
 
 sub _build__data {
 	my $self = shift;
 	my $url  = sprintf "tags/%s", $self->name;
-	$self->_api->_request_data( $url );
+	API::Instagram->instance->_request_data( $url );
 }
 
 1;
@@ -41,7 +40,7 @@ API::Instagram::Tag - Instagram Tag Object
 
 =head1 VERSION
 
-version 0.009
+version 0.010
 
 =head1 SYNOPSIS
 

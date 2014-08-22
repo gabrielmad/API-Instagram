@@ -2,9 +2,10 @@ package API::Instagram;
 
 # ABSTRACT: OO Interface to Instagram REST API
 
-our $VERSION = '0.009';
+our $VERSION = '0.010';
 
 use Moo;
+with 'MooX::Singleton';
 
 use Carp;
 use strict;
@@ -100,9 +101,6 @@ sub _get_obj {
 
 	# Code used as cache key
 	my $cache_code = md5_hex( $code // $data);
-
-	# Adds this Instagram instance
-	$data->{_api} = $self;
 
 	# Returns cached value or creates a new object
 	my $return = $self->_cache($type)->{$cache_code} //= ("API::Instagram::$type")->new( $data );
@@ -212,7 +210,7 @@ API::Instagram - OO Interface to Instagram REST API
 
 =head1 VERSION
 
-version 0.009
+version 0.010
 
 =head1 SYNOPSIS
 

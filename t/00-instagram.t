@@ -17,7 +17,7 @@ my $res  = Test::MockObject::Extends->new( Furl::Response->new( 1, 200, 'OK', {}
 $ua->mock('get',  sub { $res });
 $ua->mock('post', sub { $res });
 
-my $api = API::Instagram->new({
+my $api = API::Instagram->instance({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',

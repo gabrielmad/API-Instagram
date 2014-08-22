@@ -5,7 +5,6 @@ package API::Instagram::Location;
 use Moo;
 use Carp;
 
-has _api      => ( is => 'ro', required => 1 );
 has id        => ( is => 'ro', predicate => 1 );
 has latitude  => ( is => 'lazy' );
 has longitude => ( is => 'lazy' );
@@ -13,17 +12,13 @@ has name      => ( is => 'lazy' );
 has _data     => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
 
 
-
 sub recent_medias {
 	my $self = shift;
 
-	unless ( $self->has_id ) {
-		carp "Recent medias not available for this location with no id yet.";
-		return [];
-	}
+	carp "Not available for location with no ID." and return [] unless $self->has_id;
 
 	my $url  = "/locations/" . $self->id . "/media/recent";
-	$self->_api->_recent_medias( $url, @_ );
+	API::Instagram->instance->_recent_medias( $url, @_ );
 }
 
 sub _build_name      { shift->_data->{name}      }
@@ -32,8 +27,9 @@ sub _build_longitude { shift->_data->{longitude} }
 
 sub _build__data {
 	my $self = shift;
+	carp "Not available for location with no ID." and return {} unless $self->has_id;
 	my $url  = sprintf "locations/%s", $self->id;
-	$self->_api->_request_data( $url );
+	API::Instagram->instance->_request_data( $url );
 }
 
 1;
@@ -50,7 +46,7 @@ API::Instagram::Location - Instagram Location Object
 
 =head1 VERSION
 
-version 0.009
+version 0.010
 
 =head1 SYNOPSIS
 

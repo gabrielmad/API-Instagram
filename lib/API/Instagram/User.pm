@@ -5,15 +5,14 @@ package API::Instagram::User;
 use Moo;
 use Carp;
 
-has _api            => ( is => 'ro', required => 1 );
 has id              => ( is => 'ro', required => 1 );
 has username        => ( is => 'lazy' );
 has full_name       => ( is => 'lazy' );
 has bio             => ( is => 'lazy' );
 has website         => ( is => 'lazy' );
 has profile_picture => ( is => 'lazy' );
+has _api            => ( is => 'lazy' );
 has _data           => ( is => 'rwp', lazy => 1, builder => 1, clearer => 1 );
-
 
 sub media {
 	my $self = shift;
@@ -105,6 +104,7 @@ sub BUILDARGS {
 }
 
 
+sub _build__api            { API::Instagram->instance        }
 sub _build_username        { shift->_data->{username}        }
 sub _build_full_name       { shift->_data->{full_name}       }
 sub _build_bio             { shift->_data->{bio}             }
@@ -135,7 +135,7 @@ API::Instagram::User - Instagram User Object
 
 =head1 VERSION
 
-version 0.009
+version 0.010
 
 =head1 SYNOPSIS
 
