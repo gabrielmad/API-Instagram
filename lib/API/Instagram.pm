@@ -1,6 +1,6 @@
 package API::Instagram;
 
-# ABSTRACT: OO Interface to Instagram REST API
+# ABSTRACT: Object Oriented Interface for the Instagram REST and Search APIs
 
 our $VERSION = '0.010';
 
@@ -21,6 +21,7 @@ use API::Instagram::Location;
 use API::Instagram::Tag;
 use API::Instagram::Media;
 use API::Instagram::Media::Comment;
+use API::Instagram::Search;
 
 has client_id         => ( is => 'ro', required => 1 );
 has client_secret     => ( is => 'ro', required => 1 );
@@ -45,7 +46,7 @@ has _debug => ( is => 'rw', lazy => 1 );
 
 	use API::Instagram;
 
-	my $instagram = API::Instagram->new({
+	my $instagram = API::Instagram->instance({
 			client_id     => $client_id,
 			client_secret => $client_secret,
 			redirect_uri  => 'http://localhost',
@@ -79,7 +80,7 @@ Get the AUTH URL to authenticate.
 
 	use API::Instagram;
 
-	my $instagram = API::Instagram->new({
+	my $instagram = API::Instagram->instance({
 			client_id     => 'xxxxxxxxxx',
 			client_secret => 'xxxxxxxxxx',
 			redirect_uri  => 'http://localhost',
@@ -110,9 +111,9 @@ authenticated user credentials.
 	print $me->full_name;
 
 
-=method new
+=method instance
 
-	my $instagram = API::Instagram->new({
+	my $instagram = API::Instagram->instance({
 			client_id     => $client_id,
 			client_secret => $client_secret,
 			redirect_uri  => 'http://localhost',
@@ -241,6 +242,28 @@ Get information about a comment. Returns an L<API::Instagram::Media::Comment> ob
 
 =cut
 sub comment { shift->_get_obj( 'Media::Comment', 'id', shift ) }
+
+
+=method search
+
+	my $search = $instagram->search('user');
+	my $users = $search->find( q => 'larry' );
+	for my $user ( @$users ) {
+		say $user->username;
+	}
+
+Returns a L<API::Instagram::Search> object, capable of searching for the given C<type>.
+
+Where B<type> can be: C<user>, C<media>, C<tag> or C<location>.
+
+See L<API::Instagram::Search> for more details and examples.
+
+=cut
+sub search {
+	my $self = shift;
+	my $type = shift;
+	API::Instagram::Search->new( type => $type )
+}
 
 
 #####################################################
