@@ -44,11 +44,15 @@ isa_ok( $me, 'API::Instagram::User');
 is( $me->username, "snoopdogg", 'auth_user' );
 
 is( ref $api->_request('media'), 'HASH', '_request' );
+is( ref $api->_get_list( count => 2 ), 'ARRAY', '_get_list' );
 
 __DATA__
 {
     "meta": {
         "code": 200
+    },
+    "pagination": {
+        "next_url": "http://localhost"
     },
     "access_token": 123456789,
     "user": {
