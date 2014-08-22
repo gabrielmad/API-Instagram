@@ -153,8 +153,8 @@ METHODS
                     say $user->username;
             }
 
-    Returns a API::Instagram::Search object, capable of searching for the
-    given "type".
+    Returns an API::Instagram::Search object, capable to search for the
+    given type.
 
     Where type can be: "user", "media", "tag" or "location".
 
