@@ -8,7 +8,7 @@ use JSON;
 use Furl;
 use Furl::Response;
 use API::Instagram;
-use Test::More tests => 12;
+use Test::More tests => 14;
 
 my $data = join '', <DATA>;
 my $ua   = Test::MockObject::Extends->new( Furl->new() );
@@ -17,7 +17,7 @@ my $res  = Test::MockObject::Extends->new( Furl::Response->new( 1, 200, 'OK', {}
 $ua->mock('get',  sub { $res });
 $ua->mock('post', sub { $res });
 
-my $api = API::Instagram->instance({
+my $api = API::Instagram->new({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
@@ -40,6 +40,10 @@ is( $access_token, 123456789, 'get_access_token' );
 
 $api->access_token( $access_token );
 is( $api->access_token, 123456789, 'get_access_token' );
+
+my $api2 = API::Instagram->instance;
+isa_ok( $api2, 'API::Instagram');
+is( $api2->access_token, 123456789, 'api2_get_access_token' );
 
 isa_ok( $me, 'API::Instagram::User');
 is( $me->username, "snoopdogg", 'auth_user' );

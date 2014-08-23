@@ -105,7 +105,7 @@ Returns media caption text.
 Returns media total likes.
 If you set C<1> as parameter it will renew all media data and return an up-do-date total likes.
 
-Hint: C<1> as parameter also updates total comments, last likes and last comments.
+Note: C<1> as parameter also updates total comments, last likes and last comments.
 =cut
 sub likes {
 	my $self = shift;
@@ -124,7 +124,7 @@ sub likes {
 Returns media total comments.
 If you set C<1> as parameter it will renew all media data and return an up-do-date total comments.
 
-Hint: C<1> as parameter also updates total likes, last likes and last comments.
+Note: C<1> as parameter also updates total likes, last likes and last comments.
 =cut
 sub comments {
 	my $self = shift;
@@ -140,7 +140,7 @@ sub comments {
 Returns a list of C<API::Instagram::User> of the last users who liked the media.
 If you set C<1> as parameter it will renew all media data and return an up-do-date list.
 
-Hint: C<1> as parameter also updates total likes, total comments and last comments.
+Note: C<1> as parameter also updates total likes, total comments and last comments.
 =cut
 sub last_likes {
 	my $self = shift;
@@ -159,7 +159,7 @@ sub last_likes {
 Returns a list of C<API::Instagram::Media::Comment> of the last comments on the media.
 If you set C<1> as parameter it will renew all media data and return an up-do-date list.
 
-Hint: C<1> as parameter also updates total likes, total comments and last likes.
+Note: C<1> as parameter also updates total likes, total comments and last likes.
 =cut
 sub last_comments {
 	my $self = shift;

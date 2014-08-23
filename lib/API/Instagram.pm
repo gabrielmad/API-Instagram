@@ -2,10 +2,10 @@ package API::Instagram;
 
 # ABSTRACT: Object Oriented Interface for the Instagram REST and Search APIs
 
-our $VERSION = '0.010';
+our $VERSION = '0.011';
 
 use Moo;
-with 'MooX::Singleton';
+# with 'MooX::Singleton';
 
 use Carp;
 use strict;
@@ -41,12 +41,14 @@ has _access_token_url => ( is => 'ro', default => sub { 'https://api.instagram.c
 
 has _debug => ( is => 'rw', lazy => 1 );
 
+my $instance;
+sub BUILD { $instance = shift }
 
 =head1 SYNOPSIS
 
 	use API::Instagram;
 
-	my $instagram = API::Instagram->instance({
+	my $instagram = API::Instagram->new({
 			client_id     => $client_id,
 			client_secret => $client_secret,
 			redirect_uri  => 'http://localhost',
@@ -80,7 +82,7 @@ Get the AUTH URL to authenticate.
 
 	use API::Instagram;
 
-	my $instagram = API::Instagram->instance({
+	my $instagram = API::Instagram->new({
 			client_id     => 'xxxxxxxxxx',
 			client_secret => 'xxxxxxxxxx',
 			redirect_uri  => 'http://localhost',
@@ -111,9 +113,9 @@ authenticated user credentials.
 	print $me->full_name;
 
 
-=method instance
+=method new
 
-	my $instagram = API::Instagram->instance({
+	my $instagram = API::Instagram->new({
 			client_id     => $client_id,
 			client_secret => $client_secret,
 			redirect_uri  => 'http://localhost',
@@ -134,6 +136,27 @@ C<response_type> and C<granty_type> do no vary. See L<http://instagram.com/devel
 
 By default, L<API::Instagram> caches created objects to avoid duplications. You can disable
 this feature setting a true value to C<no_chace> parameter.
+
+=method instance
+
+	my $instagram = API::Instagram->instance;
+	print $instagram->user->full_name;
+
+	or
+
+	my $instagram = API::Instagram->instance({
+			client_id     => $client_id,
+			client_secret => $client_secret,
+			redirect_uri  => 'http://localhost',
+	});
+
+
+Returns the singleton instance of L<API::Instagram>.
+
+Note: if no instance was created before, creates a new L<API::Instagram> object initialized with arguments provided and then returns it.
+
+=cut
+sub instance { $instance //= shift->new(@_) }
 
 =method get_auth_url
 
@@ -369,7 +392,7 @@ sub _request_data { shift->_request(@_)->{data} || {} }
 ################################
 sub _cache { shift->_obj_cache->{ shift() } }
 
-=for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope
+=for Pod::Coverage client_id client_secret grant_type no_cache redirect_uri response_type scope BUILD
 
 =for HTML <a href="https://travis-ci.org/gabrielmad/API-Instagram"><img src="https://travis-ci.org/gabrielmad/API-Instagram.svg?branch=build%2Fmaster"></a>
 
