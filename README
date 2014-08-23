@@ -3,12 +3,12 @@ NAME
     Search APIs
 
 VERSION
-    version 0.010
+    version 0.011
 
 SYNOPSIS
             use API::Instagram;
 
-            my $instagram = API::Instagram->instance({
+            my $instagram = API::Instagram->new({
                             client_id     => $client_id,
                             client_secret => $client_secret,
                             redirect_uri  => 'http://localhost',
@@ -38,7 +38,7 @@ DESCRIPTION
 
             use API::Instagram;
 
-            my $instagram = API::Instagram->instance({
+            my $instagram = API::Instagram->new({
                             client_id     => 'xxxxxxxxxx',
                             client_secret => 'xxxxxxxxxx',
                             redirect_uri  => 'http://localhost',
@@ -66,8 +66,8 @@ DESCRIPTION
             print $me->full_name;
 
 METHODS
-  instance
-            my $instagram = API::Instagram->instance({
+  new
+            my $instagram = API::Instagram->new({
                             client_id     => $client_id,
                             client_secret => $client_secret,
                             redirect_uri  => 'http://localhost',
@@ -92,6 +92,23 @@ METHODS
     By default, API::Instagram caches created objects to avoid duplications.
     You can disable this feature setting a true value to "no_chace"
     parameter.
+
+  instance
+            my $instagram = API::Instagram->instance;
+            print $instagram->user->full_name;
+
+            or
+
+            my $instagram = API::Instagram->instance({
+                            client_id     => $client_id,
+                            client_secret => $client_secret,
+                            redirect_uri  => 'http://localhost',
+            });
+
+    Returns the singleton instance of API::Instagram.
+
+    Note: if no instance was created before, creates a new API::Instagram
+    object initialized with arguments provided and then returns it.
 
   get_auth_url
             my $auth_url = $instagram->get_auth_url;

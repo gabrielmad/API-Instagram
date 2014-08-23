@@ -119,7 +119,7 @@ API::Instagram::Media - Instagram Media Object
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
@@ -213,7 +213,7 @@ Returns the media date in a L<Time::Moment> object.
 Returns media total likes.
 If you set C<1> as parameter it will renew all media data and return an up-do-date total likes.
 
-Hint: C<1> as parameter also updates total comments, last likes and last comments.
+Note: C<1> as parameter also updates total comments, last likes and last comments.
 
 =head2 comments
 
@@ -226,7 +226,7 @@ Hint: C<1> as parameter also updates total comments, last likes and last comment
 Returns media total comments.
 If you set C<1> as parameter it will renew all media data and return an up-do-date total comments.
 
-Hint: C<1> as parameter also updates total likes, last likes and last comments.
+Note: C<1> as parameter also updates total likes, last likes and last comments.
 
 =head2 last_likes
 
@@ -237,7 +237,7 @@ Hint: C<1> as parameter also updates total likes, last likes and last comments.
 Returns a list of C<API::Instagram::User> of the last users who liked the media.
 If you set C<1> as parameter it will renew all media data and return an up-do-date list.
 
-Hint: C<1> as parameter also updates total likes, total comments and last comments.
+Note: C<1> as parameter also updates total likes, total comments and last comments.
 
 =head2 last_comments
 
@@ -248,7 +248,7 @@ Hint: C<1> as parameter also updates total likes, total comments and last commen
 Returns a list of C<API::Instagram::Media::Comment> of the last comments on the media.
 If you set C<1> as parameter it will renew all media data and return an up-do-date list.
 
-Hint: C<1> as parameter also updates total likes, total comments and last likes.
+Note: C<1> as parameter also updates total likes, total comments and last likes.
 
 =head2 get_likes
 

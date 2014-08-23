@@ -9,7 +9,7 @@ use API::Instagram;
 use Test::More tests => 33;
 
 my $api = Test::MockObject::Extends->new(
-	API::Instagram->instance({
+	API::Instagram->new({
 			client_id     => '123',
 			client_secret => '456',
 			redirect_uri  => 'http://localhost',
