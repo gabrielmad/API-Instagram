@@ -38,7 +38,8 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Inline::Files" => 0,
     "Test::MockObject::Extends" => 0,
-    "Test::More" => 0
+    "Test::More" => 0,
+    "if" => 0
   },
   "VERSION" => "0.012",
   "test" => {
@@ -63,6 +64,7 @@ my %FallbackPrereqs = (
   "Test::More" => 0,
   "Time::Moment" => 0,
   "URI" => 0,
+  "if" => 0,
   "strict" => 0,
   "warnings" => 0
 );

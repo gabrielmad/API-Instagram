@@ -11,6 +11,7 @@ build_requires:
   Inline::Files: 0
   Test::MockObject::Extends: 0
   Test::More: 0
+  if: 0
   perl: 5.010
 configure_requires:
   ExtUtils::MakeMaker: 0

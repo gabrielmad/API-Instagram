@@ -89,7 +89,7 @@ isa_ok( $user4, 'API::Instagram::User' );
 
 is( $user4->profile_picture, undef );
 
-
+no if $] >= 5.018, "experimental::smartmatch";
 my $req = decode_json join '', <REL>;
 $api->mock('_request', sub { $req });
 is( ref $user4->relationship, 'HASH' );
