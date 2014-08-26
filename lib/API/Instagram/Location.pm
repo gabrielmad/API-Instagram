@@ -18,7 +18,7 @@ sub recent_medias {
 	carp "Not available for location with no ID." and return [] unless $self->has_id;
 
 	my $url  = "/locations/" . $self->id . "/media/recent";
-	API::Instagram->instance->_recent_medias( $url, @_ );
+	API::Instagram->instance->_medias( $url, @_ );
 }
 
 sub _build_name      { shift->_data->{name}      }
@@ -46,7 +46,7 @@ API::Instagram::Location - Instagram Location Object
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 

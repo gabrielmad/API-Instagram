@@ -66,18 +66,29 @@ sub get_followers {
 
 sub recent_medias {
 	my $self = shift;
-	my $url  = "/users/" . $self->id . "/media/recent";
-	$self->_api->_recent_medias( $url, @_ );
+	my $url  = sprintf "/users/%s/media/recent", $self->id;
+	$self->_api->_medias( $url, @_, token_not_required => 1 );
 }
 
+sub relationship {
+	my $self    = shift;
+	my $action  = shift;
+	my $url     = sprintf "users/%s/relationship", $self->id;
+	my @actions = qw/ follow unfollow block unblock approve ignore/;
 
+	if ( $action ~~ @actions ){
+		carp "Invalid action";
+		return $self->_api->_post_data( $url, { action => $action } )
+	}
 
+	$self->_api->_request_data( $url );
+}
 
 
 sub _get_relashions {
 	my $self = shift;
 	my %opts = @_;
-	my $url  = "/users/" . $self->id . "/" . $opts{relationship};
+	my $url  = sprintf "/users/%s/%s", $self->id, $opts{relationship};
 	my $api  = $self->_api;
 	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
 }
@@ -135,7 +146,7 @@ API::Instagram::User - Instagram User Object
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 
@@ -242,6 +253,25 @@ Accepts C<count> as parameter.
 Returns a list of L<API::Instagram::Media> objects of user's recent medias.
 
 Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as parameters.
+
+=head2 relationship
+
+	my $relationship = $user->relationship;
+	say $relationship->{incoming_status};
+
+Returns a C<HASH> reference contaning information about the relationship of the user with the authenticated user.
+
+This reference contains two keys:
+
+B<outgoing_status:> Authenticated user relationship to the user. Can be C<follows>, C<requested>, C<none>. 
+
+B<incoming_status:> A user's relationship to the authenticated user. Can be C<followed_by>, C<requested_by>, C<blocked_by_you>, C<none>.
+
+	$user->relationship('follow');
+
+When an B<action> (as parameter) is given, it sends a request to modify the relationship to the given one.
+
+The B<action> can be one of C<follow>/C<unfollow>/C<block>/C<unblock>/C<approve>/C<ignore>.
 
 =head1 AUTHOR
 

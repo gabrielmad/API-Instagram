@@ -3,7 +3,7 @@ NAME
     Search APIs
 
 VERSION
-    version 0.011
+    version 0.012
 
 SYNOPSIS
             use API::Instagram;
@@ -176,6 +176,13 @@ METHODS
     Where type can be: "user", "media", "tag" or "location".
 
     See API::Instagram::Search for more details and examples.
+
+  popular_medias
+            my $medias = $user->popular_medias( count => 3 );
+            print $_->caption . $/ for @$medias;
+
+    Returns a list of API::Instagram::Media objects of Instagram most
+    popular media at the moment.
 
 AUTHOR
     Gabriel Vieira <gabriel.vieira@gmail.com>

@@ -5,8 +5,10 @@ author:
 build_requires:
   File::Spec: 0
   Furl::Response: 0
+  HTTP::Response: 0
   IO::Handle: 0
   IPC::Open3: 0
+  Inline::Files: 0
   Test::MockObject::Extends: 0
   Test::More: 0
   perl: 5.010
@@ -34,4 +36,4 @@ resources:
   bugtracker: https://github.com/gabrielmad/api-instagram/issues
   homepage: http://metacpan.org/release/API-Instagram
   repository: git://github.com/gabrielmad/api-instagram.git
-version: 0.011
+version: 0.012

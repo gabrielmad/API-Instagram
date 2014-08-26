@@ -17,7 +17,7 @@ sub media_count {
 sub recent_medias {
 	my $self = shift;
 	my $url  = sprintf "tags/%s/media/recent", $self->name;
-	API::Instagram->instance->_recent_medias( $url, @_ );
+	API::Instagram->instance->_medias( $url, @_ );
 }
 
 sub _build__data {
@@ -40,7 +40,7 @@ API::Instagram::Tag - Instagram Tag Object
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 

@@ -2,7 +2,7 @@ package API::Instagram;
 
 # ABSTRACT: Object Oriented Interface for the Instagram REST and Search APIs
 
-our $VERSION = '0.011';
+our $VERSION = '0.012';
 
 use Moo;
 # with 'MooX::Singleton';
@@ -98,6 +98,12 @@ sub search {
 }
 
 
+sub popular_medias {
+	my $self = shift;
+	my $url  = "/media/popular";
+	$self->_medias( $url, @_ );
+}
+
 #####################################################
 # Returns cached wanted object or creates a new one #
 #####################################################
@@ -126,7 +132,7 @@ sub _get_obj {
 ###################################
 # Returns a list of Media Objects #
 ###################################
-sub _recent_medias {
+sub _medias {
 	my ($self, $url, %opts) = @_;
 	$opts{count} //= 33;
 	[ map { $self->media($_) } $self->_get_list( %opts, url => $url ) ]
@@ -167,7 +173,9 @@ sub _get_list {
 sub _request {
 	my ( $self, $url, $params, $opts ) = @_;
 
-	carp "A valid access_token is required" and return {} unless defined $self->access_token;
+	carp "A valid access_token is required" and return {}
+			if !defined $self->access_token or
+			( $opts->{access_token_not_required} and !$self->client_id );
 
 	# If URL is not prepared, prepares it
 	unless ( $opts->{prepared_url} ){
@@ -222,7 +230,7 @@ API::Instagram - Object Oriented Interface for the Instagram REST and Search API
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 
@@ -402,6 +410,13 @@ Returns an L<API::Instagram::Search> object, capable to search for the given B<t
 Where B<type> can be: C<user>, C<media>, C<tag> or C<location>.
 
 See L<API::Instagram::Search> for more details and examples.
+
+=head2 popular_medias
+
+	my $medias = $user->popular_medias( count => 3 );
+	print $_->caption . $/ for @$medias;
+
+Returns a list of L<API::Instagram::Media> objects of Instagram most popular media at the moment.
 
 =head1 AUTHOR
 
