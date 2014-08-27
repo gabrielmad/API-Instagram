@@ -23,11 +23,11 @@ $api->mock('_get_list', sub { [] });
 
 my $tag = $api->tag('nofilter');
 isa_ok( $tag, 'API::Instagram::Tag' );
-is( $tag->name, 'nofilter', 'tag_name' );
-is( $tag->media_count, 472, 'tag_media_count' );
-is( $tag->media_count(1), 472, 'tag_media_count' );
-is( ref $tag->recent_medias, 'ARRAY', 'tag_recent_medias' );
 
+is $tag->name, 'nofilter';
+is $tag->media_count, 472;
+is $tag->media_count(1), 472;
+is ref $tag->recent_medias, 'ARRAY';
 
 __DATA__
 {

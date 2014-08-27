@@ -24,22 +24,22 @@ $api->mock('_request', sub { $json });
 my $media = $api->media(1);
 isa_ok( $media, 'API::Instagram::Media' );
 
-# First Object
 my $get_comments = $media->get_comments;
-is( ref $get_comments, 'ARRAY', 'media_get_comments' );
+is ref $get_comments, 'ARRAY';
 
 my $comment = $get_comments->[0];
 isa_ok( $comment, 'API::Instagram::Media::Comment' );
-is( $comment->id, 420, 'comment_id' );
-is( $comment->text, 'Really amazing photo!', 'comment_text' );
+
+is $comment->id, 420;
+is $comment->text, 'Really amazing photo!';
 
 my $from = $comment->from;
 isa_ok( $from, 'API::Instagram::User' );
-is( $from->full_name, 'Snoop Dogg', 'comment_from' );
+is $from->full_name, 'Snoop Dogg';
 
 my $time = $comment->created_time;
 isa_ok( $time, 'Time::Moment' );
-is( $time->year, 2010, 'comment_created_time' );
+is $time->year, 2010;
 
 
 __DATA__

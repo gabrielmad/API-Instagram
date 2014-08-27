@@ -7,7 +7,6 @@ use Test::MockObject::Extends;
 use JSON;
 use Furl;
 use Furl::Response;
-use HTTP::Response;
 use Inline::Files;
 
 use API::Instagram;
@@ -30,40 +29,41 @@ my $api = API::Instagram->new({
 
 
 isa_ok( $api, 'API::Instagram');
-ok( $api->get_auth_url, 'get_auth_url' );
-is( $api->get_access_token, undef, 'get_access_token' );
+ok $api->get_auth_url;
+is $api->get_access_token, undef;
 
 $api->code('789');
-is( $api->code, 789, 'code' );
-ok( $api->get_auth_url, 'get_auth_url' );
-is( $api->user->username, undef, 'user' );
-is( ref $api->user(123)->relationship('unfollow'), 'HASH');
+is $api->code, 789;
+ok $api->get_auth_url;
+is $api->user->username, undef;
+is ref $api->user(123)->relationship('unfollow'), 'HASH';
 
 my ( $access_token, $me ) = $api->get_access_token;
-is( $access_token, 123456789, 'get_access_token' );
+is $access_token, 123456789;
 
 $api->access_token( $access_token );
-is( $api->access_token, 123456789, 'get_access_token' );
+is $api->access_token, 123456789;
 
 my $api2 = API::Instagram->instance;
 isa_ok( $api2, 'API::Instagram');
-is( $api2->access_token, 123456789, 'api2_get_access_token' );
+
+is $api2->access_token, 123456789;
 
 isa_ok( $me, 'API::Instagram::User');
-is( $me->username, "snoopdogg", 'auth_user' );
+is $me->username, "snoopdogg";
 
-is( ref $api->_request('media'), 'HASH', '_request' );
+is ref $api->_request('media'), 'HASH';
 
 my @list = $api->_get_list( { url => 'media', count => 2 } );
-is( ~~@list , 2, '_get_list' );
+is ~~@list , 2;
 
 # Tests Popular Medias method with new DATA (__POPULAR__)
 my $popular = join '', <POPULAR>;
 my $res2 = Test::MockObject::Extends->new( Furl::Response->new( 1, 200, 'OK', {}, $popular) );
 $ua->mock('get',  sub { $res2 });
 
-is( ref $api2->popular_medias, 'ARRAY', 'api2_popular_medias' );
-is( $api2->popular_medias->[0]->user->username, 'cocomiin', 'api2_popular_medias_media_user_username' );
+is ref $api2->popular_medias, 'ARRAY';
+is $api2->popular_medias->[0]->user->username, 'cocomiin';
 
 __DATA__
 {
