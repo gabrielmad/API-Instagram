@@ -3,8 +3,16 @@ Changes from 2013-08-27 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.012 at 2014-08-27 02:13:03 +0000
+version 0.012 at 2014-08-27 02:16:55 +0000
 ------------------------------------------
+
+  Change: 18d4c00985ef334e019f94be9d2d7a1bfd00764e
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-26 23:16:30 +0000
+
+    Starting version 0.012. Add popular_medias method to API::Instagram.
+    Some methods do not require token anymore (as Instagram API Docs
+    describes). Add relatioship get/set method to API::Instagramm::User. 
 
   Change: 3e4383545f6a505294ff8a4eb0ed754e4720cd04
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
