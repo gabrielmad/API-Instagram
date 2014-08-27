@@ -76,6 +76,7 @@ sub relationship {
 	my $url     = sprintf "users/%s/relationship", $self->id;
 	my @actions = qw/ follow unfollow block unblock approve ignore/;
 
+	use experimental 'smartmatch';
 	if ( $action ~~ @actions ){
 		carp "Invalid action";
 		return $self->_api->_post_data( $url, { action => $action } )

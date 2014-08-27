@@ -11,7 +11,6 @@ build_requires:
   Inline::Files: 0
   Test::MockObject::Extends: 0
   Test::More: 0
-  if: 0
   perl: 5.010
 configure_requires:
   ExtUtils::MakeMaker: 0
@@ -30,6 +29,7 @@ requires:
   Moo: 0
   Time::Moment: 0
   URI: 0
+  experimental: 0
   perl: 5.010
   strict: 0
   warnings: 0
