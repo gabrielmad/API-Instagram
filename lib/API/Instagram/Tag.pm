@@ -53,7 +53,7 @@ Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as
 sub recent_medias {
 	my $self = shift;
 	my $url  = sprintf "tags/%s/media/recent", $self->name;
-	API::Instagram->instance->_recent_medias( $url, @_ );
+	API::Instagram->instance->_medias( $url, { @_%2?():@_ } );
 }
 
 sub _build__data {

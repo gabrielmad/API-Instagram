@@ -7,8 +7,11 @@ use Test::MockObject::Extends;
 use JSON;
 use Furl;
 use Furl::Response;
+use HTTP::Response;
+use Inline::Files;
+
 use API::Instagram;
-use Test::More tests => 14;
+use Test::More tests => 17;
 
 my $data = join '', <DATA>;
 my $ua   = Test::MockObject::Extends->new( Furl->new() );
@@ -34,6 +37,7 @@ $api->code('789');
 is( $api->code, 789, 'code' );
 ok( $api->get_auth_url, 'get_auth_url' );
 is( $api->user->username, undef, 'user' );
+is( ref $api->user(123)->relationship('unfollow'), 'HASH');
 
 my ( $access_token, $me ) = $api->get_access_token;
 is( $access_token, 123456789, 'get_access_token' );
@@ -50,8 +54,16 @@ is( $me->username, "snoopdogg", 'auth_user' );
 
 is( ref $api->_request('media'), 'HASH', '_request' );
 
-my @list = $api->_get_list( url => 'media', count => 2 );
+my @list = $api->_get_list( { url => 'media', count => 2 } );
 is( ~~@list , 2, '_get_list' );
+
+# Tests Popular Medias method with new DATA (__POPULAR__)
+my $popular = join '', <POPULAR>;
+my $res2 = Test::MockObject::Extends->new( Furl::Response->new( 1, 200, 'OK', {}, $popular) );
+$ua->mock('get',  sub { $res2 });
+
+is( ref $api2->popular_medias, 'ARRAY', 'api2_popular_medias' );
+is( $api2->popular_medias->[0]->user->username, 'cocomiin', 'api2_popular_medias_media_user_username' );
 
 __DATA__
 {
@@ -76,4 +88,146 @@ __DATA__
             "followed_by": 3410
         }
     }
+}
+
+__POPULAR__
+{
+    "meta": {
+        "code": 200
+    },
+    "data": [{
+            "type": "image",
+            "users_in_photo": [],
+            "filter": "Gotham",
+            "tags": [],
+            "comments": {},
+            "caption": {
+                "created_time": "1296656006",
+                "text": "ãã¼ãâ¥ã¢ããªå§ãã¦ä½¿ã£ã¦ã¿ãã(^^)",
+                "from": {
+                    "username": "cocomiin",
+                    "full_name": "",
+                    "type": "user",
+                    "id": "1127272"
+                },
+                "id": "26329105"
+            },
+            "likes": {
+                "count": 35,
+                "data": [{
+                    "username": "mikeyk",
+                    "full_name": "Kevin S",
+                    "id": "4",
+                    "profile_picture": "..."
+                }]
+            },
+            "link": "http://instagr.am/p/BV5v_/",
+            "user": {
+                "username": "cocomiin",
+                "full_name": "Cocomiin",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_1127272_75sq_1296145633.jpg",
+                "id": "1127272"
+            },
+            "created_time": "1296655883",
+            "images": {
+                "low_resolution": {
+                    "url": "http://distillery.s3.amazonaws.com/media/2011/02/01/34d027f155204a1f98dde38649a752ad_6.jpg",
+                    "width": 306,
+                    "height": 306
+                },
+                "thumbnail": {
+                    "url": "http://distillery.s3.amazonaws.com/media/2011/02/01/34d027f155204a1f98dde38649a752ad_5.jpg",
+                    "width": 150,
+                    "height": 150
+                },
+                "standard_resolution": {
+                    "url": "http://distillery.s3.amazonaws.com/media/2011/02/01/34d027f155204a1f98dde38649a752ad_7.jpg",
+                    "width": 612,
+                    "height": 612
+                }
+            },
+            "id": "22518783",
+            "location": null
+        }, {
+            "type": "video",
+            "videos": {
+                "low_resolution": {
+                    "url": "http://distilleryvesper9-13.ak.instagram.com/090d06dad9cd11e2aa0912313817975d_102.mp4",
+                    "width": 480,
+                    "height": 480
+                },
+                "standard_resolution": {
+                    "url": "http://distilleryvesper9-13.ak.instagram.com/090d06dad9cd11e2aa0912313817975d_101.mp4",
+                    "width": 640,
+                    "height": 640
+                },
+                "users_in_photo": null,
+                "filter": "Vesper",
+                "tags": [],
+                "comments": {
+                    "data": [{
+                        "created_time": "1279332030",
+                        "text": "Love the sign here",
+                        "from": {
+                            "username": "mikeyk",
+                            "full_name": "Mikey Krieger",
+                            "id": "4",
+                            "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_1242695_75sq_1293915800.jpg"
+                        },
+                        "id": "8"
+                    }, {
+                        "created_time": "1279341004",
+                        "text": "Chilako taco",
+                        "from": {
+                            "username": "kevin",
+                            "full_name": "Kevin S",
+                            "id": "3",
+                            "profile_picture": "..."
+                        },
+                        "id": "3"
+                    }],
+                    "count": 2
+                },
+                "caption": null,
+                "likes": {
+                    "count": 1,
+                    "data": [{
+                        "username": "mikeyk",
+                        "full_name": "Mikeyk",
+                        "id": "4",
+                        "profile_picture": "..."
+                    }]
+                },
+                "link": "http://instagr.am/p/D/",
+                "user": {
+                    "username": "kevin",
+                    "full_name": "Kevin S",
+                    "profile_picture": "...",
+                    "bio": "...",
+                    "website": "...",
+                    "id": "3"
+                },
+                "created_time": "1279340983",
+                "images": {
+                    "low_resolution": {
+                        "url": "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_6.jpg",
+                        "width": 306,
+                        "height": 306
+                    },
+                    "thumbnail": {
+                        "url": "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_5.jpg",
+                        "width": 150,
+                        "height": 150
+                    },
+                    "standard_resolution": {
+                        "url": "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_7.jpg",
+                        "width": 612,
+                        "height": 612
+                    }
+                },
+                "id": "3",
+                "location": null
+            }
+        }
+    ]
 }

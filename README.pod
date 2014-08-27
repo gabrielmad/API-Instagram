@@ -14,7 +14,7 @@ API::Instagram - Object Oriented Interface for the Instagram REST and Search API
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 
@@ -194,6 +194,13 @@ Returns an L<API::Instagram::Search> object, capable to search for the given B<t
 Where B<type> can be: C<user>, C<media>, C<tag> or C<location>.
 
 See L<API::Instagram::Search> for more details and examples.
+
+=head2 popular_medias
+
+	my $medias = $user->popular_medias( count => 3 );
+	print $_->caption . $/ for @$medias;
+
+Returns a list of L<API::Instagram::Media> objects of Instagram most popular media at the moment.
 
 =head1 AUTHOR
 

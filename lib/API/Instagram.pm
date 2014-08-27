@@ -2,7 +2,7 @@ package API::Instagram;
 
 # ABSTRACT: Object Oriented Interface for the Instagram REST and Search APIs
 
-our $VERSION = '0.011';
+our $VERSION = '0.012';
 
 use Moo;
 # with 'MooX::Singleton';
@@ -204,10 +204,7 @@ sub get_access_token {
 	}
 
 	my $data = { map { $_ => $self->$_ } @access_token_fields };
-	my $json = from_json $self->_ua->post( $self->_access_token_url, [], $data )->decoded_content;
-
-	my $meta = $json->{meta};
-	carp "ERROR $meta->{error_type}: $meta->{error_message}" and return if $meta->{code} ne '200';
+	my $json = $self->_post( $self->_access_token_url, $data, { token_not_required => 1 } );
 
 	wantarray ? ( $json->{access_token}, $self->user( $json->{user} ) ) : $json->{access_token};
 }
@@ -288,6 +285,20 @@ sub search {
 	API::Instagram::Search->new( type => $type )
 }
 
+=method popular_medias
+
+	my $medias = $user->popular_medias( count => 3 );
+	print $_->caption . $/ for @$medias;
+
+Returns a list of L<API::Instagram::Media> objects of Instagram most popular media at the moment.
+
+=cut
+
+sub popular_medias {
+	my $self = shift;
+	my $url  = "/media/popular";
+	$self->_medias( $url, { @_%2?():@_ } );
+}
 
 #####################################################
 # Returns cached wanted object or creates a new one #
@@ -317,25 +328,27 @@ sub _get_obj {
 ###################################
 # Returns a list of Media Objects #
 ###################################
-sub _recent_medias {
-	my ($self, $url, %opts) = @_;
-	$opts{count} //= 33;
-	[ map { $self->media($_) } $self->_get_list( %opts, url => $url ) ]
+sub _medias {
+	my ($self, $url, $params, $opts) = @_;
+	$params->{count} //= 33;
+	$params->{url}     = $url;
+	[ map { $self->media($_) } $self->_get_list( { %$params, url => $url }, $opts ) ]
 }
 
 ####################################################################
 # Returns a list of the requested items. Does pagination if needed #
 ####################################################################
 sub _get_list {
-	my $self = shift;
-	my %opts = @_;
+	my $self   = shift;
+	my $params = shift;
+	my $opts   = shift;
 
-	my $url      = delete $opts{url} || return [];
-	my $count    = $opts{count} // 999_999_999;
+	my $url      = delete $params->{url} || return [];
+	my $count    = $params->{count} // 999_999_999;
 	$count       = 999_999_999 if $count < 0;
-	$opts{count} = $count;
+	$params->{count} = $count;
 
-	my $request = $self->_request( $url, \%opts );
+	my $request = $self->_request( $url, $params, $opts );
 	my $data    = $request->{data};
 
 	# Keeps requesting if total items is less than requested
@@ -345,7 +358,8 @@ sub _get_list {
 		last if     @$data >= $count;
 		last unless $pagination->{next_url};
 
-		$request = $self->_request( $pagination->{next_url}, \%opts, { prepared_url => 1 } );
+		$opts->{prepared_url} = 1;
+		$request = $self->_request( $pagination->{next_url}, $params, $opts );
 		push @$data, @{ $request->{data} };
 	}
 
@@ -358,7 +372,13 @@ sub _get_list {
 sub _request {
 	my ( $self, $url, $params, $opts ) = @_;
 
-	carp "A valid access_token is required" and return {} unless defined $self->access_token;
+	# Verifies access requirements
+	unless ( defined $self->access_token ) {
+		if ( !$opts->{token_not_required} or !defined $self->client_id ) {
+			carp "A valid access_token is required";
+			return {}
+		}
+	}
 
 	# If URL is not prepared, prepares it
 	unless ( $opts->{prepared_url} ){
@@ -384,8 +404,35 @@ sub _request {
 
 	$res;
 }
-
 sub _request_data { shift->_request(@_)->{data} || {} }
+
+###############################
+# Posts data to the given URL #
+###############################
+sub _post {
+	my ( $self, $url, $params, $opts ) = @_;
+
+	# Verifies access requirements
+	unless ( defined $self->access_token ) {
+		if ( !$opts->{token_not_required} or !defined $self->client_id ) {
+			carp "A valid access_token is required";
+			return {}
+		}
+	}
+
+	# Treats response content
+	my $res = decode_json $self->_ua->post( $url, [], $params )->decoded_content;
+
+	# Verifies meta node
+	my $meta = $res->{meta};
+	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
+
+use Data::Dumper;
+# die Dumper $res;
+	$res;
+}
+
+sub _post_data { shift->_post(@_)->{data} || {} }
 
 ################################
 # Returns requested cache hash #

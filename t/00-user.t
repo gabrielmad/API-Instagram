@@ -5,8 +5,9 @@ use warnings;
 use Test::MockObject::Extends; 
 
 use JSON;
+use Inline::Files;
 use API::Instagram;
-use Test::More tests => 33;
+use Test::More tests => 37;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -88,6 +89,15 @@ isa_ok( $user4, 'API::Instagram::User' );
 
 is( $user4->profile_picture, undef );
 
+
+my $req = decode_json join '', <REL>;
+$api->mock('_request', sub { $req });
+$api->mock('_request', sub { $req });
+is( ref $user4->relationship, 'HASH' );
+is( $user4->relationship->{incoming_status}, 'requested_by' );
+is( ref $user4->relationship('block'), 'HASH' );
+is( ref $user4->relationship('undef'), 'HASH' );
+
 __DATA__
 {
     "data": {
@@ -102,5 +112,16 @@ __DATA__
             "follows": 420,
             "followed_by": 3410
         }
+    }
+}
+
+__REL__
+{
+    "meta": {
+        "code": 200
+    }, 
+    "data": {
+        "outgoing_status": "none", 
+        "incoming_status": "requested_by"
     }
 }

@@ -178,20 +178,54 @@ Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as
 
 sub recent_medias {
 	my $self = shift;
-	my $url  = "/users/" . $self->id . "/media/recent";
-	$self->_api->_recent_medias( $url, @_ );
+	my $url  = sprintf "/users/%s/media/recent", $self->id;
+	$self->_api->_medias( $url, { @_%2?():@_ }, { token_not_required => 1 } );
 }
 
+=method relationship
 
+	my $relationship = $user->relationship;
+	say $relationship->{incoming_status};
 
+Returns a C<HASH> reference contaning information about the relationship of the user with the authenticated user.
+
+This reference contains two keys:
+
+B<outgoing_status:> Authenticated user relationship to the user. Can be C<follows>, C<requested>, C<none>. 
+
+B<incoming_status:> A user's relationship to the authenticated user. Can be C<followed_by>, C<requested_by>, C<blocked_by_you>, C<none>.
+
+	$user->relationship('follow');
+
+When an B<action> (as parameter) is given, it sends a request to modify the relationship to the given one.
+
+The B<action> can be one of C<follow>/C<unfollow>/C<block>/C<unblock>/C<approve>/C<ignore>.
+
+=cut
+sub relationship {
+	my $self    = shift;
+	my $action  = shift;
+	my $url     = sprintf "users/%s/relationship", $self->id;
+	my @actions = qw/ follow unfollow block unblock approve ignore/;
+
+	use experimental 'smartmatch';
+	if ( $action ) {
+		if ( $action ~~ @actions ){
+			return $self->_api->_post_data( $url, { action => $action } )
+		}
+		carp "Invalid action";
+	}
+
+	$self->_api->_request_data( $url );
+}
 
 
 sub _get_relashions {
 	my $self = shift;
 	my %opts = @_;
-	my $url  = "/users/" . $self->id . "/" . $opts{relationship};
+	my $url  = sprintf "/users/%s/%s", $self->id, $opts{relationship};
 	my $api  = $self->_api;
-	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
+	[ map { $api->user($_) } $api->_get_list( { %opts, url => $url } ) ]
 }
 
 sub _self_requests {
@@ -202,7 +236,7 @@ sub _self_requests {
 		return;
 	}
 
-	$self->_api->_get_list( %opts, url => $url )
+	$self->_api->_get_list( { %opts, url => $url } )
 }
 
 
