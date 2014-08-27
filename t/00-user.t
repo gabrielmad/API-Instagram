@@ -7,7 +7,7 @@ use Test::MockObject::Extends;
 use JSON;
 use Inline::Files;
 use API::Instagram;
-use Test::More tests => 35;
+use Test::More tests => 37;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -92,8 +92,11 @@ is( $user4->profile_picture, undef );
 
 my $req = decode_json join '', <REL>;
 $api->mock('_request', sub { $req });
+$api->mock('_request', sub { $req });
 is( ref $user4->relationship, 'HASH' );
 is( $user4->relationship->{incoming_status}, 'requested_by' );
+is( ref $user4->relationship('block'), 'HASH' );
+is( ref $user4->relationship('undef'), 'HASH' );
 
 __DATA__
 {

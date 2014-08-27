@@ -18,7 +18,7 @@ sub recent_medias {
 	carp "Not available for location with no ID." and return [] unless $self->has_id;
 
 	my $url  = "/locations/" . $self->id . "/media/recent";
-	API::Instagram->instance->_medias( $url, @_ );
+	API::Instagram->instance->_medias( $url, { @_%2?():@_ } );
 }
 
 sub _build_name      { shift->_data->{name}      }

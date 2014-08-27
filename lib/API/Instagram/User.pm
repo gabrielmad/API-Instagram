@@ -67,7 +67,7 @@ sub get_followers {
 sub recent_medias {
 	my $self = shift;
 	my $url  = sprintf "/users/%s/media/recent", $self->id;
-	$self->_api->_medias( $url, @_, token_not_required => 1 );
+	$self->_api->_medias( $url, { @_%2?():@_ }, { token_not_required => 1 } );
 }
 
 sub relationship {
@@ -77,9 +77,11 @@ sub relationship {
 	my @actions = qw/ follow unfollow block unblock approve ignore/;
 
 	use experimental 'smartmatch';
-	if ( $action ~~ @actions ){
+	if ( $action ) {
+		if ( $action ~~ @actions ){
+			return $self->_api->_post_data( $url, { action => $action } )
+		}
 		carp "Invalid action";
-		return $self->_api->_post_data( $url, { action => $action } )
 	}
 
 	$self->_api->_request_data( $url );
@@ -91,7 +93,7 @@ sub _get_relashions {
 	my %opts = @_;
 	my $url  = sprintf "/users/%s/%s", $self->id, $opts{relationship};
 	my $api  = $self->_api;
-	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
+	[ map { $api->user($_) } $api->_get_list( { %opts, url => $url } ) ]
 }
 
 sub _self_requests {
@@ -102,7 +104,7 @@ sub _self_requests {
 		return;
 	}
 
-	$self->_api->_get_list( %opts, url => $url )
+	$self->_api->_get_list( { %opts, url => $url } )
 }
 
 

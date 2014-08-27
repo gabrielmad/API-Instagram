@@ -50,7 +50,7 @@ sub get_likes {
 	my %opts = @_;
 	my $url  = "/media/" . $self->id . "/likes";
 	my $api  = $self->_api;
-	[ map { $api->user($_) } $api->_get_list( %opts, url => $url ) ]
+	[ map { $api->user($_) } $api->_get_list( { %opts, url => $url } ) ]
 }
 
 sub get_comments {
@@ -58,7 +58,7 @@ sub get_comments {
 	my %opts = @_;
 	my $url  = "/media/" . $self->id . "/comments";
 	my $api  = $self->_api;
-	[ map { $api->comment($_) } $api->_get_list( %opts, url => $url ) ]
+	[ map { $api->comment($_) } $api->_get_list( { %opts, url => $url } ) ]
 }
 
 

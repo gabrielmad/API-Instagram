@@ -20,7 +20,7 @@ http://www.pjcj.net
 <h1>Branch Coverage</h1>
 <table>
 <tr><td class="h" align="right">File:</td><td align="left">lib/API/Instagram/User.pm</td></tr>
-<tr><td class="h" align="right">Coverage:</td><td align="left" class="c3">100.0%</td></tr>
+<tr><td class="h" align="right">Coverage:</td><td align="left" class="c2">95.5%</td></tr>
 </table>
 <div><br/></div>
 <table>
@@ -31,8 +31,11 @@ http://www.pjcj.net
 <tr><td class="h"><a id="L100">100</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless my(@list) = $self-&gt;_self_requests(&#39;feed&#39;, &#39;/users/self/feed&#39;, @_)</td></tr>
 <tr><td class="h"><a id="L117">117</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless my(@list) = $self-&gt;_self_requests(&#39;liked-media&#39;, &#39;/users/self/media/liked&#39;, @_)</td></tr>
 <tr><td class="h"><a id="L134">134</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless my(@list) = $self-&gt;_self_requests(&#39;requested-by&#39;, &#39;/users/self/requested-by&#39;, @_)</td></tr>
-<tr><td class="h"><a id="L200">200</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($self-&gt;id ne $self-&gt;_api-&gt;user-&gt;id)</td></tr>
-<tr><td class="h"><a id="L213">213</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if exists $$opts{&#39;profile_pic_url&#39;}</td></tr>
+<tr><td class="h"><a id="L182">182</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">@_ % 2 ? :</td></tr>
+<tr><td class="h"><a id="L212">212</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($action)</td></tr>
+<tr><td class="h"><a id="L213">213</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($action ~~ \@actions)</td></tr>
+<tr><td class="h"><a id="L234">234</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($self-&gt;id ne $self-&gt;_api-&gt;user-&gt;id)</td></tr>
+<tr><td class="h"><a id="L247">247</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if exists $$opts{&#39;profile_pic_url&#39;}</td></tr>
 </table>
 </body>
 </html>

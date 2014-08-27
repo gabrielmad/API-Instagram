@@ -20,7 +20,7 @@ http://www.pjcj.net
 <h1>Branch Coverage</h1>
 <table>
 <tr><td class="h" align="right">File:</td><td align="left">lib/API/Instagram.pm</td></tr>
-<tr><td class="h" align="right">Coverage:</td><td align="left" class="c1">78.1%</td></tr>
+<tr><td class="h" align="right">Coverage:</td><td align="left" class="c0">73.8%</td></tr>
 </table>
 <div><br/></div>
 <table>
@@ -28,19 +28,24 @@ http://www.pjcj.net
 <tr><td class="h"><a id="L172">172</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if $self-&gt;code</td></tr>
 <tr><td class="h"><a id="L176">176</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">unless defined $self-&gt;$_</td></tr>
 <tr><td class="h"><a id="L203">203</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless defined $self-&gt;$_</td></tr>
-<tr><td class="h"><a id="L210">210</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $$meta{&#39;code&#39;} ne &#39;200&#39;</td></tr>
-<tr><td class="h"><a id="L212">212</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">wantarray ? :</td></tr>
-<tr><td class="h"><a id="L313">313</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ref $code eq &#39;HASH&#39;</td></tr>
-<tr><td class="h"><a id="L317">317</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if not $optional_code || defined $code or ref $code</td></tr>
-<tr><td class="h"><a id="L326">326</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if $self-&gt;no_cache</td></tr>
-<tr><td class="h"><a id="L349">349</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $count &lt; 0</td></tr>
-<tr><td class="h"><a id="L359">359</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if @$data &gt;= $count</td></tr>
-<tr><td class="h"><a id="L360">360</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">unless $$pagination{&#39;next_url&#39;}</td></tr>
-<tr><td class="h"><a id="L375">375</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if not defined $self-&gt;access_token or $$opts{&#39;access_token_not_required&#39;} and not $self-&gt;client_id</td></tr>
-<tr><td class="h"><a id="L380">380</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless ($$opts{&#39;prepared_url&#39;})</td></tr>
-<tr><td class="h"><a id="L392">392</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $self-&gt;_debug</td></tr>
-<tr><td class="h"><a id="L399">399</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $$meta{&#39;code&#39;} ne &#39;200&#39;</td></tr>
-<tr><td class="h"><a id="L404">404</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless shift()-&gt;_request(@_)-&gt;{&#39;data&#39;}</td></tr>
+<tr><td class="h"><a id="L209">209</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">wantarray ? :</td></tr>
+<tr><td class="h"><a id="L300">300</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">@_ % 2 ? :</td></tr>
+<tr><td class="h"><a id="L310">310</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ref $code eq &#39;HASH&#39;</td></tr>
+<tr><td class="h"><a id="L314">314</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if not $optional_code || defined $code or ref $code</td></tr>
+<tr><td class="h"><a id="L323">323</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if $self-&gt;no_cache</td></tr>
+<tr><td class="h"><a id="L348">348</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $count &lt; 0</td></tr>
+<tr><td class="h"><a id="L358">358</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if @$data &gt;= $count</td></tr>
+<tr><td class="h"><a id="L359">359</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">unless $$pagination{&#39;next_url&#39;}</td></tr>
+<tr><td class="h"><a id="L376">376</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless (defined $self-&gt;access_token)</td></tr>
+<tr><td class="h"><a id="L377">377</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">unless ($$opts{&#39;token_not_required&#39;} and defined $self-&gt;client_id)</td></tr>
+<tr><td class="h"><a id="L384">384</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless ($$opts{&#39;prepared_url&#39;})</td></tr>
+<tr><td class="h"><a id="L396">396</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $self-&gt;_debug</td></tr>
+<tr><td class="h"><a id="L403">403</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $$meta{&#39;code&#39;} ne &#39;200&#39;</td></tr>
+<tr><td class="h"><a id="L407">407</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless shift()-&gt;_request(@_)-&gt;{&#39;data&#39;}</td></tr>
+<tr><td class="h"><a id="L416">416</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">unless (defined $self-&gt;access_token)</td></tr>
+<tr><td class="h"><a id="L417">417</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless ($$opts{&#39;token_not_required&#39;} and defined $self-&gt;client_id)</td></tr>
+<tr><td class="h"><a id="L428">428</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $$meta{&#39;code&#39;} ne &#39;200&#39;</td></tr>
+<tr><td class="h"><a id="L435">435</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">unless shift()-&gt;_post(@_)-&gt;{&#39;data&#39;}</td></tr>
 </table>
 </body>
 </html>

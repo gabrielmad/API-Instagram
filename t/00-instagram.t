@@ -11,7 +11,7 @@ use HTTP::Response;
 use Inline::Files;
 
 use API::Instagram;
-use Test::More tests => 16;
+use Test::More tests => 17;
 
 my $data = join '', <DATA>;
 my $ua   = Test::MockObject::Extends->new( Furl->new() );
@@ -37,6 +37,7 @@ $api->code('789');
 is( $api->code, 789, 'code' );
 ok( $api->get_auth_url, 'get_auth_url' );
 is( $api->user->username, undef, 'user' );
+is( ref $api->user(123)->relationship('unfollow'), 'HASH');
 
 my ( $access_token, $me ) = $api->get_access_token;
 is( $access_token, 123456789, 'get_access_token' );
@@ -53,7 +54,7 @@ is( $me->username, "snoopdogg", 'auth_user' );
 
 is( ref $api->_request('media'), 'HASH', '_request' );
 
-my @list = $api->_get_list( url => 'media', count => 2 );
+my @list = $api->_get_list( { url => 'media', count => 2 } );
 is( ~~@list , 2, '_get_list' );
 
 # Tests Popular Medias method with new DATA (__POPULAR__)
