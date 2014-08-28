@@ -68,7 +68,7 @@ Returns the media where the comment was posted.
 
 =head2 remove
 
-	$comment->del;
+	$comment->remove;
 
 Removes the comment either on the authenticated user's media object or authored by the authenticated user.
 
