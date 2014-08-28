@@ -394,8 +394,6 @@ sub _request {
 	my $meta = $res->{meta};
 	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
 
-use Data::Dumper;
-# die Dumper $res;
 	$res;
 }
 
