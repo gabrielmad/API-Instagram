@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 5;
+use Test::More tests => 4;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -20,21 +20,14 @@ my $data = join '', <DATA>;
 my $json = decode_json $data;
 $api->mock('_request', sub { $json });
 
-# First Object
 my $search = $api->search('tag');
 isa_ok( $search, 'API::Instagram::Search' );
 
 my $tags = $search->find( q => 'x' );
-is( ref $tags, 'ARRAY', 'search_response' );
+is ref $tags, 'ARRAY';
 
 isa_ok( $tags->[0], 'API::Instagram::Tag' );
-is( $tags->[3]->name, 'snowydays', 'search_item' );
-
-# Second Object
-$json = decode_json $data;
-my $search2 = eval { $api->search('car') };
-is( $search2, undef, 'search_wrong_type' );
-
+is $tags->[3]->name, 'snowydays';
 
 __DATA__
 {

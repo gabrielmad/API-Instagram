@@ -156,13 +156,6 @@ METHODS
 
     Get information about a tag. Returns an API::Instagram::Tag object.
 
-  comment
-            my $comment = $instagram->comment('1234567');
-            say $comment->text;
-
-    Get information about a comment. Returns an
-    API::Instagram::Media::Comment object.
-
   search
             my $search = $instagram->search('user');
             my $users = $search->find( q => 'larry' );

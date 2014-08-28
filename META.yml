@@ -5,7 +5,6 @@ author:
 build_requires:
   File::Spec: 0
   Furl::Response: 0
-  HTTP::Response: 0
   IO::Handle: 0
   IPC::Open3: 0
   Inline::Files: 0

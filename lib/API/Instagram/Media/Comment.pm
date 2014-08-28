@@ -8,8 +8,14 @@ use Time::Moment;
 has id           => ( is => 'ro', required => 1 );
 has from         => ( is => 'ro', required => 1, coerce => sub { API::Instagram->instance->user( $_[0] ) } );
 has text         => ( is => 'ro', required => 1 );
+has media        => ( is => 'ro', required => 1 );
 has created_time => ( is => 'ro', coerce => sub { Time::Moment->from_epoch( $_[0] ) } );
 
+sub remove {
+	my $self = shift;
+	my $url  = sprintf "media/%s/comments/%s", $self->media->id, $self->id;
+	$self->media->_api->_del( $url )
+}
 
 1;
 
@@ -53,6 +59,18 @@ Returns the text commented.
 =head2 created_time
 
 Returns the comment date in a L<Time::Moment> object.
+
+=head2 media
+
+Returns the media where the comment was posted.
+
+=head1 METHODS
+
+=head2 remove
+
+	$comment->del;
+
+Removes the comment either on the authenticated user's media object or authored by the authenticated user.
 
 =head1 AUTHOR
 

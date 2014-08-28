@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 10;
+use Test::More tests => 6;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -21,25 +21,14 @@ my $json = decode_json $data;
 $api->mock('_request', sub { $json });
 $api->mock('_get_list', sub { [] });
 
-# First Object
 my $location = $api->location('1');
 isa_ok( $location, 'API::Instagram::Location' );
-is( $location->id, 1, 'location_id' );
-is( $location->name, 'Dogpatch Labs', 'location_name' );
-is( $location->latitude, 37.782, 'location_latitude' );
-is( $location->longitude, -122.387, 'location_longitude' );
-is( ref $location->recent_medias, 'ARRAY', 'location_recent_medias' );
 
-# Second Object
-$json = decode_json $data;
-delete $json->{data}->{id};
-delete $json->{data}->{name};
-
-my $location2 = $api->location( $json->{data} );
-isa_ok( $location2, 'API::Instagram::Location' );
-is( $location2->id, undef, 'location2_undef_id' );
-is( $location2->name, undef, 'location2_undef_name' );
-is( ref $location2->recent_medias, 'ARRAY', 'location2_undef_recent_medias' );
+is $location->id, 1;
+is $location->name, 'Dogpatch Labs';
+is $location->latitude, 37.782;
+is $location->longitude, -122.387;
+is ref $location->recent_medias, 'ARRAY';
 
 __DATA__
 {

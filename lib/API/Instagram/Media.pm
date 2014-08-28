@@ -26,11 +26,6 @@ sub likes {
 	$self->_data->{likes}->{count}
 }
 
-sub comments {
-	my $self = shift;
-	$self->_clear_data if shift;
-	$self->_data->{comments}->{count}
-}
 sub last_likes {
 	my $self = shift;
 	$self->_clear_data if shift;
@@ -38,27 +33,52 @@ sub last_likes {
 	[ map { $api->user($_) } @{ $self->_data->{likes}->{data} } ]
 }
 
+sub get_likes {
+	my $self = shift;
+	my %opts = @_;
+	my $url  = sprintf "media/%s/likes", $self->id;
+	my $api  = $self->_api;
+	[ map { $api->user($_) } $api->_get_list( { %opts, url => $url } ) ]
+}
+
+sub like {
+	my $self = shift;
+	my $url  = sprintf "media/%s/likes", $self->id;
+	$self->_api->_post( $url )
+}
+
+sub dislike {
+	my $self = shift;
+	my $url  = sprintf "media/%s/likes", $self->id;
+	$self->_api->_del( $url )
+}
+
+sub comments {
+	my $self = shift;
+	$self->_clear_data if shift;
+	$self->_data->{comments}->{count}
+}
+
 sub last_comments {
 	my $self = shift;
 	$self->_clear_data if shift;
 	my $api  = $self->_api;
-	[ map { $api->comment($_) } @{ $self->_data->{comments}->{data} } ]
-}
-
-sub get_likes {
-	my $self = shift;
-	my %opts = @_;
-	my $url  = "/media/" . $self->id . "/likes";
-	my $api  = $self->_api;
-	[ map { $api->user($_) } $api->_get_list( { %opts, url => $url } ) ]
+	[ map { $api->_comment( { %$_, media => $self } ) } @{ $self->_data->{comments}->{data} } ]
 }
 
 sub get_comments {
 	my $self = shift;
 	my %opts = @_;
-	my $url  = "/media/" . $self->id . "/comments";
+	my $url  = sprintf "media/%s/comments", $self->id;
 	my $api  = $self->_api;
-	[ map { $api->comment($_) } $api->_get_list( { %opts, url => $url } ) ]
+	[ map { $api->_comment( { %$_, media => $self } ) } $api->_get_list( { %opts, url => $url } ) ]
+}
+
+sub comment {
+	my $self = shift;
+	my $text = shift;
+	my $url  = sprintf "media/%s/comments", $self->id;
+	$self->_api->_post( $url, { text => $text } )
 }
 
 
@@ -78,7 +98,7 @@ sub _build_created_time   { shift->_data->{created_time}   }
 sub _build__data {
 	my $self = shift;
 	my $url  = sprintf "media/%s", $self->id;
-	$self->_api->_request_data( $url );
+	$self->_api->_get( $url );
 }
 
 ############################################################
@@ -215,6 +235,37 @@ If you set C<1> as parameter it will renew all media data and return an up-do-da
 
 Note: C<1> as parameter also updates total comments, last likes and last comments.
 
+=head2 last_likes
+
+	for my $user ( @{ $media->last_likes } ) {
+		say $user->username;
+	}
+
+Returns a list of C<API::Instagram::User> of the last users who liked the media.
+If you set C<1> as parameter it will renew all media data and return an up-do-date list.
+
+Note: C<1> as parameter also updates total likes, total comments and last comments.
+
+=head2 get_likes
+
+	my @likers = $media->get_likes( count => 5 );
+
+Returns a list of L<API::Instagram::User> objects of users who liked the media.
+
+Accepts C<count>.
+
+=head2 like
+
+	$media->like;
+
+Sets a like on the media by the authenticated user.
+
+=head2 dislike
+
+	$media->dislike;
+
+Removes a like on the media by the authenticated user.
+
 =head2 comments
 
 	printf "Total Comments: %d\n", $media->comments; # Total comments when object was created
@@ -228,17 +279,6 @@ If you set C<1> as parameter it will renew all media data and return an up-do-da
 
 Note: C<1> as parameter also updates total likes, last likes and last comments.
 
-=head2 last_likes
-
-	for my $user ( @{ $media->last_likes } ) {
-		say $user->username;
-	}
-
-Returns a list of C<API::Instagram::User> of the last users who liked the media.
-If you set C<1> as parameter it will renew all media data and return an up-do-date list.
-
-Note: C<1> as parameter also updates total likes, total comments and last comments.
-
 =head2 last_comments
 
 	for my $comment ( @{ $media->last_comments } ) {
@@ -250,14 +290,6 @@ If you set C<1> as parameter it will renew all media data and return an up-do-da
 
 Note: C<1> as parameter also updates total likes, total comments and last likes.
 
-=head2 get_likes
-
-	my @likers = $media->get_likes( count => 5 );
-
-Returns a list of L<API::Instagram::User> objects of users who liked the media.
-
-Accepts C<count>.
-
 =head2 get_comments
 
 	my @comments = $media->get_comments( count => 5 );
@@ -265,6 +297,14 @@ Accepts C<count>.
 Returns a list of L<API::Instagram::Media::Comment> objects of the media.
 
 Accepts C<count>.
+
+=head2 comment
+
+	$media->comment("Nice pic!");
+
+Creates a comment on the media.
+
+Note: This endpoint is restrict, check  L<https://help.instagram.com/contact/185819881608116> for more information.
 
 =head1 AUTHOR
 

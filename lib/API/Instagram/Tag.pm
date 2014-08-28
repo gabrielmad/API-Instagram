@@ -23,7 +23,7 @@ sub recent_medias {
 sub _build__data {
 	my $self = shift;
 	my $url  = sprintf "tags/%s", $self->name;
-	API::Instagram->instance->_request_data( $url );
+	API::Instagram->instance->_get( $url );
 }
 
 1;

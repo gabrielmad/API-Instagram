@@ -71,7 +71,7 @@ sub get_access_token {
 	}
 
 	my $data = { map { $_ => $self->$_ } @access_token_fields };
-	my $json = $self->_post( $self->_access_token_url, $data, { token_not_required => 1 } );
+	my $json = $self->_request( 'post', $self->_access_token_url, $data, { token_not_required => 1 } );
 
 	wantarray ? ( $json->{access_token}, $self->user( $json->{user} ) ) : $json->{access_token};
 }
@@ -85,9 +85,6 @@ sub location { shift->_get_obj( 'Location', 'id', shift, 1 ) }
 
 sub tag { shift->_get_obj( 'Tag', 'name', shift ) }
 
-sub comment { shift->_get_obj( 'Media::Comment', 'id', shift ) }
-
-
 sub search {
 	my $self = shift;
 	my $type = shift;
@@ -100,6 +97,8 @@ sub popular_medias {
 	my $url  = "/media/popular";
 	$self->_medias( $url, { @_%2?():@_ } );
 }
+
+sub _comment { shift->_get_obj( 'Media::Comment', 'id', shift ) }
 
 #####################################################
 # Returns cached wanted object or creates a new one #
@@ -149,7 +148,7 @@ sub _get_list {
 	$count       = 999_999_999 if $count < 0;
 	$params->{count} = $count;
 
-	my $request = $self->_request( $url, $params, $opts );
+	my $request = $self->_request( 'get', $url, $params, $opts );
 	my $data    = $request->{data};
 
 	# Keeps requesting if total items is less than requested
@@ -160,7 +159,7 @@ sub _get_list {
 		last unless $pagination->{next_url};
 
 		$opts->{prepared_url} = 1;
-		$request = $self->_request( $pagination->{next_url}, $params, $opts );
+		$request = $self->_request( 'get', $pagination->{next_url}, $params, $opts );
 		push @$data, @{ $request->{data} };
 	}
 
@@ -171,7 +170,7 @@ sub _get_list {
 # Requests the data from the given URL with QUERY parameters #
 ##############################################################
 sub _request {
-	my ( $self, $url, $params, $opts ) = @_;
+	my ( $self, $method, $url, $params, $opts ) = @_;
 
 	# Verifies access requirements
 	unless ( defined $self->access_token ) {
@@ -193,36 +192,12 @@ sub _request {
 		$uri->query_form($params);
 		$url = $uri->as_string;
 	}
+
 	# For debugging purposes
 	print "Requesting: $url$/" if $self->_debug;
 
 	# Treats response content
-	my $res = decode_json $self->_ua->get( $url )->decoded_content;
-
-	# Verifies meta node
-	my $meta = $res->{meta};
-	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
-
-	$res;
-}
-sub _request_data { shift->_request(@_)->{data} || {} }
-
-###############################
-# Posts data to the given URL #
-###############################
-sub _post {
-	my ( $self, $url, $params, $opts ) = @_;
-
-	# Verifies access requirements
-	unless ( defined $self->access_token ) {
-		if ( !$opts->{token_not_required} or !defined $self->client_id ) {
-			carp "A valid access_token is required";
-			return {}
-		}
-	}
-
-	# Treats response content
-	my $res = decode_json $self->_ua->post( $url, [], $params )->decoded_content;
+	my $res = decode_json $self->_ua->$method( $url, [], $params )->decoded_content;
 
 	# Verifies meta node
 	my $meta = $res->{meta};
@@ -233,7 +208,11 @@ use Data::Dumper;
 	$res;
 }
 
-sub _post_data { shift->_post(@_)->{data} || {} }
+sub _request_data { shift->_request(@_)->{data} || {} }
+
+sub _del  { shift->_request_data( 'delete', @_ ) }
+sub _get  { shift->_request_data( 'get',    @_ ) }
+sub _post { shift->_request_data( 'post',   @_ ) }
 
 ################################
 # Returns requested cache hash #
@@ -420,13 +399,6 @@ Get information about a location. Returns an L<API::Instagram::Location> object.
 	say $tag->media_count;
 
 Get information about a tag. Returns an L<API::Instagram::Tag> object.
-
-=head2 comment
-
-	my $comment = $instagram->comment('1234567');
-	say $comment->text;
-
-Get information about a comment. Returns an L<API::Instagram::Media::Comment> object.
 
 =head2 search
 
