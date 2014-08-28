@@ -3,8 +3,19 @@ Changes from 2013-08-28 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.013 at 2014-08-28 03:51:44 +0000
+version 0.013 at 2014-08-28 03:57:09 +0000
 ------------------------------------------
+
+  Change: c9e9ae4852ac563c904f3a1a22d750ef47373db6
+  Author: Gabriel Vieira <gabriel.vieira@gmail.com>
+  Date : 2014-08-28 00:52:40 +0000
+
+    Starting version 0.013. Removed comment method from API::Instagram
+    (replaced by internal _comment method). Added _post, _get_, _del
+    methods, proxy to _request main method in API::Instagram. Added
+    like,dislike and comment methods to API::Instagram::Media. Added
+    media attribute to API::Instagram::Media::Comment. Added remove
+    method to API::Instagram::Media::Comment. 
 
   Change: ec7504d1d44f315b5db6c0d07a19fffe3dcbf9d5
   Author: Gabriel Vieira <gabriel.vieira@gmail.com>
