@@ -37,4 +37,4 @@ resources:
   bugtracker: https://github.com/gabrielmad/api-instagram/issues
   homepage: http://metacpan.org/release/API-Instagram
   repository: git://github.com/gabrielmad/api-instagram.git
-version: 0.012
+version: 0.013

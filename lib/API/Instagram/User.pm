@@ -149,7 +149,7 @@ API::Instagram::User - Instagram User Object
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 

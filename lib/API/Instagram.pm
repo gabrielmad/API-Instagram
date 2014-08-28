@@ -2,7 +2,7 @@ package API::Instagram;
 
 # ABSTRACT: Object Oriented Interface for the Instagram REST and Search APIs
 
-our $VERSION = '0.012';
+our $VERSION = '0.013';
 
 use Moo;
 # with 'MooX::Singleton';
@@ -240,7 +240,7 @@ API::Instagram - Object Oriented Interface for the Instagram REST and Search API
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 
