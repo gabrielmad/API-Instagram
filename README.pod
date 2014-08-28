@@ -14,7 +14,7 @@ API::Instagram - Object Oriented Interface for the Instagram REST and Search API
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 
@@ -173,13 +173,6 @@ Get information about a location. Returns an L<API::Instagram::Location> object.
 	say $tag->media_count;
 
 Get information about a tag. Returns an L<API::Instagram::Tag> object.
-
-=head2 comment
-
-	my $comment = $instagram->comment('1234567');
-	say $comment->text;
-
-Get information about a comment. Returns an L<API::Instagram::Media::Comment> object.
 
 =head2 search
 

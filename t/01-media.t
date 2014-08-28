@@ -6,7 +6,7 @@ use Test::MockObject::Extends;
 
 use JSON;
 use API::Instagram;
-use Test::More tests => 10;
+use Test::More tests => 13;
 
 my $api = Test::MockObject::Extends->new(
 	API::Instagram->new({
@@ -43,6 +43,10 @@ my $item_pos = $item->{position};
 is ref $item_pos, 'HASH';
 is $item_pos->{y}, 0.9111;
 
+is ref $media->like,    'HASH';
+is ref $media->dislike, 'HASH';
+
+ok $media->comment("Nice pic!");
 
 __DATA__
 {

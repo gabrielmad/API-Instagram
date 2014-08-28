@@ -52,7 +52,7 @@ is $api2->access_token, 123456789;
 isa_ok( $me, 'API::Instagram::User');
 is $me->username, "snoopdogg";
 
-is ref $api->_request('media'), 'HASH';
+is ref $api->_request('get','media'), 'HASH';
 
 my @list = $api->_get_list( { url => 'media', count => 2 } );
 is ~~@list , 2;

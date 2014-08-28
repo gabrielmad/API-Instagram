@@ -178,7 +178,7 @@ Accepts C<count>, C<min_timestamp>, C<min_id>, C<max_id> and C<max_timestamp> as
 
 sub recent_medias {
 	my $self = shift;
-	my $url  = sprintf "/users/%s/media/recent", $self->id;
+	my $url  = sprintf "users/%s/media/recent", $self->id;
 	$self->_api->_medias( $url, { @_%2?():@_ }, { token_not_required => 1 } );
 }
 
@@ -211,19 +211,19 @@ sub relationship {
 	use experimental 'smartmatch';
 	if ( $action ) {
 		if ( $action ~~ @actions ){
-			return $self->_api->_post_data( $url, { action => $action } )
+			return $self->_api->_post( $url, { action => $action } )
 		}
 		carp "Invalid action";
 	}
 
-	$self->_api->_request_data( $url );
+	$self->_api->_get( $url );
 }
 
 
 sub _get_relashions {
 	my $self = shift;
 	my %opts = @_;
-	my $url  = sprintf "/users/%s/%s", $self->id, $opts{relationship};
+	my $url  = sprintf "users/%s/%s", $self->id, $opts{relationship};
 	my $api  = $self->_api;
 	[ map { $api->user($_) } $api->_get_list( { %opts, url => $url } ) ]
 }
@@ -260,7 +260,7 @@ sub _build_profile_picture { shift->_data->{profile_picture} }
 sub _build__data {
 	my $self = shift;
 	my $url  = sprintf "users/%s", $self->id;
-	$self->_api->_request_data( $url );
+	$self->_api->_get( $url );
 }
 
 
