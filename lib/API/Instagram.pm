@@ -385,7 +385,7 @@ sub _request {
 	}
 
 	# For debugging purposes
-	print "Requesting: $url$/" if $self->_debug;
+	# print "Requesting: $url$/" if $self->_debug;
 
 	# Treats response content
 	my $response = $self->_ua->$method( $url, [], $params );
@@ -398,7 +398,7 @@ sub _request {
 	if (ref $meta eq 'HASH' && $meta->{code} ne '200') {
 		carp "$meta->{error_type}: $meta->{error_message}";
 	} else {
-		crap $response->status_line() unless $response->is_success;
+		carp $response->status_line() unless $response->is_success;
 	}
 
 	$res;
