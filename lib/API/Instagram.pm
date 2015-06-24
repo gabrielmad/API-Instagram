@@ -204,7 +204,7 @@ sub get_access_token {
 	}
 
 	my $data = { map { $_ => $self->$_ } @access_token_fields };
-	my $json = $self->_request( 'post', $self->_access_token_url, $data, { token_not_required => 1 } );
+	my $json = $self->_request( 'post', $self->_access_token_url, $data, { token_not_required => 1, prepared_url => 1 } );
 
 	wantarray ? ( $json->{access_token}, $self->user( $json->{user} ) ) : $json->{access_token};
 }
@@ -385,14 +385,21 @@ sub _request {
 	}
 
 	# For debugging purposes
-	print "Requesting: $url$/" if $self->_debug;
+	# print "Requesting: $url$/" if $self->_debug;
 
 	# Treats response content
-	my $res = decode_json $self->_ua->$method( $url, [], $params )->decoded_content;
+	my $response = $self->_ua->$method( $url, [], $params );
+	my $res = decode_json $response->decoded_content;
 
 	# Verifies meta node
 	my $meta = $res->{meta};
-	carp "$meta->{error_type}: $meta->{error_message}" if $meta->{code} ne '200';
+	
+	# Sometimes there is no {meta} data in response JSON, so we'll check 
+	if (ref $meta eq 'HASH' && $meta->{code} ne '200') {
+		carp "$meta->{error_type}: $meta->{error_message}";
+	} else {
+		carp $response->status_line() unless $response->is_success;
+	}
 
 	$res;
 }
