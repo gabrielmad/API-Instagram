@@ -88,7 +88,7 @@ Get the AUTH URL to authenticate.
 			redirect_uri  => 'http://localhost',
 			scope         => 'basic',
 			response_type => 'code',
-			granty_type   => 'authorization_code',
+			grant_type   => 'authorization_code',
 	});
 
 	print $instagram->get_auth_url;
