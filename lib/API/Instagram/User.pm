@@ -206,11 +206,10 @@ sub relationship {
 	my $self    = shift;
 	my $action  = shift;
 	my $url     = sprintf "users/%s/relationship", $self->id;
-	my @actions = qw/ follow unfollow block unblock approve ignore/;
+	my %actions = map { $_ => 1 } qw/ follow unfollow block unblock approve ignore/;
 
-	use experimental 'smartmatch';
 	if ( $action ) {
-		if ( $action ~~ @actions ){
+		if ( $actions{ $action } ){
 			return $self->_api->_post( $url, { action => $action } )
 		}
 		carp "Invalid action";
