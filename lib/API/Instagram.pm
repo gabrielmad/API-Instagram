@@ -88,7 +88,7 @@ Get the AUTH URL to authenticate.
 			redirect_uri  => 'http://localhost',
 			scope         => 'basic',
 			response_type => 'code',
-			granty_type   => 'authorization_code',
+			grant_type   => 'authorization_code',
 	});
 
 	print $instagram->get_auth_url;
@@ -121,7 +121,7 @@ authenticated user credentials.
 			redirect_uri  => 'http://localhost',
 			scope         => 'basic',
 			response_type => 'code',
-			granty_type   => 'authorization_code',
+			grant_type   => 'authorization_code',
 			no_cache      => 1,
 	});
 
@@ -132,7 +132,7 @@ to your application. See L<http://instagram.com/developer/clients/manage/>.
 
 C<scope> is the scope of access. See L<http://instagram.com/developer/authentication/#scope>.
 
-C<response_type> and C<granty_type> do no vary. See L<http://instagram.com/developer/authentication/>.
+C<response_type> and C<grant_type> do no vary. See L<http://instagram.com/developer/authentication/>.
 
 By default, L<API::Instagram> caches created objects to avoid duplications. You can disable
 this feature setting a true value to C<no_chace> parameter.
